@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "3.1.3"
@@ -19,12 +20,17 @@ subprojects {
 
     apply {
         plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.springframework.boot")
+        plugin("io.spring.dependency-management")
 
+        plugin("kotlin")
+        plugin("kotlin-spring")
     }
 
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
+        runtimeOnly("com.mysql:mysql-connector-j")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
     }
 
@@ -39,3 +45,9 @@ subprojects {
         useJUnitPlatform()
     }
 }
+
+val jar: Jar by tasks
+val bootJar: BootJar by tasks
+
+bootJar.enabled = false
+jar.enabled = true

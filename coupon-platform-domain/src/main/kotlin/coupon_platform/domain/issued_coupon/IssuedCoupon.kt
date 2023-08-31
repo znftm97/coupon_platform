@@ -1,16 +1,16 @@
 package coupon_platform.domain.issued_coupon
 
 import coupon_platform.domain.common.BaseEntity
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
+import jakarta.persistence.*
 import java.security.InvalidParameterException
 import java.time.ZonedDateTime
 
 @Entity
 class IssuedCoupon (
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "issued_coupon_id")
     val id: Long,
 
     val externalId: Long, // FIXME 쿠폰코드 기능 구현시 수정 필요

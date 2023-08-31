@@ -1,4 +1,4 @@
-package coupon_platform.domain.coupon
+package coupon_platform.domain.coupon.entity
 
 enum class DiscountType(description: String) {
     PRICE("정액"),

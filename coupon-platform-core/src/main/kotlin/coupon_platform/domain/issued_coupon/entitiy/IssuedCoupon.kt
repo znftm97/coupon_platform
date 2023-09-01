@@ -1,4 +1,4 @@
-package coupon_platform.domain.issued_coupon
+package coupon_platform.domain.issued_coupon.entitiy
 
 import coupon_platform.domain.common.BaseEntity
 import jakarta.persistence.*
@@ -6,14 +6,14 @@ import java.security.InvalidParameterException
 import java.time.ZonedDateTime
 
 @Entity
-class IssuedCoupon (
+class IssuedCoupon private constructor(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "issued_coupon_id")
-    val id: Long,
+    val id: Long? = null,
 
-    val externalId: Long, // FIXME 쿠폰코드 기능 구현시 수정 필요
+    val externalId: Long? = null, // FIXME 쿠폰코드 기능 구현시 수정 필요
 
     val couponId: Long,
 
@@ -29,5 +29,12 @@ class IssuedCoupon (
         require(!isUsed) {
             throw InvalidParameterException("쿠폰이 발급될 때, 사용 여부는 항상 false 여야 한다.")
         }
+    }
+
+    companion object {
+        fun of(
+            couponId: Long,
+            expirationPeriod: ZonedDateTime,
+        ) = IssuedCoupon(couponId = couponId, isUsed = false, expirationPeriod = expirationPeriod)
     }
 }

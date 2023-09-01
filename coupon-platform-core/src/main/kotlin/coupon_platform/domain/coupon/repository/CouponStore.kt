@@ -3,16 +3,16 @@ package coupon_platform.domain.coupon.repository
 import coupon_platform.domain.coupon.entity.Coupon
 import org.springframework.stereotype.Component
 
-interface CouponCommand {
-    fun saveCoupon(coupon: Coupon) : String
+interface CouponStore {
+    fun saveCoupon(coupon: Coupon): String
 }
 
 @Component
-class CouponCommandImpl (
+class CouponStoreImpl(
     val couponJpaRepository: CouponJpaRepository,
-) : CouponCommand {
+) : CouponStore {
 
-    override fun saveCoupon(coupon: Coupon) : String {
+    override fun saveCoupon(coupon: Coupon): String {
         return couponJpaRepository.save(coupon).name
     }
 

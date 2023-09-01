@@ -1,4 +1,4 @@
-package coupon_platform.application.coupon
+package coupon_platform.domain.coupon.facade
 
 import coupon_platform.domain.coupon.CreateCouponCommand
 import coupon_platform.domain.coupon.service.CouponService
@@ -9,7 +9,7 @@ class CouponFacade(
     val couponService: CouponService
 ) {
 
-    fun createCoupon(createCouponCommand: CreateCouponCommand) : String {
+    fun createCoupon(createCouponCommand: CreateCouponCommand): String {
         return couponService.createCoupon(createCouponCommand)
     }
 

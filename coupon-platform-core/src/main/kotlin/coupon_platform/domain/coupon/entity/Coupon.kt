@@ -4,7 +4,7 @@ import coupon_platform.domain.common.BaseEntity
 import jakarta.persistence.*
 
 @Entity
-class Coupon private constructor (
+class Coupon private constructor(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ class Coupon private constructor (
             name: String,
             applyType: ApplyType,
             discountType: DiscountType,
-        ): Coupon = Coupon(name = name, applyType = applyType, discountType = discountType)
+        ) = Coupon(name = name, applyType = applyType, discountType = discountType)
     }
 
     enum class DiscountType(description: String) {

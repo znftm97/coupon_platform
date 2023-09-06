@@ -1,7 +1,16 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.Embeddable")
+    annotation("javax.persistence.MappedSuperclass")
+}
+
+plugins {
+    kotlin("plugin.jpa") version "1.8.10"
+}
+
 dependencies {
-    implementation(project(":coupon-platform-domain"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 }
 

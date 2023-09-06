@@ -2,7 +2,6 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 dependencies {
     implementation(project(":coupon-platform-domain"))
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}

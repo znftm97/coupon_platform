@@ -1,6 +1,6 @@
 package coupon_platform.interfaces.issue_coupon
 
-import com.coupon_platform.couponplatformapplication.issued_coupon.IssuedCouponFacade
+import coupon_platform.application.issued_coupon.IssuedCouponFacade
 import coupon_platform.interfaces.common.response.BaseResponse
 import coupon_platform.interfaces.issue_coupon.dto.IssueCouponRequest
 import coupon_platform.interfaces.issue_coupon.dto.toCommand

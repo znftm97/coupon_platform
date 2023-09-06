@@ -5,18 +5,15 @@ import coupon_platform.domain.coupon.repository.CouponStore
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-interface CouponStoreService {
-    fun createCoupon(createCouponCommand: CreateCouponCommand): String
-}
-
 @Service
 @Transactional
-class CouponStoreServiceImpl(
+class CouponStoreService(
     val couponStore: CouponStore,
-) : CouponStoreService {
+) {
 
-    override fun createCoupon(createCouponCommand: CreateCouponCommand): String {
+    fun createCoupon(createCouponCommand: CreateCouponCommand): String {
         val coupon = createCouponCommand.toEntity()
         return couponStore.saveCoupon(coupon).name
     }
+
 }

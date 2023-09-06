@@ -1,4 +1,4 @@
-package com.coupon_platform.couponplatformapplication.coupon
+package coupon_platform.application.coupon
 
 import coupon_platform.domain.coupon.CreateCouponCommand
 import coupon_platform.domain.coupon.service.CouponReadService

@@ -1,10 +1,9 @@
 package coupon_platform.interfaces.coupon
 
 import coupon_platform.application.coupon.CouponFacade
-import coupon_platform.domain.coupon.repository.CouponStore
 import coupon_platform.interfaces.common.response.BaseResponse
-import coupon_platform.interfaces.coupon.dto.CreateCouponRequest
-import coupon_platform.interfaces.coupon.dto.QueryCouponResponse
+import coupon_platform.interfaces.coupon.dto.CouponCreateRequest
+import coupon_platform.interfaces.coupon.dto.CouponResponse
 import coupon_platform.interfaces.coupon.dto.toCommand
 import org.springframework.web.bind.annotation.*
 
@@ -12,19 +11,18 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1/coupons")
 class CouponController(
     val couponFacade: CouponFacade,
-    val couponStore: CouponStore,
 ) {
 
     @PostMapping
-    fun createCoupon(@RequestBody createCouponRequest: CreateCouponRequest): BaseResponse<String> {
-        val couponName = couponFacade.createCoupon(createCouponRequest.toCommand())
+    fun createCoupon(@RequestBody couponCreateRequest: CouponCreateRequest): BaseResponse<String> {
+        val couponName = couponFacade.createCoupon(couponCreateRequest.toCommand())
         return BaseResponse.success(couponName)
     }
 
     @GetMapping
-    fun queryCoupon(@RequestParam("name") name: String): BaseResponse<QueryCouponResponse> {
+    fun readCoupon(@RequestParam("name") name: String): BaseResponse<CouponResponse> {
         val couponInfo = couponFacade.readCoupon(name)
-        return BaseResponse.success(QueryCouponResponse.toResponse(couponInfo))
+        return BaseResponse.success(CouponResponse.toResponse(couponInfo))
     }
 
 }

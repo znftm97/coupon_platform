@@ -1,7 +1,7 @@
 package coupon_platform.interfaces.common.response
 
-import coupon_platform.interfaces.common.exception.BaseException
-import coupon_platform.interfaces.common.exception.ExceptionCode
+import coupon_platform.domain.common.exception.BaseException
+import coupon_platform.domain.common.exception.ExceptionCode
 import coupon_platform.interfaces.common.filter.CommonHttpRequestInterceptor
 import mu.KLogging
 import org.slf4j.MDC
@@ -91,10 +91,14 @@ class GlobalExceptionHandler {
         )
 
         val fieldError: FieldError? = e.bindingResult.fieldError
-        return when(fieldError) {
-            null -> BaseResponse.fail(ExceptionCode.COMMON_INVALID_PARAMETER.message, ExceptionCode.COMMON_INVALID_PARAMETER.name)
+        return when (fieldError) {
+            null -> BaseResponse.fail(
+                ExceptionCode.COMMON_INVALID_PARAMETER.message,
+                ExceptionCode.COMMON_INVALID_PARAMETER.name
+            )
             else -> {
-                val message = "Request Error ${fieldError.field}=${fieldError.rejectedValue} (${fieldError.defaultMessage})"
+                val message =
+                    "Request Error ${fieldError.field}=${fieldError.rejectedValue} (${fieldError.defaultMessage})"
                 BaseResponse.fail(message, ExceptionCode.COMMON_INVALID_PARAMETER.name)
             }
         }

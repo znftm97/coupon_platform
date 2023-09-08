@@ -9,9 +9,9 @@ class CouponCode private constructor(
 
     val couponId: Long,
 
-    var code: String,
+    val code: String,
 
-    var expirationPeriod: ZonedDateTime,
+    val expirationPeriod: ZonedDateTime,
 
     val externalId: String = "",
 

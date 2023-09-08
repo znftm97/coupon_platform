@@ -7,5 +7,5 @@ data class CouponCreateCommand(
     val applyType: Coupon.ApplyType,
     val discountType: Coupon.DiscountType,
 ) {
-    fun toEntity(): Coupon = Coupon.of(name, applyType, discountType)
+    fun toEntity(externalId: String): Coupon = Coupon.of(name, applyType, discountType, externalId)
 }

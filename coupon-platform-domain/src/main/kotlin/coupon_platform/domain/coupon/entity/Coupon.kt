@@ -14,7 +14,7 @@ class Coupon private constructor(
     @Enumerated(value = EnumType.STRING)
     val discountType: DiscountType,
 
-    val externalId: String = "", // FIXME 쿠폰코드 기능 구현시 수정 필요
+    val externalId: String = "",
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,8 @@ class Coupon private constructor(
             name: String,
             applyType: ApplyType,
             discountType: DiscountType,
-        ) = Coupon(name, applyType, discountType)
+            externalId: String,
+        ) = Coupon(name, applyType, discountType, externalId)
     }
 
     enum class DiscountType(description: String) {

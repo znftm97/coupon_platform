@@ -7,7 +7,7 @@ data class IssueCouponCommand(
     val couponId: Long,
     val expirationPeriod: ZonedDateTime,
 ) {
-    fun toEntity(): IssuedCoupon {
-        return IssuedCoupon.of(couponId, expirationPeriod)
+    fun toEntity(externalId: String): IssuedCoupon {
+        return IssuedCoupon.of(couponId, expirationPeriod, externalId)
     }
 }

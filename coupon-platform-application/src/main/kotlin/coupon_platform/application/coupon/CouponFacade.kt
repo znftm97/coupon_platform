@@ -11,5 +11,5 @@ class CouponFacade(
     val couponStoreService: CouponStoreService,
 ) {
     fun createCoupon(createCouponCommand: CreateCouponCommand) = couponStoreService.createCoupon(createCouponCommand)
-    fun readCoupon(name: String) = couponReadService.readCoupon(name)
+    fun findCouponByName(name: String) = couponReadService.findCouponByName(name)
 }

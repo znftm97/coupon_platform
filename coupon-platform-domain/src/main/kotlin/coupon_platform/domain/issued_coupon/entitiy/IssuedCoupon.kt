@@ -8,18 +8,18 @@ import java.time.ZonedDateTime
 @Entity
 class IssuedCoupon private constructor(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "issued_coupon_id")
-    val id: Long? = null,
-
-    val externalId: Long? = null, // FIXME 쿠폰코드 기능 구현시 수정 필요
-
     val couponId: Long,
 
     var isUsed: Boolean,
 
-    var expirationPeriod: ZonedDateTime
+    var expirationPeriod: ZonedDateTime,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "issued_coupon_id")
+    val id: Long = 0,
+
+    val externalId: Long = 0, // FIXME 쿠폰코드 기능 구현시 수정 필요
 
 ) : BaseEntity() {
     init {

@@ -9,8 +9,8 @@ class Product(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    val id: Long,
+    val id: Long = 0,
 
-    val externalId: Long, // FIXME 쿠폰코드 기능 구현시 수정 필요
+    val externalId: Long = 0, // FIXME 쿠폰코드 기능 구현시 수정 필요
 
 ) : BaseEntity()

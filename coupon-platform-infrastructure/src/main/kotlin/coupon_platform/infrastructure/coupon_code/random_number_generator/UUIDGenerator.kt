@@ -8,9 +8,15 @@ import java.util.*
 @Component
 @Qualifier("UUIDGenerator")
 class UUIDGenerator() : RandomNumberGenerator {
-    override fun generate(length: Int): String = UUID.randomUUID().toString().substring(0 until length)
 
-    override fun generateWithPrefix(length: Int, prefix: String): String =
-        prefix.plus(UUID.randomUUID().toString()).substring(0 until length)
+    override fun generate(length: Int): String {
+        validateLength(length)
+        return UUID.randomUUID().toString().substring(0 until length)
+    }
+
+    override fun generateWithPrefix(length: Int, prefix: String): String {
+        validateLength(length)
+        return prefix.plus(UUID.randomUUID().toString()).substring(0 until length)
+    }
 
 }

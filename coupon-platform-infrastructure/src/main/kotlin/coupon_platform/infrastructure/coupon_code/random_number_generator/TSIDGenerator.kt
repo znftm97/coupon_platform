@@ -8,8 +8,15 @@ import org.springframework.stereotype.Component
 @Component
 @Qualifier("TSIDGenerator")
 class TSIDGenerator() : RandomNumberGenerator {
-    override fun generate(length: Int): String = TsidCreator.getTsid().toString().substring(0 until length)
 
-    override fun generateWithPrefix(length: Int, prefix: String): String =
-        prefix.plus(TsidCreator.getTsid().toString()).substring(0 until length)
+    override fun generate(length: Int): String {
+        validateLength(length)
+        return TsidCreator.getTsid().toString().substring(0 until length)
+    }
+
+    override fun generateWithPrefix(length: Int, prefix: String): String {
+        validateLength(length)
+        return prefix.plus(TsidCreator.getTsid().toString()).substring(0 until length)
+    }
+
 }

@@ -13,4 +13,7 @@ enum class ExceptionCode(
     /*coupon_code*/
     NOT_FOUND_COUPON_CODE_EXCEPTION("존재하지 않는 쿠폰코드입니다."),
 
+    /*etc*/
+    INVALID_RANDOM_NUMBER_LENGTH_EXCEPTION("난수 길이는 0 초과여야 합니다.")
+
 }

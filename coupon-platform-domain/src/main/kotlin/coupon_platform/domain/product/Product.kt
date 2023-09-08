@@ -6,11 +6,11 @@ import jakarta.persistence.*
 @Entity
 class Product(
 
+    val externalId: String = "", // FIXME 쿠폰코드 기능 구현시 수정 필요
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     val id: Long = 0,
 
-    val externalId: Long = 0, // FIXME 쿠폰코드 기능 구현시 수정 필요
-
-) : BaseEntity()
+    ) : BaseEntity()

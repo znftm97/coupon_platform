@@ -14,14 +14,14 @@ class Coupon private constructor(
     @Enumerated(value = EnumType.STRING)
     val discountType: DiscountType,
 
+    val externalId: String = "", // FIXME 쿠폰코드 기능 구현시 수정 필요
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "coupon_id")
     val id: Long = 0,
 
-    val externalId: Long = 0, // FIXME 쿠폰코드 기능 구현시 수정 필요
-
-) : BaseEntity() {
+    ) : BaseEntity() {
 
     companion object {
         fun of(

@@ -5,7 +5,7 @@ import java.time.ZonedDateTime
 
 data class CouponCodeInfo(
     val id: Long? = null,
-    val externalId: Long? = null,
+    val externalId: String? = null,
     val couponId: Long,
     val couponCode: String,
     val expirationPeriod: ZonedDateTime

@@ -2,7 +2,7 @@ package coupon_platform.domain.coupon
 
 import coupon_platform.domain.coupon.entity.Coupon
 
-data class CreateCouponCommand(
+data class CouponCreateCommand(
     val name: String,
     val applyType: Coupon.ApplyType,
     val discountType: Coupon.DiscountType,

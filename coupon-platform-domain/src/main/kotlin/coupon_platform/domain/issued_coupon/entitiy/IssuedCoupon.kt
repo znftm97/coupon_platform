@@ -14,14 +14,14 @@ class IssuedCoupon private constructor(
 
     var expirationPeriod: ZonedDateTime,
 
+    val externalId: String = "", // FIXME 쿠폰코드 기능 구현시 수정 필요
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "issued_coupon_id")
     val id: Long = 0,
 
-    val externalId: Long = 0, // FIXME 쿠폰코드 기능 구현시 수정 필요
-
-) : BaseEntity() {
+    ) : BaseEntity() {
     init {
         require(expirationPeriod > ZonedDateTime.now()) {
             throw InvalidParameterException("만료 기간은 쿠폰을 발급하는 시점의 시간 이후여야 한다.")

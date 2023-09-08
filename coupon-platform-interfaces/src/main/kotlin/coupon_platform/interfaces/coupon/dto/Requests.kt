@@ -1,6 +1,6 @@
 package coupon_platform.interfaces.coupon.dto
 
-import coupon_platform.domain.coupon.CreateCouponCommand
+import coupon_platform.domain.coupon.CouponCreateCommand
 import coupon_platform.domain.coupon.entity.Coupon
 
 data class CouponCreateRequest(
@@ -9,4 +9,4 @@ data class CouponCreateRequest(
     val discountType: Coupon.DiscountType,
 )
 
-fun CouponCreateRequest.toCommand() = CreateCouponCommand(name, applyType, discountType)
+fun CouponCreateRequest.toCommand() = CouponCreateCommand(name, applyType, discountType)

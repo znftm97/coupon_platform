@@ -1,23 +1,29 @@
 package coupon_platform.interfaces.common.filter
 
+import coupon_platform.domain.coupon_code.RandomNumberGenerator
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.MDC
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
-import java.util.*
 
 @Component
-class CommonHttpRequestInterceptor : HandlerInterceptor {
+class CommonHttpRequestInterceptor(
+    @Qualifier("TSIDGenerator")
+    val randomNumberGenerator: RandomNumberGenerator
+) : HandlerInterceptor {
 
     companion object {
         const val HEADER_REQUEST_UUID_KEY = "x-request-id"
+        const val REQUEST_EVENT_ID_LENGTH = 12;
     }
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         var requestEventId: String = request.getHeader(HEADER_REQUEST_UUID_KEY)
         if (requestEventId.isEmpty()) {
-            requestEventId = UUID.randomUUID().toString() // FIXME 코드 쿠폰 기능 구현시, 같이 수정
+            requestEventId =
+                randomNumberGenerator.generateWithPrefix(REQUEST_EVENT_ID_LENGTH, Thread.currentThread().id.toString())
         }
 
         MDC.put(HEADER_REQUEST_UUID_KEY, requestEventId)

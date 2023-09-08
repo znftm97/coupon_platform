@@ -4,7 +4,7 @@ import coupon_platform.domain.coupon.dto.CouponInfo
 import coupon_platform.domain.coupon.entity.Coupon
 
 data class CouponResponse(
-    val externalId: Long?,
+    val externalId: String,
     val name: String,
     val applyType: Coupon.ApplyType,
     val discountType: Coupon.DiscountType,

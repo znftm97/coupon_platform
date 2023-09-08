@@ -1,6 +1,6 @@
 package coupon_platform.domain.coupon_code.service
 
-import coupon_platform.domain.common.ExternalIdGenerator
+import coupon_platform.domain.common.CommonConstants.Companion.EXTERNAL_ID_LENGTH
 import coupon_platform.domain.coupon_code.RandomNumberGenerator
 import coupon_platform.domain.coupon_code.dto.CouponCodeCreateCommand
 import coupon_platform.domain.coupon_code.dto.CouponCodeInfo
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class CouponCodeStoreService(
     val couponCodeStore: CouponCodeStore,
-    val externalIdGenerator: ExternalIdGenerator,
     @Qualifier("UUIDGenerator")
     val randomNumberGenerator: RandomNumberGenerator,
 ) {
@@ -28,7 +27,7 @@ class CouponCodeStoreService(
             couponCodeCreateCommand.couponId,
             generateCouponCode(),
             couponCodeCreateCommand.expirationPeriod,
-            externalIdGenerator.generate(),
+            randomNumberGenerator.generate(EXTERNAL_ID_LENGTH),
         )
         val storedCouponCode = couponCodeStore.createCouponCode(couponCode)
 

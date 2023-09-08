@@ -20,8 +20,8 @@ class CouponController(
     }
 
     @GetMapping
-    fun readCoupon(@RequestParam("name") name: String): BaseResponse<CouponResponse> {
-        val couponInfo = couponFacade.readCoupon(name)
+    fun findCoupon(@RequestParam("name") name: String): BaseResponse<CouponResponse> {
+        val couponInfo = couponFacade.findCouponByName(name)
         return BaseResponse.success(CouponResponse.toResponse(couponInfo))
     }
 

@@ -10,7 +10,7 @@ data class CouponResponse(
     val discountType: Coupon.DiscountType,
 ) {
     companion object {
-        fun toResponse(couponInfo: CouponInfo): CouponResponse = CouponResponse(
+        fun toResponse(couponInfo: CouponInfo) = CouponResponse(
             couponInfo.externalId,
             couponInfo.name,
             couponInfo.applyType,

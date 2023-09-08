@@ -11,7 +11,6 @@ data class CouponIssueRequest(
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     val expirationPeriod: LocalDateTime,
-)
-
-fun CouponIssueRequest.toCommand() =
-    IssueCouponCommand(couponId, ZonedDateTime.of(expirationPeriod, ZoneId.of("UTC")))
+) {
+    fun toCommand() = IssueCouponCommand(couponId, ZonedDateTime.of(expirationPeriod, ZoneId.of("UTC")))
+}

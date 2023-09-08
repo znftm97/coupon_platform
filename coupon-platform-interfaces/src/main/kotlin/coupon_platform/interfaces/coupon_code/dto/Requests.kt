@@ -11,7 +11,6 @@ data class CouponCodeCreateRequest(
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     val expirationPeriod: LocalDateTime,
-)
-
-fun CouponCodeCreateRequest.toCommand() =
-    CouponCodeCreateCommand(couponId, ZonedDateTime.of(expirationPeriod, ZoneId.of("UTC")))
+) {
+    fun toCommand() = CouponCodeCreateCommand(couponId, ZonedDateTime.of(expirationPeriod, ZoneId.of("UTC")))
+}

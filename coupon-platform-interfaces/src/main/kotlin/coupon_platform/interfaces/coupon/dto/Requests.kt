@@ -7,6 +7,6 @@ data class CouponCreateRequest(
     val name: String,
     val applyType: Coupon.ApplyType,
     val discountType: Coupon.DiscountType,
-)
-
-fun CouponCreateRequest.toCommand() = CouponCreateCommand(name, applyType, discountType)
+) {
+    fun toCommand() = CouponCreateCommand(name, applyType, discountType)
+}

@@ -4,7 +4,6 @@ import coupon_platform.application.coupon.CouponFacade
 import coupon_platform.interfaces.common.response.BaseResponse
 import coupon_platform.interfaces.coupon.dto.CouponCreateRequest
 import coupon_platform.interfaces.coupon.dto.CouponResponse
-import coupon_platform.interfaces.coupon.dto.toCommand
 import org.springframework.web.bind.annotation.*
 
 @RestController

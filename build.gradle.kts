@@ -32,7 +32,12 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
         runtimeOnly("com.mysql:mysql-connector-j")
+
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation(kotlin("test"))
+        testImplementation("io.mockk:mockk:1.13.4")
+        runtimeOnly("io.kotest:kotest-assertions-core-jvm:5.7.0")
+        testImplementation("io.kotest:kotest-runner-junit5-jvm:5.7.0")
     }
 
     tasks.withType<KotlinCompile> {

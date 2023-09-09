@@ -1,4 +1,4 @@
-package coupon_platform.infrastructure.domain.coupon.repository
+package coupon_platform.infrastructure.coupon.repository
 
 import coupon_platform.domain.coupon.entity.Coupon
 import coupon_platform.domain.coupon.repository.CouponStore

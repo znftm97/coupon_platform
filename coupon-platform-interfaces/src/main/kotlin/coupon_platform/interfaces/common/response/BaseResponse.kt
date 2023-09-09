@@ -1,6 +1,6 @@
 package coupon_platform.interfaces.common.response
 
-import coupon_platform.interfaces.common.exception.ExceptionCode
+import coupon_platform.domain.common.exception.ExceptionCode
 
 data class BaseResponse<T>(
     private val result: Result,

@@ -11,8 +11,13 @@ class CouponReadService(
     val couponReader: CouponReader,
 ) {
 
-    fun readCoupon(name: String): CouponInfo {
-        val coupon = couponReader.readCoupon(name)
+    fun findCouponByName(name: String): CouponInfo {
+        val coupon = couponReader.findCouponByName(name)
+        return CouponInfo.toCouponInfo(coupon)
+    }
+
+    fun findCouponById(id: Long): CouponInfo {
+        val coupon = couponReader.findCouponById(id)
         return CouponInfo.toCouponInfo(coupon)
     }
 }

@@ -1,6 +1,6 @@
-package coupon_platform.interfaces.common.exception
+package coupon_platform.domain.common.exception
 
-class BaseException : RuntimeException {
+open class BaseException : RuntimeException {
     val exceptionCode: ExceptionCode
 
     constructor(exceptionCode: ExceptionCode) : super(exceptionCode.message) {

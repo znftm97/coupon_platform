@@ -2,12 +2,9 @@ package coupon_platform.domain.coupon.dto
 
 import coupon_platform.domain.coupon.entity.Coupon
 
-data class CouponQuery(
-    val name: String,
-)
-
 data class CouponInfo(
-    val externalId: Long?,
+    val id: Long,
+    val externalId: String,
     val name: String,
     val applyType: Coupon.ApplyType,
     val discountType: Coupon.DiscountType,
@@ -15,6 +12,7 @@ data class CouponInfo(
     companion object {
         fun toCouponInfo(coupon: Coupon): CouponInfo {
             return CouponInfo(
+                coupon.id,
                 coupon.externalId,
                 coupon.name,
                 coupon.applyType,

@@ -8,20 +8,21 @@ import java.time.ZonedDateTime
 @Entity
 class IssuedCoupon private constructor(
 
+    val couponId: Long,
+
+    val isUsed: Boolean,
+
+    val expirationPeriod: ZonedDateTime,
+
+    val externalId: String = "",
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "issued_coupon_id")
-    val id: Long? = null,
+    val id: Long = 0,
 
-    val externalId: Long? = null, // FIXME 쿠폰코드 기능 구현시 수정 필요
+    ) : BaseEntity() {
 
-    val couponId: Long,
-
-    var isUsed: Boolean,
-
-    var expirationPeriod: ZonedDateTime
-
-) : BaseEntity() {
     init {
         require(expirationPeriod > ZonedDateTime.now()) {
             throw InvalidParameterException("만료 기간은 쿠폰을 발급하는 시점의 시간 이후여야 한다.")
@@ -35,6 +36,7 @@ class IssuedCoupon private constructor(
         fun of(
             couponId: Long,
             expirationPeriod: ZonedDateTime,
-        ) = IssuedCoupon(couponId = couponId, isUsed = false, expirationPeriod = expirationPeriod)
+            externalId: String,
+        ) = IssuedCoupon(couponId, false, expirationPeriod, externalId)
     }
 }

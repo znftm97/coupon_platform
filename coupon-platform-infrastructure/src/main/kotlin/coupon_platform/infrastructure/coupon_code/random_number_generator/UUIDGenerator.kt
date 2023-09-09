@@ -14,7 +14,7 @@ class UUIDGenerator() : RandomNumberGenerator {
      * @param length 범위 -> 0 < length <= 32
      */
     override fun generate(length: Int): String {
-        require(length in 33 downTo 0) {
+        require(length in 32 downTo 1) {
             throw InvalidRandomNumberLengthException()
         }
 
@@ -26,7 +26,7 @@ class UUIDGenerator() : RandomNumberGenerator {
      * @param prefix 범위 -> 0 <= prefix <= 10
      */
     override fun generateWithPrefix(length: Int, prefix: String): String {
-        require(length in 33 downTo 0 || prefix.length in 11 downTo 0) {
+        require(length in 32 downTo 1 && prefix.length in 10 downTo 0) {
             throw InvalidRandomNumberLengthException()
         }
 

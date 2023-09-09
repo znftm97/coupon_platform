@@ -14,7 +14,7 @@ class TSIDGenerator() : RandomNumberGenerator {
      * @param length 범위 -> 0 < length <= 13 (TSID는 최대길이가 13 이다.)
      */
     override fun generate(length: Int): String {
-        require(length in 14 downTo 0) {
+        require(length in 13 downTo 1) {
             throw InvalidRandomNumberLengthException()
         }
 
@@ -26,7 +26,7 @@ class TSIDGenerator() : RandomNumberGenerator {
      * @param prefix 범위 -> 0 <= prefix <= 10
      */
     override fun generateWithPrefix(length: Int, prefix: String): String {
-        require(length in 14 downTo 0 || prefix.length in 11 downTo 0) {
+        require(length in 13 downTo 1 && prefix.length in 10 downTo 0) {
             throw InvalidRandomNumberLengthException()
         }
 

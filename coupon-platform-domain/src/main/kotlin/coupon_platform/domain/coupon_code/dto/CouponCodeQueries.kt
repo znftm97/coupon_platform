@@ -4,8 +4,8 @@ import coupon_platform.domain.coupon_code.entity.CouponCode
 import java.time.ZonedDateTime
 
 data class CouponCodeInfo(
-    val id: Long? = null,
-    val externalId: String? = null,
+    val id: Long,
+    val externalId: String,
     val couponId: Long,
     val couponCode: String,
     val expirationPeriod: ZonedDateTime

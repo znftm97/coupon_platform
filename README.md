@@ -60,7 +60,7 @@
 - 12자리 길이 난수를 생성할 수 있고, 시간순으로 정렬할 수 있는 `TSID` 사용 
 
 ### 2-1-3. 클래스 다이어 그램
-![Untitled](https://github.com/znftm97/coupon_platform/assets/57134526/c3b88562-ac66-4b8a-b214-9f09ab5da2e0)
+![Untitled](https://github.com/znftm97/coupon_platform/assets/57134526/9112a3fc-257c-4d28-826b-44703690c921)
 
 직접 `UUID.randomUUID()` 또는 `TSID.getTsid()`를 호출해서 사용해도 되지만, 객체지향적으로 구현하여 DIP 개념을 함께 활용했다.
 

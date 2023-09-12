@@ -12,13 +12,13 @@ class IssuedCouponController(
 ) {
 
     @PostMapping
-    fun issueCoupon(@RequestBody couponIssueRequest: CouponIssueRequest): BaseResponse<Long> {
+    suspend fun issueCoupon(@RequestBody couponIssueRequest: CouponIssueRequest): BaseResponse<Long> {
         val issuedCouponId = issuedCouponFacade.issueCoupon(couponIssueRequest.toCommand())
         return BaseResponse.success(issuedCouponId)
     }
 
     @PostMapping("/coupon_code/{coupon-code}")
-    fun issueCouponByCouponCode(@PathVariable("coupon-code") couponCode: String): BaseResponse<Long> {
+    suspend fun issueCouponByCouponCode(@PathVariable("coupon-code") couponCode: String): BaseResponse<Long> {
         val issuedCouponInfo = issuedCouponFacade.issueCouponByCouponCode(couponCode)
         return BaseResponse.success(issuedCouponInfo)
     }

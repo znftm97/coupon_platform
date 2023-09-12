@@ -10,13 +10,13 @@ import org.springframework.web.servlet.HandlerInterceptor
 
 @Component
 class CommonHttpRequestInterceptor(
-    @Qualifier("TSIDGenerator")
+    @Qualifier("UUIDGenerator")
     val randomNumberGenerator: RandomNumberGenerator
 ) : HandlerInterceptor {
 
     companion object {
         const val HEADER_REQUEST_UUID_KEY = "x-request-id"
-        const val REQUEST_EVENT_ID_LENGTH = 12;
+        const val REQUEST_EVENT_ID_LENGTH = 16;
     }
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {

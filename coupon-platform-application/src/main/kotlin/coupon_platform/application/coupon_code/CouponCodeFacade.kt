@@ -10,7 +10,7 @@ class CouponCodeFacade(
     val couponCodeStoreService: CouponCodeStoreService,
     val couponReadService: CouponReadService,
 ) {
-    fun createCouponCode(couponCodeCreateCommand: CouponCodeCreateCommand): String {
+    suspend fun createCouponCode(couponCodeCreateCommand: CouponCodeCreateCommand): String {
         // 존재하는 쿠폰인지 확인하기 위해 조회
         couponReadService.findCouponById(couponCodeCreateCommand.couponId)
         val couponCodeInfo = couponCodeStoreService.createCouponCode(couponCodeCreateCommand)

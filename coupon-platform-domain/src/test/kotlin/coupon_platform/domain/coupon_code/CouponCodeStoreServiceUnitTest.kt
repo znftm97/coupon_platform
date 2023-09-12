@@ -4,6 +4,7 @@ import coupon_platform.domain.coupon_code.dto.CouponCodeCreateCommand
 import coupon_platform.domain.coupon_code.dto.CouponCodeInfo
 import coupon_platform.domain.coupon_code.repository.CouponCodeStore
 import coupon_platform.domain.coupon_code.service.CouponCodeStoreService
+import io.kotest.common.runBlocking
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.mockk.every
@@ -14,9 +15,11 @@ class CouponCodeStoreServiceUnitTest : BehaviorSpec({
 
     val couponCodeStoreMock = mockk<CouponCodeStore> {}
     val randomNumberGeneratorMock = mockk<RandomNumberGenerator> {}
+    val suspendableRandomNumberGenerator = mockk<SuspendableRandomNumberGenerator> {}
     val couponCodeStoreServiceMock = mockk<CouponCodeStoreService> {
         every { couponCodeStore } returns couponCodeStoreMock
-        every { randomNumberGenerator } returns randomNumberGeneratorMock
+        every { uuidGenerator } returns randomNumberGeneratorMock
+        every { tsidGenerator } returns suspendableRandomNumberGenerator
     }
 
     given("쿠폰 코드 생성 객체(couponCodeCreateCommand)가 주어지고") {
@@ -28,7 +31,7 @@ class CouponCodeStoreServiceUnitTest : BehaviorSpec({
             "xxxx-xxxx-xxxx-xxxx",
             ZonedDateTime.now(),
         )
-        every { couponCodeStoreServiceMock.createCouponCode(couponCodeCreateCommand) } returns couponCodeInfo
+        every { runBlocking { couponCodeStoreServiceMock.createCouponCode(couponCodeCreateCommand) } } returns couponCodeInfo
 
         `when`("couponCodeStoreService의 createCouponCode() 함수를 호출했을 때") {
             val result = couponCodeStoreServiceMock.createCouponCode(couponCodeCreateCommand)

@@ -13,7 +13,7 @@ class CouponController(
 ) {
 
     @PostMapping
-    fun createCoupon(@RequestBody couponCreateRequest: CouponCreateRequest): BaseResponse<String> {
+    suspend fun createCoupon(@RequestBody couponCreateRequest: CouponCreateRequest): BaseResponse<String> {
         val couponName = couponFacade.createCoupon(couponCreateRequest.toCommand())
         return BaseResponse.success(couponName)
     }

@@ -1,5 +1,7 @@
 package coupon_platform.domain.coupon_code
 
+import coupon_platform.domain.common.RandomNumberGenerator
+import coupon_platform.domain.common.SuspendableRandomNumberGenerator
 import coupon_platform.domain.coupon_code.dto.CouponCodeCreateCommand
 import coupon_platform.domain.coupon_code.dto.CouponCodeInfo
 import coupon_platform.domain.coupon_code.repository.CouponCodeStore

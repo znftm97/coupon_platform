@@ -1,4 +1,4 @@
-package coupon_platform.domain.coupon_code
+package coupon_platform.domain.common
 
 interface RandomNumberGenerator {
     fun generate(length: Int): String

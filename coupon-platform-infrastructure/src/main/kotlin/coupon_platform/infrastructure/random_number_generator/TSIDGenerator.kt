@@ -1,9 +1,9 @@
-package coupon_platform.infrastructure.coupon_code.random_number_generator
+package coupon_platform.infrastructure.random_number_generator
 
 import com.github.f4b6a3.tsid.Tsid
 import com.github.f4b6a3.tsid.TsidCreator
 import coupon_platform.domain.common.exception.InvalidRandomNumberLengthException
-import coupon_platform.domain.coupon_code.SuspendableRandomNumberGenerator
+import coupon_platform.domain.common.SuspendableRandomNumberGenerator
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import org.springframework.beans.factory.annotation.Qualifier

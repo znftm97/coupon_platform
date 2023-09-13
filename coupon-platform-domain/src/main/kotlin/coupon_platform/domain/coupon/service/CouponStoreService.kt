@@ -3,7 +3,7 @@ package coupon_platform.domain.coupon.service
 import coupon_platform.domain.common.CommonConstants.Companion.EXTERNAL_ID_LENGTH
 import coupon_platform.domain.coupon.CouponCreateCommand
 import coupon_platform.domain.coupon.repository.CouponStore
-import coupon_platform.domain.coupon_code.SuspendableRandomNumberGenerator
+import coupon_platform.domain.common.SuspendableRandomNumberGenerator
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

@@ -1,6 +1,6 @@
 package coupon_platform.interfaces.common.filter
 
-import coupon_platform.domain.coupon_code.RandomNumberGenerator
+import coupon_platform.domain.common.RandomNumberGenerator
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.MDC

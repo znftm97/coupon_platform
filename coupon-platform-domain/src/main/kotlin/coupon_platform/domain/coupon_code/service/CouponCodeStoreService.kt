@@ -1,8 +1,8 @@
 package coupon_platform.domain.coupon_code.service
 
 import coupon_platform.domain.common.CommonConstants.Companion.EXTERNAL_ID_LENGTH
-import coupon_platform.domain.coupon_code.RandomNumberGenerator
-import coupon_platform.domain.coupon_code.SuspendableRandomNumberGenerator
+import coupon_platform.domain.common.RandomNumberGenerator
+import coupon_platform.domain.common.SuspendableRandomNumberGenerator
 import coupon_platform.domain.coupon_code.dto.CouponCodeCreateCommand
 import coupon_platform.domain.coupon_code.dto.CouponCodeInfo
 import coupon_platform.domain.coupon_code.entity.CouponCode

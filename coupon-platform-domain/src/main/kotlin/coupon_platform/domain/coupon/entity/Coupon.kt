@@ -14,6 +14,9 @@ class Coupon private constructor(
     @Enumerated(value = EnumType.STRING)
     val discountType: DiscountType,
 
+    @Enumerated(value = EnumType.STRING)
+    val status: CouponStatus,
+
     val externalId: String = "",
 
     @Id
@@ -29,7 +32,7 @@ class Coupon private constructor(
             applyType: ApplyType,
             discountType: DiscountType,
             externalId: String,
-        ) = Coupon(name, applyType, discountType, externalId)
+        ) = Coupon(name, applyType, discountType, CouponStatus.CREATED, externalId)
     }
 
     enum class DiscountType(description: String) {
@@ -40,6 +43,13 @@ class Coupon private constructor(
     enum class ApplyType(description: String) {
         PRODUCT("상품"),
         ACCOUNT("사용자")
+    }
+
+    enum class CouponStatus(description: String) {
+        CREATED("생성됨"),
+        ISSUED("발급됨"),
+        USED("사용됨"),
+        EXPIRED("만료됨"),
     }
 }
 

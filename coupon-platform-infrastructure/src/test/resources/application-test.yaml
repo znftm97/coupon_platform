@@ -1,0 +1,22 @@
+spring:
+  config:
+    activate:
+      on-profile: "test"
+  datasource:
+    url: jdbc:mysql://localhost:3306/coupon_platform?characterEncoding=UTF-8&serverTimezone=UCT
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database: mysql
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
+        dialect: org.hibernate.dialect.MySQLDialect
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.MySQL5InnoDBDialect
+        show_sql: true
+    defer-datasource-initialization: true
+    open-in-view: false

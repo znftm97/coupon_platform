@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-@Qualifier("UUIDGenerator")
 class UUIDGenerator() : RandomNumberGenerator {
 
     /**

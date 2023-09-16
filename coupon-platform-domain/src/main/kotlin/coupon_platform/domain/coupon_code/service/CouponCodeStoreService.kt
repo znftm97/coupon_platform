@@ -15,9 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class CouponCodeStoreService(
     val couponCodeStore: CouponCodeStore,
-    @Qualifier("TSIDGenerator")
     val tsidGenerator: SuspendableRandomNumberGenerator,
-    @Qualifier("UUIDGenerator")
     val uuidGenerator: RandomNumberGenerator,
 ) {
 

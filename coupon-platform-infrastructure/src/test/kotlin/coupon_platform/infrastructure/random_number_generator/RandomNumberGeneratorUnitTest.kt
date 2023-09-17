@@ -1,8 +1,6 @@
 package coupon_platform.infrastructure.random_number_generator
 
 import coupon_platform.domain.common.exception.InvalidRandomNumberLengthException
-import coupon_platform.infrastructure.coupon_code.random_number_generator.TSIDGenerator
-import coupon_platform.infrastructure.coupon_code.random_number_generator.UUIDGenerator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.equals.shouldBeEqual

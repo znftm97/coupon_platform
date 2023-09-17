@@ -1,13 +1,12 @@
-package coupon_platform.infrastructure.coupon_code.random_number_generator
+package coupon_platform.infrastructure.random_number_generator
 
 import coupon_platform.domain.common.exception.InvalidRandomNumberLengthException
-import coupon_platform.domain.coupon_code.RandomNumberGenerator
+import coupon_platform.domain.common.RandomNumberGenerator
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-@Qualifier("UUIDGenerator")
 class UUIDGenerator() : RandomNumberGenerator {
 
     /**

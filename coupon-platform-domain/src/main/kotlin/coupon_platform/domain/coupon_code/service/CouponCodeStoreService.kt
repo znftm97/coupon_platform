@@ -1,13 +1,12 @@
 package coupon_platform.domain.coupon_code.service
 
-import coupon_platform.domain.common.CommonConstants.Companion.EXTERNAL_ID_LENGTH
+import coupon_platform.domain.common.CommonConstants.EXTERNAL_ID_LENGTH
 import coupon_platform.domain.common.RandomNumberGenerator
 import coupon_platform.domain.common.SuspendableRandomNumberGenerator
 import coupon_platform.domain.coupon_code.dto.CouponCodeCreateCommand
 import coupon_platform.domain.coupon_code.dto.CouponCodeInfo
 import coupon_platform.domain.coupon_code.entity.CouponCode
 import coupon_platform.domain.coupon_code.repository.CouponCodeStore
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

@@ -1,6 +1,6 @@
 package coupon_platform.infrastructure.coupon_code
 
-import coupon_platform.domain.common.CommonConstants.Companion.EXTERNAL_ID_LENGTH
+import coupon_platform.domain.common.CommonConstants.EXTERNAL_ID_LENGTH
 import coupon_platform.domain.coupon_code.dto.CouponCodeCreateCommand
 import coupon_platform.domain.coupon_code.service.CouponCodeStoreService
 import coupon_platform.domain.coupon_code.service.CouponCodeStoreService.Companion.COUPON_CODE_LENGTH

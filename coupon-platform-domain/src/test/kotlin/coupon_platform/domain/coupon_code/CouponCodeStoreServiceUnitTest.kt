@@ -27,7 +27,6 @@ class CouponCodeStoreServiceUnitTest : BehaviorSpec({
     given("쿠폰 코드 생성 객체(couponCodeCreateCommand)가 주어지고") {
         val couponCodeCreateCommand = CouponCodeCreateCommand(1, ZonedDateTime.now())
         val couponCodeInfo = CouponCodeInfo(
-            1,
             "externalId",
             1,
             "xxxx-xxxx-xxxx-xxxx",
@@ -39,7 +38,6 @@ class CouponCodeStoreServiceUnitTest : BehaviorSpec({
             val result = couponCodeStoreServiceMock.createCouponCode(couponCodeCreateCommand)
 
             then("쿠폰 코드를 생성할 수 있다.") {
-                result.id shouldBeEqual 1
                 result.externalId shouldBeEqual "externalId"
                 result.couponId shouldBeEqual 1
                 result.couponCode shouldBeEqual "xxxx-xxxx-xxxx-xxxx"

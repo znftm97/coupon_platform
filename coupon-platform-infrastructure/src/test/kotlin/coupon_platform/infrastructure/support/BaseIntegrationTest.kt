@@ -6,6 +6,6 @@ import org.springframework.test.context.jdbc.Sql
 
 @SpringBootTest
 @ActiveProfiles("test")
-@Sql(value = ["/data/init.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value = ["/data/clean-up.sql"], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value = ["/sql/data.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = ["/sql/clean-up.sql"], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 interface BaseIntegrationTest

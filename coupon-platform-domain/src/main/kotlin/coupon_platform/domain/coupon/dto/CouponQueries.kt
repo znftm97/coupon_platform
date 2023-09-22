@@ -6,7 +6,6 @@ data class CouponInfo(
     val id: Long,
     val externalId: String,
     val name: String,
-    val applyType: Coupon.ApplyType,
     val discountType: Coupon.DiscountType,
 ) {
     companion object {
@@ -15,7 +14,6 @@ data class CouponInfo(
                 coupon.id,
                 coupon.externalId,
                 coupon.name,
-                coupon.applyType,
                 coupon.discountType,
             )
         }

@@ -19,7 +19,6 @@ class CouponStoreServiceUnitTest : FunSpec({
         val name = "name"
         val couponCreateCommand = CouponCreateCommand(
             name,
-            Coupon.ApplyType.ACCOUNT,
             Coupon.DiscountType.PRICE,
         )
         every { runBlocking { couponStoreServiceMock.createCoupon(couponCreateCommand) } } returns name

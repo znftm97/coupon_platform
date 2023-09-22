@@ -20,7 +20,6 @@ class CouponReadServiceUnitTest : FunSpec({
             1,
             "externalId",
             name,
-            Coupon.ApplyType.ACCOUNT,
             Coupon.DiscountType.PRICE,
         )
         every { couponReadServiceMock.findCouponByName(name) } returns couponInfo
@@ -29,7 +28,6 @@ class CouponReadServiceUnitTest : FunSpec({
         result.id shouldBeEqual 1
         result.externalId shouldBeEqual "externalId"
         result.name shouldBeEqual name
-        result.applyType shouldBeEqual Coupon.ApplyType.ACCOUNT
         result.discountType shouldBeEqual Coupon.DiscountType.PRICE
 
     }
@@ -40,7 +38,6 @@ class CouponReadServiceUnitTest : FunSpec({
             couponId,
             "externalId",
             "name",
-            Coupon.ApplyType.ACCOUNT,
             Coupon.DiscountType.PRICE,
         )
         every { couponReadServiceMock.findCouponById(couponId) } returns couponInfo
@@ -49,7 +46,6 @@ class CouponReadServiceUnitTest : FunSpec({
         result.id shouldBeEqual couponId
         result.externalId shouldBeEqual "externalId"
         result.name shouldBeEqual "name"
-        result.applyType shouldBeEqual Coupon.ApplyType.ACCOUNT
         result.discountType shouldBeEqual Coupon.DiscountType.PRICE
     }
 

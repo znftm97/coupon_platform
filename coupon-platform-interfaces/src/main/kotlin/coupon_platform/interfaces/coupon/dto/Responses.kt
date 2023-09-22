@@ -6,14 +6,12 @@ import coupon_platform.domain.coupon.entity.Coupon
 data class CouponResponse(
     val externalId: String,
     val name: String,
-    val applyType: Coupon.ApplyType,
     val discountType: Coupon.DiscountType,
 ) {
     companion object {
         fun toResponse(couponInfo: CouponInfo) = CouponResponse(
             couponInfo.externalId,
             couponInfo.name,
-            couponInfo.applyType,
             couponInfo.discountType
         )
     }

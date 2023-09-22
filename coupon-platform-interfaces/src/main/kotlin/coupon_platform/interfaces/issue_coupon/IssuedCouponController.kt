@@ -17,9 +17,12 @@ class IssuedCouponController(
         return BaseResponse.success(issuedCouponId)
     }
 
-    @PostMapping("/coupon_code/{coupon-code}")
-    suspend fun issueCouponByCouponCode(@PathVariable("coupon-code") couponCode: String): BaseResponse<Long> {
-        val issuedCouponInfo = issuedCouponFacade.issueCouponByCouponCode(couponCode)
+    @PostMapping("/coupon_code/{coupon-code}/{account-id}")
+    suspend fun issueCouponByCouponCode(
+        @PathVariable("coupon-code") couponCode: String,
+        @PathVariable("account-id") accountId: Long,
+    ): BaseResponse<Long> {
+        val issuedCouponInfo = issuedCouponFacade.issueCouponByCouponCode(couponCode, accountId)
         return BaseResponse.success(issuedCouponInfo)
     }
 

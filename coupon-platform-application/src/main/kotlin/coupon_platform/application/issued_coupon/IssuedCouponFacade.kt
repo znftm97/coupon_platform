@@ -15,9 +15,9 @@ class IssuedCouponFacade(
     suspend fun issueCoupon(issueCouponCommand: IssueCouponCommand) =
         issuedCouponStoreService.issueCoupon(issueCouponCommand)
 
-    suspend fun issueCouponByCouponCode(couponCode: String): Long {
+    suspend fun issueCouponByCouponCode(couponCode: String, accountId: Long): Long {
         val couponCodeInfo = couponCodeReadService.findCouponCodeByCode(couponCode)
         val couponInfo = couponReadService.findCouponById(couponCodeInfo.couponId)
-        return issuedCouponStoreService.issueCoupon(IssueCouponCommand(couponInfo.id, couponCodeInfo.expirationPeriod))
+        return issuedCouponStoreService.issueCoupon(IssueCouponCommand(couponInfo.id, accountId, couponCodeInfo.expirationPeriod))
     }
 }

@@ -10,6 +10,8 @@ class IssuedCoupon private constructor(
 
     val couponId: Long,
 
+    val accountId: Long,
+
     val isUsed: Boolean,
 
     val expirationPeriod: ZonedDateTime,
@@ -35,8 +37,9 @@ class IssuedCoupon private constructor(
     companion object {
         fun of(
             couponId: Long,
+            accountId: Long,
             expirationPeriod: ZonedDateTime,
             externalId: String,
-        ) = IssuedCoupon(couponId, false, expirationPeriod, externalId)
+        ) = IssuedCoupon(couponId, accountId, false, expirationPeriod, externalId)
     }
 }

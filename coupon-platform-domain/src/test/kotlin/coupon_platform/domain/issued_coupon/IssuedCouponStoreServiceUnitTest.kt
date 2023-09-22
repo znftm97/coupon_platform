@@ -18,7 +18,8 @@ class IssuedCouponStoreServiceUnitTest : BehaviorSpec({
 
     given("쿠폰 발급 요청 객체가 주어지고") {
         val couponId = 1L
-        val issuedCouponCommand = IssueCouponCommand(couponId, ZonedDateTime.now())
+        val accountId = 1L
+        val issuedCouponCommand = IssueCouponCommand(couponId, accountId, ZonedDateTime.now())
         every { runBlocking { issuedCouponStoreServiceMock.issueCoupon(issuedCouponCommand) } } returns couponId
 
         `when`("쿠폰 발급 요청시") {

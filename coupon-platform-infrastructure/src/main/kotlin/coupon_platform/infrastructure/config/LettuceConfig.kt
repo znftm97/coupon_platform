@@ -39,18 +39,21 @@ class LettuceConfig(
 
 class BitSetRedisSerializer : RedisSerializer<BitSet> {
     override fun serialize(bitset: BitSet?): ByteArray? {
-        if (bitset == null) return null
+        bitset ?: return null
+
         val byteArray = ByteArray(bitset.size() / 8 + 1)
         for (i in 0 until bitset.size()) {
             if (bitset.get(i)) {
                 byteArray[i / 8] = (byteArray[i / 8].toInt() or (1 shl (i % 8))).toByte()
             }
         }
+
         return byteArray
     }
 
     override fun deserialize(bytes: ByteArray?): BitSet? {
-        if (bytes == null) return null
+        bytes ?: return null
+
         val bitset = BitSet(bytes.size * 8)
         for (i in bytes.indices) {
             for (j in 0 until 8) {
@@ -59,6 +62,7 @@ class BitSetRedisSerializer : RedisSerializer<BitSet> {
                 }
             }
         }
+
         return bitset
     }
 }

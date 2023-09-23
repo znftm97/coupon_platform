@@ -6,7 +6,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.github.f4b6a3:tsid-creator:5.2.5")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    implementation("org.redisson:redisson-spring-boot-starter:3.23.2")
+    implementation("io.lettuce:lettuce-core:6.2.6.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis:3.1.3")
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}

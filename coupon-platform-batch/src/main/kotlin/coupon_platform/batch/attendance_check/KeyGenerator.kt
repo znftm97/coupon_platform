@@ -1,5 +1,6 @@
 package coupon_platform.batch.attendance_check
 
+import coupon_platform.batch.attendance_check.CommonConstants.ATTENDANCE_CHECK_PREFIX
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -7,17 +8,10 @@ import java.time.format.DateTimeFormatter
 @Component
 class KeyGenerator {
     fun generateKeys(checkDay: Long): Array<String> {
-        val today = LocalDateTime.now()
-        var beforeDays = today.minusDays(checkDay - 1)
-        val keys = mutableListOf<String>()
-
-        repeat(checkDay.toInt() - 1) {
-            keys.add(generateKey(CommonConstants.ATTENDANCE_CHECK_PREFIX, beforeDays))
-            beforeDays = beforeDays.plusDays(1)
-        }
-        keys.add(generateKey(CommonConstants.ATTENDANCE_CHECK_PREFIX, today))
-
-        return keys.toTypedArray()
+        return (0 until checkDay).map {
+            val dateTime = LocalDateTime.now().minusDays(checkDay - it - 1)
+            generateKey(ATTENDANCE_CHECK_PREFIX, dateTime)
+        }.toTypedArray()
     }
 
     fun generateKey(

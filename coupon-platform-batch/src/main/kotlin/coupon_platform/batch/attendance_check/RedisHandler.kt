@@ -8,7 +8,7 @@ import java.util.*
 
 interface RedisHandler {
     fun bitopAndOperation(destKey: String, keys: Array<String>)
-    fun get(destKey: String): BitSet?
+    fun get(destKey: String): BitSet
 }
 
 @Component
@@ -22,13 +22,10 @@ class LettuceHandler(
 
     override fun bitopAndOperation(destKey: String, keys: Array<String>) {
         redisTemplate.execute { connection ->
-            val destKeyBytes = destKey.toByteArray()
-            val keysBytes = keys.map { it.toByteArray() }.toTypedArray()
-
             connection.stringCommands().bitOp(
                 RedisStringCommands.BitOperation.valueOf(BIT_AND_OPERATOR),
-                destKeyBytes,
-                *keysBytes
+                destKey.toByteArray(),
+                *keys.map { it.toByteArray() }.toTypedArray()
             )
         }
     }

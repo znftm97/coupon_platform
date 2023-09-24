@@ -21,14 +21,14 @@ class SevenDayAttendanceCheckTasklet(
 ) : Tasklet {
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus? {
-        val bitSet: BitSet = read() ?: return RepeatStatus.FINISHED
+        val bitSet: BitSet = read()
         val issuedCouponCommands: List<IssueCouponCommand> = processor.process(bitSet)
         writer.write(issuedCouponCommands)
 
         return RepeatStatus.FINISHED
     }
 
-    private fun read(): BitSet? {
+    private fun read(): BitSet {
         val destKey = keyGenerator.generateKey(CommonConstants.DEST_KEY_OF_SEVEN_DAY, LocalDateTime.now())
         return redisHandler.get(destKey)
     }

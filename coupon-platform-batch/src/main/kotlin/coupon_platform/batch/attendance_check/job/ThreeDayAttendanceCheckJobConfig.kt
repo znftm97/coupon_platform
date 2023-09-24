@@ -40,7 +40,6 @@ class ThreeDayAttendanceCheckJobConfig(
             .build()
     }
 
-
     @Bean
     fun bitopOperatorStep(
         jobRepository: JobRepository,
@@ -49,7 +48,6 @@ class ThreeDayAttendanceCheckJobConfig(
         .tasklet(threeDaysBitopOperatorTasklet, platformTransactionManager)
         .listener(stepListener)
         .build()
-
 
     @Bean
     fun attendanceCheckStep(

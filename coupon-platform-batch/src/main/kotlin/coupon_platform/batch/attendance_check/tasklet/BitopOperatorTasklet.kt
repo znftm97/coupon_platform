@@ -44,6 +44,7 @@ class SevenDaysBitopOperatorTasklet(
 
         return RepeatStatus.FINISHED
     }
+
 }
 
 @Component
@@ -59,4 +60,5 @@ class ThirtyDaysBitopOperatorTasklet(
 
         return RepeatStatus.FINISHED
     }
+
 }

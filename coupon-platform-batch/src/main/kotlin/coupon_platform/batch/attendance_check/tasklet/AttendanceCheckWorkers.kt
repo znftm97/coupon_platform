@@ -20,15 +20,13 @@ class Processor {
     private var expirationPeriodStr: String? = ""
 
     fun process(bitSet: BitSet): List<IssueCouponCommand> {
-        val checkedAttendanceAccountIds = mutableListOf<Long>()
-        for (i in 0 until bitSet.size()) {
-            if (bitSet.get(i)) {
-                checkedAttendanceAccountIds.add(i.toLong())
-            }
-        }
+        val checkedAttendanceAccountIds = (0 until bitSet.size())
+            .filter { bitSet.get(it) }
+            .map { it.toLong() }
 
-        couponId ?: return emptyList()
-        if(expirationPeriodStr.isNullOrEmpty()) return emptyList()
+        if (couponId == null || expirationPeriodStr.isNullOrEmpty()) {
+            return emptyList()
+        }
 
         return checkedAttendanceAccountIds.map { accountId ->
             IssueCouponCommand(
@@ -39,9 +37,9 @@ class Processor {
         }
     }
 
-    private fun convertStringToZonedDateTime(str: String?) : ZonedDateTime {
-        return ZonedDateTime.of(LocalDate.parse(str).atStartOfDay(), ZoneId.of("UTC"))
-    }
+    private fun convertStringToZonedDateTime(str: String?) =
+        ZonedDateTime.of(LocalDate.parse(str).atStartOfDay(), ZoneId.of("UTC"))
+
 }
 
 @Component

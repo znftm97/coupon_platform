@@ -1,4 +1,4 @@
-package coupon_platform.batch.listner
+package coupon_platform.batch.listener
 
 import mu.KLogging
 import org.springframework.batch.core.JobExecution

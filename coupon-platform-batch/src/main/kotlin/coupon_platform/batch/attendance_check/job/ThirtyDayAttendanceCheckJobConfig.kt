@@ -3,8 +3,8 @@ package coupon_platform.batch.attendance_check.job
 import coupon_platform.batch.attendance_check.job.ThirtyDayAttendanceCheckJobConfig.Companion.JOB_NAME_OF_THIRTY_DAY
 import coupon_platform.batch.attendance_check.tasklet.ThirtyDayAttendanceCheckTasklet
 import coupon_platform.batch.attendance_check.tasklet.ThirtyDaysBitopOperatorTasklet
-import coupon_platform.batch.listner.JobListener
-import coupon_platform.batch.listner.StepListener
+import coupon_platform.batch.listener.JobListener
+import coupon_platform.batch.listener.StepListener
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.job.builder.JobBuilder

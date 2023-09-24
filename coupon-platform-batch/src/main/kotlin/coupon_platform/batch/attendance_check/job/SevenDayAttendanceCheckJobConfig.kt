@@ -3,6 +3,8 @@ package coupon_platform.batch.attendance_check.job
 import coupon_platform.batch.attendance_check.job.SevenDayAttendanceCheckJobConfig.Companion.JOB_NAME_OF_SEVEN_DAY
 import coupon_platform.batch.attendance_check.tasklet.SevenDayAttendanceCheckTasklet
 import coupon_platform.batch.attendance_check.tasklet.SevenDaysBitopOperatorTasklet
+import coupon_platform.batch.listner.JobListener
+import coupon_platform.batch.listner.StepListener
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.job.builder.JobBuilder
@@ -18,6 +20,8 @@ import org.springframework.transaction.PlatformTransactionManager
 class SevenDayAttendanceCheckJobConfig(
     private val sevenDayBitopOperatorTasklet: SevenDaysBitopOperatorTasklet,
     private val sevenDayAttendanceCheckTasklet: SevenDayAttendanceCheckTasklet,
+    private val jobListener: JobListener,
+    private val stepListener: StepListener,
 ) {
 
     companion object {
@@ -32,6 +36,7 @@ class SevenDayAttendanceCheckJobConfig(
         return JobBuilder(JOB_NAME_OF_SEVEN_DAY, jobRepository)
             .start(bitopOperatorStep(jobRepository, platformTransactionManager))
             .next(attendanceCheckStep(jobRepository, platformTransactionManager))
+            .listener(jobListener)
             .build()
     }
 
@@ -42,6 +47,7 @@ class SevenDayAttendanceCheckJobConfig(
         platformTransactionManager: PlatformTransactionManager,
     ): Step = StepBuilder("seven.bitop.operator.step", jobRepository)
         .tasklet(sevenDayBitopOperatorTasklet, platformTransactionManager)
+        .listener(stepListener)
         .build()
 
 
@@ -51,5 +57,6 @@ class SevenDayAttendanceCheckJobConfig(
         platformTransactionManager: PlatformTransactionManager,
     ): Step = StepBuilder("seven.attendance.check.step", jobRepository)
         .tasklet(sevenDayAttendanceCheckTasklet, platformTransactionManager)
+        .listener(stepListener)
         .build()
 }

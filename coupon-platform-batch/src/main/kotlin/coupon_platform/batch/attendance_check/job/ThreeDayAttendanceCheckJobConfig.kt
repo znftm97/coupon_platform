@@ -1,0 +1,56 @@
+package coupon_platform.batch.attendance_check.job
+
+import coupon_platform.batch.attendance_check.job.ThreeDayAttendanceCheckJobConfig.Companion.JOB_NAME_OF_THREE_DAY
+import coupon_platform.batch.attendance_check.tasklet.ThreeDayAttendanceCheckTasklet
+import coupon_platform.batch.attendance_check.tasklet.ThreeDaysBitopOperatorTasklet
+import org.springframework.batch.core.Job
+import org.springframework.batch.core.Step
+import org.springframework.batch.core.job.builder.JobBuilder
+import org.springframework.batch.core.repository.JobRepository
+import org.springframework.batch.core.step.builder.StepBuilder
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.transaction.PlatformTransactionManager
+
+@Configuration
+@ConditionalOnProperty(value = ["spring.batch.job.names"], havingValue = JOB_NAME_OF_THREE_DAY)
+class ThreeDayAttendanceCheckJobConfig(
+    private val threeDaysBitopOperatorTasklet: ThreeDaysBitopOperatorTasklet,
+    private val threeDayAttendanceCheckTasklet: ThreeDayAttendanceCheckTasklet,
+) {
+
+    companion object {
+        const val JOB_NAME_OF_THREE_DAY = "three.attendance.check.job"
+    }
+
+    @Bean
+    fun attendanceCheckJob(
+        jobRepository: JobRepository,
+        platformTransactionManager: PlatformTransactionManager,
+    ): Job {
+        return JobBuilder(JOB_NAME_OF_THREE_DAY, jobRepository)
+            .start(bitopOperatorStep(jobRepository, platformTransactionManager))
+            .next(attendanceCheckStep(jobRepository, platformTransactionManager))
+            .build()
+    }
+
+
+    @Bean
+    fun bitopOperatorStep(
+        jobRepository: JobRepository,
+        platformTransactionManager: PlatformTransactionManager,
+    ): Step = StepBuilder("three.bitop.operator.step", jobRepository)
+        .tasklet(threeDaysBitopOperatorTasklet, platformTransactionManager)
+        .build()
+
+
+    @Bean
+    fun attendanceCheckStep(
+        jobRepository: JobRepository,
+        platformTransactionManager: PlatformTransactionManager,
+    ): Step = StepBuilder("three.attendance.check.step", jobRepository)
+        .tasklet(threeDayAttendanceCheckTasklet, platformTransactionManager)
+        .build()
+
+}

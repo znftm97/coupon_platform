@@ -1,9 +1,11 @@
 package coupon_platform.batch.attendance_check
 
+import coupon_platform.infrastructure.account.AccountStoreImpl.Companion.ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.redis.connection.RedisStringCommands
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
+import java.time.Duration
 import java.util.*
 
 interface RedisHandler {
@@ -28,6 +30,8 @@ class LettuceHandler(
                 *keys.map { it.toByteArray() }.toTypedArray()
             )
         }
+
+        redisTemplate.expire(destKey, Duration.ofDays(ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL))
     }
 
     override fun get(destKey: String): BitSet {

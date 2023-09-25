@@ -4,6 +4,7 @@ import coupon_platform.domain.account.AccountStore
 import coupon_platform.domain.common.CommonConstants.MAX_ACCOUNTS_NUMBER
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
+import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -15,6 +16,7 @@ class AccountStoreImpl(
 
     companion object {
         const val ATTENDANCE_CHECK_PREFIX = "attendance:check:"
+        const val ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL = 60L
     }
 
     override fun attendance(userId: Long) {
@@ -27,7 +29,7 @@ class AccountStoreImpl(
             else -> {
                 val bitSet = BitSet(MAX_ACCOUNTS_NUMBER)
                 bitSet.set(userId.toInt(), true)
-                redis.set(key, bitSet)
+                redis.set(key, bitSet, Duration.ofDays(ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL))
             }
         }
     }

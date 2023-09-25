@@ -9,9 +9,6 @@ class Coupon private constructor(
     val name: String,
 
     @Enumerated(value = EnumType.STRING)
-    val applyType: ApplyType,
-
-    @Enumerated(value = EnumType.STRING)
     val discountType: DiscountType,
 
     val externalId: String = "",
@@ -26,10 +23,9 @@ class Coupon private constructor(
     companion object {
         fun of(
             name: String,
-            applyType: ApplyType,
             discountType: DiscountType,
             externalId: String,
-        ) = Coupon(name, applyType, discountType, externalId)
+        ) = Coupon(name, discountType, externalId)
     }
 
     enum class DiscountType(description: String) {
@@ -37,9 +33,5 @@ class Coupon private constructor(
         RATE("정률")
     }
 
-    enum class ApplyType(description: String) {
-        PRODUCT("상품"),
-        ACCOUNT("사용자")
-    }
 }
 

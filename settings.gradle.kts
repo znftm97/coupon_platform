@@ -4,4 +4,5 @@ include(
     "coupon-platform-application",
     "coupon-platform-domain",
     "coupon-platform-infrastructure",
+    "coupon-platform-batch",
 )

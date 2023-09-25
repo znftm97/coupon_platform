@@ -11,12 +11,11 @@ create table coupon
 (
     coupon_id     bigint auto_increment
         primary key,
-    created_at    datetime(6)                 null,
-    update_at     datetime(6)                 null,
-    apply_type    enum ('ACCOUNT', 'PRODUCT') null,
-    discount_type enum ('PRICE', 'RATE')      null,
-    external_id   varchar(255)                null,
-    name          varchar(255)                null
+    created_at    datetime(6)            null,
+    update_at     datetime(6)            null,
+    discount_type enum ('PRICE', 'RATE') null,
+    external_id   varchar(255)           null,
+    name          varchar(255)           null
 );
 
 create table coupon_code
@@ -34,6 +33,7 @@ create table coupon_code
 create table issued_coupon
 (
     is_used           bit          not null,
+    account_id        bigint       not null,
     coupon_id         bigint       not null,
     created_at        datetime(6)  null,
     expiration_period datetime(6)  null,
@@ -41,13 +41,4 @@ create table issued_coupon
         primary key,
     update_at         datetime(6)  null,
     external_id       varchar(255) null
-);
-
-create table product
-(
-    created_at  datetime(6)  null,
-    product_id  bigint auto_increment
-        primary key,
-    update_at   datetime(6)  null,
-    external_id varchar(255) null
 );

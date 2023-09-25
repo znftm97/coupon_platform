@@ -5,9 +5,10 @@ import java.time.ZonedDateTime
 
 data class IssueCouponCommand(
     val couponId: Long,
+    val accountId: Long,
     val expirationPeriod: ZonedDateTime,
 ) {
     fun toEntity(externalId: String): IssuedCoupon {
-        return IssuedCoupon.of(couponId, expirationPeriod, externalId)
+        return IssuedCoupon.of(couponId, accountId, expirationPeriod, externalId)
     }
 }

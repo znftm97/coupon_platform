@@ -7,6 +7,7 @@ data class CouponInfo(
     val externalId: String,
     val name: String,
     val discountType: Coupon.DiscountType,
+    val price: Int,
 ) {
     companion object {
         fun toCouponInfo(coupon: Coupon): CouponInfo {
@@ -15,6 +16,7 @@ data class CouponInfo(
                 coupon.externalId,
                 coupon.name,
                 coupon.discountType,
+                coupon.price,
             )
         }
     }

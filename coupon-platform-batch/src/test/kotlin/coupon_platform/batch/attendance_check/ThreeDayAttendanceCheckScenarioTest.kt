@@ -26,7 +26,7 @@ import java.util.*
     ],
     properties = ["spring.batch.job.names=three.attendance.check.job"]
 )
-@TestPropertySource(properties = ["coupon-id=1", "expiration-period-str=2030-10-01"])
+@TestPropertySource(properties = ["coupon-id=2", "expiration-period-str=2030-10-01"])
 class ThreeDayAttendanceCheckScenarioTest(
     private val redisTemplate: RedisTemplate<String, BitSet>,
     private val jobLauncherTestUtils: JobLauncherTestUtils,

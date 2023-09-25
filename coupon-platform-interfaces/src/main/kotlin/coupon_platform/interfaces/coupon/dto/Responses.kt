@@ -7,12 +7,14 @@ data class CouponResponse(
     val externalId: String,
     val name: String,
     val discountType: Coupon.DiscountType,
+    val price: Int,
 ) {
     companion object {
         fun toResponse(couponInfo: CouponInfo) = CouponResponse(
             couponInfo.externalId,
             couponInfo.name,
-            couponInfo.discountType
+            couponInfo.discountType,
+            couponInfo.price,
         )
     }
 }

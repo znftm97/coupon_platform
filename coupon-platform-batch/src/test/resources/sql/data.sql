@@ -4,6 +4,18 @@ values ('abcdedfghj11');
 insert into coupon (external_id, name, discount_type)
 values ('abcdedfghj23', 'coupon1', 'PRICE');
 
+insert into coupon (external_id, name, discount_type, price)
+values ('abcdedfghj23', 'coupon1', 'PRICE', 1000);
+
+insert into coupon (external_id, name, discount_type, price)
+values ('fdfdfdsvc', '3일 연속 출석체크 이벤트 쿠폰', 'PRICE', 1000);
+
+insert into coupon (external_id, name, discount_type, price)
+values ('vxcvxvgdq', '7일 연속 출석체크 이벤트 쿠폰', 'PRICE', 5000);
+
+insert into coupon (external_id, name, discount_type, price)
+values ('asdadgadq', '30일 연속 출석체크 이벤트 쿠폰', 'PRICE', 50000);
+
 insert into coupon_code (external_id, coupon_id, expiration_period)
 values ('abcdedfghj23', '1', '2030-12-31 09:00:00');
 

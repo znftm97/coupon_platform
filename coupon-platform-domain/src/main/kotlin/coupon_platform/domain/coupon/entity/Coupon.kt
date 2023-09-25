@@ -11,6 +11,8 @@ class Coupon private constructor(
     @Enumerated(value = EnumType.STRING)
     val discountType: DiscountType,
 
+    val price: Int,
+
     val externalId: String = "",
 
     @Id
@@ -24,8 +26,9 @@ class Coupon private constructor(
         fun of(
             name: String,
             discountType: DiscountType,
+            price: Int,
             externalId: String,
-        ) = Coupon(name, discountType, externalId)
+        ) = Coupon(name, discountType, price, externalId)
     }
 
     enum class DiscountType(description: String) {

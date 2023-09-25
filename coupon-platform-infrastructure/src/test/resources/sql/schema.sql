@@ -9,6 +9,7 @@ create table account
 
 create table coupon
 (
+    price         int                    not null,
     coupon_id     bigint auto_increment
         primary key,
     created_at    datetime(6)            null,

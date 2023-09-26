@@ -10,7 +10,6 @@
 - Spring Data JPA
 - Spring Data Redis
 - Spring Batch
-- TSID
 - kotest, mockk
 - MySQL 8.0.34
 - Redis 7.0.10 , Lettuce 6.2.6
@@ -94,7 +93,7 @@ TSID나 ULID 라이브러리는 시간순으로 정렬할 수 있는 난수를 �
 ## 2-2. 설계
 ### 2-2-1. Redis의 BITOP 명령어
 
-[해당 문서](https://redis.com/blog/bits-and-bats/)에서 얻은 아이디어를 기반으로 구현해보고자 한다.
+[Redis Blog](https://redis.com/blog/bits-and-bats/)에서 얻은 아이디어를 기반으로 구현해보고자 한다.
 
 Redis의 비트 연산자를 정확히는 `BITOP` 명령어를 이용하는 방법이다.
 
@@ -140,14 +139,14 @@ Redis의 비트 연산자를 정확히는 `BITOP` 명령어를 이용하는 방�
 
 ![%EC%8B%9C%ED%80%80%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8_(1)](https://github.com/znftm97/coupon_platform/assets/57134526/f6eb079e-029f-4635-b2f3-3e6377cafdda)
 
-## 3. 구현
+## 2-3. 구현
 
-### 3-1. 로그인 기능(출석체크)
+### 2-3-1. 로그인 기능(출석체크)
 
 ```kotlin
 @Component
 class AccountStoreImpl(
-    val redisTemplate: RedisTemplate<String, BitSet>
+    private val redisHandler: RedisHandler,
 ) : AccountStore {
 
     companion object {
@@ -157,27 +156,25 @@ class AccountStoreImpl(
 
     override fun attendance(userId: Long) {
         val key = generateKey()
-        val redis = redisTemplate.opsForValue()
-        val findBitSet: BitSet? = redis.get(key)
+        val findBitSet: BitSet = redisHandler.get(key) ?: BitSet(MAX_ACCOUNTS_NUMBER)
+        findBitSet.set(userId.toInt(), true)
 
-        when (findBitSet?.isEmpty) {
-            false -> findBitSet.set(userId.toInt(), true)
-            else -> {
-                val bitSet = BitSet(MAX_ACCOUNTS_NUMBER)
-                bitSet.set(userId.toInt(), true)
-                redis.set(key, bitSet, Duration.ofDays(ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL))
-            }
-        }
+        redisHandler.set(
+            key,
+            findBitSet,
+            Duration.ofDays(ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL)
+        )
     }
 
-    private fun generateKey() =
+    private fun generateKey(): String =
         ATTENDANCE_CHECK_PREFIX + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 }
 ```
 
-- key가 존재하지 않으면 새로운 비트값 생성해서 넣어주고 존재하면, `userId`값을 `offset`으로 넣어서 `1(true)`로 세팅
+- key가 존재하지 않으면(당일 처음 로그인하는 사용자인 경우) 새 Bitset을 생성하고, `userId`값을 `offset`으로 넣어서 `1(true)`로 세팅한다.
+- key가 존재하면 조회한 Bitset에 `userId`값을 `offset`으로 넣어서 `1(true)`로 세팅한다.
 
-### 3-2. 출석체크 확인하는 배치
+### 2-3-2. 출석체크 확인하는 배치
 
 ![a](https://github.com/znftm97/coupon_platform/assets/57134526/31d45330-b5f5-457c-91b0-34744c32c1b7)
 

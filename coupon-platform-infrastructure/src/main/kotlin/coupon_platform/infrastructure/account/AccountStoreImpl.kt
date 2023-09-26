@@ -2,7 +2,7 @@ package coupon_platform.infrastructure.account
 
 import coupon_platform.domain.account.AccountStore
 import coupon_platform.domain.common.CommonConstants.MAX_ACCOUNTS_NUMBER
-import org.springframework.data.redis.core.RedisTemplate
+import coupon_platform.infrastructure.redis.RedisHandler
 import org.springframework.stereotype.Component
 import java.time.Duration
 import java.time.LocalDateTime
@@ -11,7 +11,7 @@ import java.util.*
 
 @Component
 class AccountStoreImpl(
-    val redisTemplate: RedisTemplate<String, BitSet>
+    private val redisHandler: RedisHandler,
 ) : AccountStore {
 
     companion object {
@@ -21,19 +21,16 @@ class AccountStoreImpl(
 
     override fun attendance(userId: Long) {
         val key = generateKey()
-        val redis = redisTemplate.opsForValue()
-        val findBitSet: BitSet? = redis.get(key)
+        val findBitSet: BitSet = redisHandler.get(key) ?: BitSet(MAX_ACCOUNTS_NUMBER)
+        findBitSet.set(userId.toInt(), true)
 
-        when (findBitSet?.isEmpty) {
-            false -> findBitSet.set(userId.toInt(), true)
-            else -> {
-                val bitSet = BitSet(MAX_ACCOUNTS_NUMBER)
-                bitSet.set(userId.toInt(), true)
-                redis.set(key, bitSet, Duration.ofDays(ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL))
-            }
-        }
+        redisHandler.set(
+            key,
+            findBitSet,
+            Duration.ofDays(ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL)
+        )
     }
 
-    private fun generateKey() =
+    private fun generateKey(): String =
         ATTENDANCE_CHECK_PREFIX + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 }

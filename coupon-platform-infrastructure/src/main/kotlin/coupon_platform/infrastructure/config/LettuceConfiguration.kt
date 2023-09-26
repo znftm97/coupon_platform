@@ -10,7 +10,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 import java.util.*
 
 @Configuration
-class LettuceConfig(
+class LettuceConfiguration(
     private val redisProperties: RedisProperties
 ) {
     @Bean

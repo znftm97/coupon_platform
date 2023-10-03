@@ -1,17 +1,22 @@
 package coupon_platform.batch.attendance_check.tasklet
 
-import coupon_platform.application.issued_coupon.IssuedCouponFacade
-import coupon_platform.domain.issued_coupon.dto.IssueCouponCommand
+import coupon_platform.domain.common.CommonConstants.EXTERNAL_ID_LENGTH
+import coupon_platform.domain.common.SuspendableRandomNumberGenerator
 import kotlinx.coroutines.runBlocking
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.*
+import javax.sql.DataSource
 
 @Component
-class Processor {
+class Processor(
+    private val randomNumberGenerator: SuspendableRandomNumberGenerator,
+) {
 
     @Value("\${coupon-id}")
     private var couponId: Long? = 0
@@ -19,7 +24,7 @@ class Processor {
     @Value("\${expiration-period-str}")
     private var expirationPeriodStr: String? = ""
 
-    fun process(bitSet: BitSet): List<IssueCouponCommand> {
+    fun process(bitSet: BitSet): List<BatchParameters> {
         val checkedAttendanceAccountIds = (0 until bitSet.size())
             .asSequence()
             .filter { bitSet.get(it) }
@@ -30,12 +35,15 @@ class Processor {
             return emptyList()
         }
 
-        return checkedAttendanceAccountIds.map { accountId ->
-            IssueCouponCommand(
-                couponId!!,
-                accountId,
-                convertStringToZonedDateTime(expirationPeriodStr!!)
-            )
+        return runBlocking {
+            checkedAttendanceAccountIds.map { accountId ->
+                BatchParameters(
+                    randomNumberGenerator.generate(EXTERNAL_ID_LENGTH),
+                    accountId,
+                    couponId!!,
+                    convertStringToZonedDateTime(expirationPeriodStr),
+                )
+            }
         }
     }
 
@@ -46,13 +54,24 @@ class Processor {
 
 @Component
 class Writer(
-    private val issuedCouponFacade: IssuedCouponFacade,
+    private val dataSource: DataSource,
 ) {
-    fun write(issuedCouponCommands: List<IssueCouponCommand>) {
-        issuedCouponCommands.forEach { issuedCouponCommand ->
-            runBlocking {
-                issuedCouponFacade.issueCoupon(issuedCouponCommand)
-            }
-        }
+
+    private val namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
+
+    fun write(parameters: List<BatchParameters>) {
+        val sql = "INSERT INTO issued_coupon (external_id, account_id, coupon_id, expiration_period, is_used) " +
+                "VALUES (:externalId, :accountId, :couponId, :expirationPeriod, :isUsed)"
+
+        namedParameterJdbcTemplate.batchUpdate(sql, SqlParameterSourceUtils.createBatch(parameters)
+        )
     }
 }
+
+data class BatchParameters(
+    val externalId: String,
+    val accountId: Long,
+    val couponId: Long,
+    val expirationPeriod: ZonedDateTime,
+    val isUsed: Boolean = false,
+)

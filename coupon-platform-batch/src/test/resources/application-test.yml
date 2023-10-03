@@ -6,7 +6,7 @@ spring:
     activate:
       on-profile: "test"
   datasource:
-    url: jdbc:mysql://localhost:3306/coupon_platform?characterEncoding=UTF-8&serverTimezone=UCT
+    url: jdbc:mysql://localhost:3306/coupon_platform?characterEncoding=UTF-8&serverTimezone=UCT&rewriteBatchedStatements=true
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver

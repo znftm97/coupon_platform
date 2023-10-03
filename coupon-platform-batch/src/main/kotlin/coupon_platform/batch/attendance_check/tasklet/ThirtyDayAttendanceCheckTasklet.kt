@@ -2,7 +2,6 @@ package coupon_platform.batch.attendance_check.tasklet
 
 import coupon_platform.batch.attendance_check.CommonConstants
 import coupon_platform.batch.attendance_check.KeyGenerator
-import coupon_platform.domain.issued_coupon.dto.IssueCouponCommand
 import coupon_platform.infrastructure.redis.RedisHandler
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
@@ -22,8 +21,8 @@ class ThirtyDayAttendanceCheckTasklet(
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus? {
         val bitSet: BitSet = read() ?: return RepeatStatus.FINISHED
-        val issuedCouponCommands: List<IssueCouponCommand> = processor.process(bitSet)
-        writer.write(issuedCouponCommands)
+        val batchParameters: List<BatchParameters> = processor.process(bitSet)
+        writer.write(batchParameters)
 
         return RepeatStatus.FINISHED
     }

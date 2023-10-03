@@ -21,8 +21,10 @@ class Processor {
 
     fun process(bitSet: BitSet): List<IssueCouponCommand> {
         val checkedAttendanceAccountIds = (0 until bitSet.size())
+            .asSequence()
             .filter { bitSet.get(it) }
             .map { it.toLong() }
+            .toList()
 
         if (couponId == null || expirationPeriodStr.isNullOrEmpty()) {
             return emptyList()

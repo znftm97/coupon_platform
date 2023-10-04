@@ -29,23 +29,26 @@ class Processor(
             return emptyList()
         }
 
-        val checkedAttendanceAccountIds = (0 until bitSet.size())
+        val checkedAttendanceAccountIds = getCheckedAttendanceAccountIds(bitSet)
+        return convertToBatchParameters(checkedAttendanceAccountIds)
+    }
+
+    private fun getCheckedAttendanceAccountIds(bitSet: BitSet): List<Long> =
+        (0 until bitSet.size())
             .asSequence()
             .filter { bitSet.get(it) }
             .map { it.toLong() }
             .toList()
 
-        return runBlocking {
-            checkedAttendanceAccountIds.map { accountId ->
-                BatchParameters(
-                    randomNumberGenerator.generate(EXTERNAL_ID_LENGTH),
-                    accountId,
-                    couponId!!,
-                    convertStringToZonedDateTime(expirationPeriodStr),
-                )
-            }
-        }
-    }
+    private fun convertToBatchParameters(checkedAttendanceAccountIds: List<Long>): List<BatchParameters> =
+        checkedAttendanceAccountIds.map { accountId ->
+            BatchParameters(
+                runBlocking { randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) },
+                accountId,
+                couponId!!,
+                convertStringToZonedDateTime(expirationPeriodStr),
+            )
+        }.toList()
 
     private fun convertStringToZonedDateTime(str: String?) =
         ZonedDateTime.of(LocalDate.parse(str).atStartOfDay(), ZoneId.of("UTC"))
@@ -59,7 +62,7 @@ class Writer(
 
     private val namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
 
-    fun write(parameters: List<BatchParameters>) {
+    fun issueCoupon(parameters: List<BatchParameters>) {
         val sql = "INSERT INTO issued_coupon (external_id, account_id, coupon_id, expiration_period, is_used) " +
                 "VALUES (:externalId, :accountId, :couponId, :expirationPeriod, :isUsed)"
 

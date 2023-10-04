@@ -22,7 +22,7 @@ class ThirtyDayAttendanceCheckTasklet(
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus? {
         val bitSet: BitSet = read() ?: return RepeatStatus.FINISHED
         val batchParameters: List<BatchParameters> = processor.process(bitSet)
-        writer.write(batchParameters)
+        writer.issueCoupon(batchParameters)
 
         return RepeatStatus.FINISHED
     }

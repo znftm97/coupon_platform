@@ -25,15 +25,15 @@ class Processor(
     private var expirationPeriodStr: String? = ""
 
     fun process(bitSet: BitSet): List<BatchParameters> {
+        if (couponId == null || expirationPeriodStr.isNullOrEmpty()) {
+            return emptyList()
+        }
+
         val checkedAttendanceAccountIds = (0 until bitSet.size())
             .asSequence()
             .filter { bitSet.get(it) }
             .map { it.toLong() }
             .toList()
-
-        if (couponId == null || expirationPeriodStr.isNullOrEmpty()) {
-            return emptyList()
-        }
 
         return runBlocking {
             checkedAttendanceAccountIds.map { accountId ->
@@ -63,8 +63,7 @@ class Writer(
         val sql = "INSERT INTO issued_coupon (external_id, account_id, coupon_id, expiration_period, is_used) " +
                 "VALUES (:externalId, :accountId, :couponId, :expirationPeriod, :isUsed)"
 
-        namedParameterJdbcTemplate.batchUpdate(sql, SqlParameterSourceUtils.createBatch(parameters)
-        )
+        namedParameterJdbcTemplate.batchUpdate(sql, SqlParameterSourceUtils.createBatch(parameters))
     }
 }
 

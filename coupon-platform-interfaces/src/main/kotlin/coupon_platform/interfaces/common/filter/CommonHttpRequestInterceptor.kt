@@ -10,6 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor
 
 @Component
 class CommonHttpRequestInterceptor(
+    @Qualifier("UUIDGenerator")
     val randomNumberGenerator: RandomNumberGenerator
 ) : HandlerInterceptor {
 

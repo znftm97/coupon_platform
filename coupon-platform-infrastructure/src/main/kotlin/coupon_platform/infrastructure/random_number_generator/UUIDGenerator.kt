@@ -2,7 +2,6 @@ package coupon_platform.infrastructure.random_number_generator
 
 import coupon_platform.domain.common.exception.InvalidRandomNumberLengthException
 import coupon_platform.domain.common.RandomNumberGenerator
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import java.util.*
 

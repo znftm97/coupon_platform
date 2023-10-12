@@ -10,7 +10,7 @@ class CouponFacade(
     val couponReadService: CouponReadService,
     val couponStoreService: CouponStoreService,
 ) {
-    suspend fun createCoupon(couponCreateCommand: CouponCreateCommand) =
+    fun createCoupon(couponCreateCommand: CouponCreateCommand) =
         couponStoreService.createCoupon(couponCreateCommand)
 
     fun findCouponByName(name: String) = couponReadService.findCouponByName(name)

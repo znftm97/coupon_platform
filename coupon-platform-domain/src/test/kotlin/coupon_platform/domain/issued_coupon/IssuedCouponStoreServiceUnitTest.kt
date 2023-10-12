@@ -2,7 +2,6 @@ package coupon_platform.domain.issued_coupon
 
 import coupon_platform.domain.issued_coupon.dto.IssueCouponCommand
 import coupon_platform.domain.issued_coupon.service.IssuedCouponStoreService
-import io.kotest.common.runBlocking
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.mockk.every
@@ -20,7 +19,7 @@ class IssuedCouponStoreServiceUnitTest : BehaviorSpec({
         val couponId = 1L
         val accountId = 1L
         val issuedCouponCommand = IssueCouponCommand(couponId, accountId, ZonedDateTime.now())
-        every { runBlocking { issuedCouponStoreServiceMock.issueCoupon(issuedCouponCommand) } } returns couponId
+        every {  issuedCouponStoreServiceMock.issueCoupon(issuedCouponCommand) } returns couponId
 
         `when`("쿠폰 발급 요청시") {
             val result = issuedCouponStoreServiceMock.issueCoupon(issuedCouponCommand)

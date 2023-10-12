@@ -2,7 +2,6 @@ package coupon_platform.domain.coupon
 
 import coupon_platform.domain.coupon.entity.Coupon
 import coupon_platform.domain.coupon.service.CouponStoreService
-import io.kotest.common.runBlocking
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.mockk.every
@@ -22,7 +21,7 @@ class CouponStoreServiceUnitTest : FunSpec({
             Coupon.DiscountType.PRICE,
             1000,
         )
-        every { runBlocking { couponStoreServiceMock.createCoupon(couponCreateCommand) } } returns name
+        every {  couponStoreServiceMock.createCoupon(couponCreateCommand) } returns name
         couponStoreServiceMock.createCoupon(couponCreateCommand) shouldBeEqual name
     }
 

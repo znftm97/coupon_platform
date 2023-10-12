@@ -1,8 +1,8 @@
 package coupon_platform.batch.attendance_check.tasklet
 
 import coupon_platform.domain.common.CommonConstants.EXTERNAL_ID_LENGTH
-import coupon_platform.domain.common.SuspendableRandomNumberGenerator
-import kotlinx.coroutines.runBlocking
+import coupon_platform.domain.common.RandomNumberGenerator
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils
@@ -15,7 +15,8 @@ import javax.sql.DataSource
 
 @Component
 class Processor(
-    private val randomNumberGenerator: SuspendableRandomNumberGenerator,
+    @Qualifier("TSIDGenerator")
+    private val randomNumberGenerator: RandomNumberGenerator,
 ) {
 
     @Value("\${coupon-id}")
@@ -43,7 +44,7 @@ class Processor(
     private fun convertToBatchParameters(checkedAttendanceAccountIds: List<Long>): List<BatchParameters> =
         checkedAttendanceAccountIds.map { accountId ->
             BatchParameters(
-                runBlocking { randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) },
+                randomNumberGenerator.generate(EXTERNAL_ID_LENGTH),
                 accountId,
                 couponId!!,
                 convertStringToZonedDateTime(expirationPeriodStr),
@@ -64,7 +65,7 @@ class Writer(
 
     fun issueCoupon(parameters: List<BatchParameters>) {
         val sql = "INSERT INTO issued_coupon (external_id, account_id, coupon_id, expiration_period, is_used) " +
-                "VALUES (:externalId, :accountId, :couponId, :expirationPeriod, :isUsed)"
+                "VALUES (:externalId, :accountId, :couponId, :expirationPeriod, false)"
 
         namedParameterJdbcTemplate.batchUpdate(sql, SqlParameterSourceUtils.createBatch(parameters))
     }
@@ -75,5 +76,4 @@ data class BatchParameters(
     val accountId: Long,
     val couponId: Long,
     val expirationPeriod: ZonedDateTime,
-    val isUsed: Boolean = false,
 )

@@ -61,14 +61,9 @@
 - 12자리 길이 난수를 생성할 수 있고, 시간순으로 정렬할 수 있는 `TSID` 사용 
 
 ## 1-3. 클래스 다이어 그램
-### 1-3-1. 기존 설계
 ![Untitled](https://github.com/znftm97/coupon_platform/assets/57134526/9112a3fc-257c-4d28-826b-44703690c921)
-직접 `UUID.randomUUID()` 또는 `TSID.getTsid()`를 호출해서 사용해도 되지만, 객체지향적으로 구현하여 DIP 개념을 함께 활용했다.
 
-### 1-3-2. 코루틴 사용으로 인한 설계 변경
-![generator 클래스 다이어그램 수정 버전](https://github.com/znftm97/coupon_platform/assets/57134526/d0cbc2d3-26ce-46da-bf5f-bb14a5bdac4e)
-TSID나 ULID 라이브러리는 시간순으로 정렬할 수 있는 난수를 생성한다. 같은 시간에 난수를 생성하는 경우가 존재할 수 있으니 내부적으로 synchronzied 키워드를 사용하고 있다. 이는 blocking 요소로 코루틴을 이용해 처리하고자 했고, 코루틴을 사용하려면 해당 함수는 suspend 함수여야 하지만 기존 설계한 인터페이스는 suspend 함수가 아니기 때문에, 설계를 변경해야 했다.
-최종적으로 suspendable한 난수생성 인터페이스와, 그렇지 않은 난수생성 인터페이스로 분리했다. 현재는 1인터페이스-1구현체 구조이지만, 언제든지 여러 기술을 사용한 구현체들이 추가될 수 있고, 변경될 수 있는 유연한 구조라고 생각한다.
+직접 `UUID.randomUUID()` 또는 `TSID.getTsid()`를 호출해서 사용해도 되지만, 객체지향적으로 구현하여 DIP 개념을 함께 활용했다.
 
 # 2. 출석체크 쿠폰 발급 이벤트
 [해당 기능에 대한 자세한 내용은 노션에 문서화](https://languid-visage-6fe.notion.site/af71a9b1ae674fdaaaecd17967f45ca7?pvs=4)
@@ -263,20 +258,11 @@ class AccountStoreImpl(
 </details> 
 
 <details>
-<summary><strong>5. lua script로 이벤트 참여자 사용자 계산</strong></summary>
-<br>
-<p>  애플리케이션에서 이벤트 참여한 사용자를 구하지 않고, redis에서 lua script로 계산하기면 어떨까?
-<a href="https://redis.io/commands/setbit/">Redis docs</a>에서 &quot;<code>GETRANGE</code>및 <code>SETRANGE</code>문자열 명령을 사용하여 비트맵의 비트 오프셋 범위에 효율
-적으로 액세스할 수도 있습니다.” 라고 설명한다. 그리고 lua script의 샘플을 보여주는데, 이를 통해 Redis에서 계산이 가능하다면, 애플리케이션에서 계산하는 것 보다 더 빠르게 처리할 수 있까?
-애플리케이션 메모리에서 계산하나, Redis 메모리에서 계산하나 큰 차이 없을 것 같긴 하다.</p>
-</li>
-</details> 
-
-<details>
-<summary><strong>6. 이벤트 참여한 사용자를 구할 때, 1로 표시된 첫 번째 offset 부터 계산하기</strong></summary>
+<summary><strong>5. 이벤트 참여한 사용자를 구할 때, 1로 표시된 첫 번째 offset 부터 계산하기</strong></summary>
 <br>
 <p>  <code>BITPOS</code> 명령어를 통해 1로 표시된 첫 번째 offset값을 구할 수 있다. 이를 통해, 예로 0~5천번 사용자는, 서비스를 이용안한지 오래되어 이벤트 참여를 안해서 다 0이고 5001번부터 1인 경우에는, 앞의 5000개 데이터는 무시할 수 있다.
-근데 주의해야 하는점은 CPU 연산이 줄어들었고, Redis에 <code>BITPOS</code> 명령어를 날리기 때문에 네트워크 비용이 늘어났다. 즉 오히려 응답시간이 늘어나기 때문에, 클라이언트에게 응답하는 API 라면 역효과라고 생각한다.</p>
+근데 주의해야 하는점은 CPU 연산이 줄어들었고, Redis에 <code>BITPOS</code> 명령어를 날리기 때문에 네트워크 비용이 늘어났다. 즉 오히려 응답시간이 늘어나기 때문에, 클라이언트에게 응답하는 API 라면 역효과라고 생각한다. 하지만 API가 아니고, 하루에 한번씩 수행하는 배치 작업이므로, 불필요한 CPU 연산
+을 줄이는게 더 나은 방향 같다. </p>
 </li>
 </ul>
 </details> 

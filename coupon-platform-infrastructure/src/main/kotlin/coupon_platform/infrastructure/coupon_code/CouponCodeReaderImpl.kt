@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class CouponCodeReaderImpl(
-    val couponCodeJpaRepository: CouponCodeJpaRepository,
+    private val couponCodeJpaRepository: CouponCodeJpaRepository,
 ) : CouponCodeReader {
 
     override fun findCouponCodeByCode(code: String): CouponCode {

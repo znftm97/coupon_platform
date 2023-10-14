@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class CouponCodeStoreImpl(
-    val couponCodeJpaRepository: CouponCodeJpaRepository,
+    private val couponCodeJpaRepository: CouponCodeJpaRepository,
 ) : CouponCodeStore {
 
     override fun createCouponCode(couponCode: CouponCode) = couponCodeJpaRepository.save(couponCode)

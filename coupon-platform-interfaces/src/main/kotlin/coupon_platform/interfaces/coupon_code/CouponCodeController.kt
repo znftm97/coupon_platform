@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/coupon-code")
 class CouponCodeController(
-    val couponCodeFacade: CouponCodeFacade,
+    private val couponCodeFacade: CouponCodeFacade,
 ) {
 
     @PostMapping()

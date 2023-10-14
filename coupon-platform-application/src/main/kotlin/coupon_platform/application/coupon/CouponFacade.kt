@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class CouponFacade(
-    val couponReadService: CouponReadService,
-    val couponStoreService: CouponStoreService,
+    private val couponReadService: CouponReadService,
+    private val couponStoreService: CouponStoreService,
 ) {
     fun createCoupon(couponCreateCommand: CouponCreateCommand) =
         couponStoreService.createCoupon(couponCreateCommand)

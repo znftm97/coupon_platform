@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/accounts/")
 class AccountController(
-    val accountFacade: AccountFacade,
+    private val accountFacade: AccountFacade,
 ) {
 
     /**

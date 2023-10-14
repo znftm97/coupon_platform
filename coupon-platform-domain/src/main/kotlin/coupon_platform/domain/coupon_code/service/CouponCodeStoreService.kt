@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class CouponCodeStoreService(
-    val couponCodeStore: CouponCodeStore,
+    private val couponCodeStore: CouponCodeStore,
     @Qualifier("TSIDGenerator")
-    val tsidGenerator: RandomNumberGenerator,
+    private val tsidGenerator: RandomNumberGenerator,
     @Qualifier("UUIDGenerator")
-    val uuidGenerator: RandomNumberGenerator,
+    private val uuidGenerator: RandomNumberGenerator,
 ) {
 
     companion object {

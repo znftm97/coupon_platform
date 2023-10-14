@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/v1/issued-coupons")
 class IssuedCouponController(
-    val issuedCouponFacade: IssuedCouponFacade,
+    private val issuedCouponFacade: IssuedCouponFacade,
 ) {
 
     @PostMapping
@@ -22,8 +22,8 @@ class IssuedCouponController(
         @PathVariable("couponCode") couponCode: String,
         @PathVariable("accountId") accountId: Long,
     ): BaseResponse<Long> {
-        val issuedCouponInfo = issuedCouponFacade.issueCouponByCouponCode(couponCode, accountId)
-        return BaseResponse.success(issuedCouponInfo)
+        val couponId = issuedCouponFacade.issueCouponByCouponCode(couponCode, accountId)
+        return BaseResponse.success(couponId)
     }
 
 }

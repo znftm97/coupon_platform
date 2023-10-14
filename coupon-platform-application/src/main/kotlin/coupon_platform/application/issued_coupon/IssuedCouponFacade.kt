@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class IssuedCouponFacade(
-    val issuedCouponStoreService: IssuedCouponStoreService,
-    val couponCodeReadService: CouponCodeReadService,
-    val couponReadService: CouponReadService,
+    private val issuedCouponStoreService: IssuedCouponStoreService,
+    private val couponCodeReadService: CouponCodeReadService,
+    private val couponReadService: CouponReadService,
 ) {
     fun issueCoupon(issueCouponCommand: IssueCouponCommand) =
         issuedCouponStoreService.issueCoupon(issueCouponCommand)

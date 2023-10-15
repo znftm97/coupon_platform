@@ -33,7 +33,7 @@ class CouponCodeStoreService(
         )
         val storedCouponCode = couponCodeStore.createCouponCode(couponCode)
 
-        return CouponCodeInfo.toCouponCodeInfo(storedCouponCode)
+        return CouponCodeInfo.toInfo(storedCouponCode)
     }
 
     /**

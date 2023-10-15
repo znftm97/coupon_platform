@@ -10,7 +10,7 @@ data class CouponInfo(
     val price: Int,
 ) {
     companion object {
-        fun toCouponInfo(coupon: Coupon): CouponInfo {
+        fun toInfo(coupon: Coupon): CouponInfo {
             return CouponInfo(
                 coupon.id,
                 coupon.externalId,

@@ -12,6 +12,6 @@ class CouponCodeReadService(
 ) {
     fun findCouponCodeByCode(code: String): CouponCodeInfo {
         val couponCode = couponCodeReader.findCouponCodeByCode(code)
-        return CouponCodeInfo.toCouponCodeInfo(couponCode)
+        return CouponCodeInfo.toInfo(couponCode)
     }
 }

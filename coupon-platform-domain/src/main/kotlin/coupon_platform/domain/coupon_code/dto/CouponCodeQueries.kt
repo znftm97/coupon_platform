@@ -10,7 +10,7 @@ data class CouponCodeInfo(
     val expirationPeriod: ZonedDateTime
 ) {
     companion object {
-        fun toCouponCodeInfo(couponCode: CouponCode): CouponCodeInfo {
+        fun toInfo(couponCode: CouponCode): CouponCodeInfo {
             return CouponCodeInfo(
                 couponCode.externalId,
                 couponCode.couponId,

@@ -1,0 +1,6 @@
+package coupon_platform.domain.common.exception.coupon_code
+
+import coupon_platform.domain.common.exception.BaseException
+import coupon_platform.domain.common.exception.ExceptionCode
+
+class InvalidExpirationPeriodException(): BaseException(ExceptionCode.INVALID_EXPIRATION_PERIOD_EXCEPTION)

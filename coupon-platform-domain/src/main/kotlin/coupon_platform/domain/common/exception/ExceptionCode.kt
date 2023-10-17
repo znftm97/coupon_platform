@@ -9,6 +9,7 @@ enum class ExceptionCode(
 
     /*coupon*/
     NOT_FOUND_COUPON_EXCEPTION("존재하지 않는 쿠폰입니다."),
+    INVALID_EXPIRATION_PERIOD_EXCEPTION("만료 기간은 쿠폰 코드를 생성하는 시점의 시간 이후여야 합니다."),
 
     /*coupon_code*/
     NOT_FOUND_COUPON_CODE_EXCEPTION("존재하지 않는 쿠폰코드입니다."),

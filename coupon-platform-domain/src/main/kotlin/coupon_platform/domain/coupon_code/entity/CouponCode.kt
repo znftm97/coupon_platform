@@ -1,6 +1,7 @@
 package coupon_platform.domain.coupon_code.entity
 
 import coupon_platform.domain.common.BaseEntity
+import coupon_platform.domain.common.exception.coupon_code.InvalidExpirationPeriodException
 import jakarta.persistence.*
 import java.security.InvalidParameterException
 import java.time.ZonedDateTime
@@ -25,7 +26,7 @@ class CouponCode private constructor(
 
     init {
         require(expirationPeriod > ZonedDateTime.now()) {
-            throw InvalidParameterException("만료 기간은 쿠폰 코드를 생성하는 시점의 시간 이후여야 한다.")
+            throw InvalidExpirationPeriodException()
         }
     }
 

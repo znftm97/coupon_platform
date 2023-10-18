@@ -1,47 +1,45 @@
 package coupon_platform.domain.coupon_code
 
+import coupon_platform.domain.common.CommonConstants.EXTERNAL_ID_LENGTH
 import coupon_platform.domain.common.RandomNumberGenerator
 import coupon_platform.domain.coupon_code.dto.CouponCodeCreateCommand
 import coupon_platform.domain.coupon_code.dto.CouponCodeInfo
+import coupon_platform.domain.coupon_code.entity.CouponCode
 import coupon_platform.domain.coupon_code.repository.CouponCodeStore
 import coupon_platform.domain.coupon_code.service.CouponCodeStoreService
-import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.equals.shouldBeEqual
+import coupon_platform.domain.coupon_code.service.CouponCodeStoreService.Companion.COUPON_CODE_LENGTH
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import java.time.ZonedDateTime
 
-class CouponCodeStoreServiceUnitTest : BehaviorSpec({
+class CouponCodeStoreServiceUnitTest : FunSpec({
 
-    val couponCodeStoreMock = mockk<CouponCodeStore> {}
-    val uuidGeneratorMock = mockk<RandomNumberGenerator> {}
-    val tsidGeneratorMock = mockk<RandomNumberGenerator> {}
-    val couponCodeStoreServiceMock = mockk<CouponCodeStoreService> {
-        every { couponCodeStore } returns couponCodeStoreMock
-        every { uuidGenerator } returns uuidGeneratorMock
-        every { tsidGenerator } returns tsidGeneratorMock
-    }
+    val couponCodeStore = mockk<CouponCodeStore> {}
+    val uuidGenerator = mockk<RandomNumberGenerator> {}
+    val tsidGenerator = mockk<RandomNumberGenerator> {}
+    val couponCodeStoreService = CouponCodeStoreService(couponCodeStore, uuidGenerator, tsidGenerator)
 
-    given("쿠폰 코드 생성 객체(couponCodeCreateCommand)가 주어지고") {
+    test("쿠폰 코드 생성") {
         val couponCodeCreateCommand = CouponCodeCreateCommand(1, ZonedDateTime.now())
-        val couponCodeInfo = CouponCodeInfo(
-            "externalId",
+        val couponCode = CouponCode.of(
             1,
             "xxxx-xxxx-xxxx-xxxx",
-            ZonedDateTime.now(),
+            ZonedDateTime.now().plusDays(7),
+            "externalId"
         )
-        every {  couponCodeStoreServiceMock.createCouponCode(couponCodeCreateCommand) } returns couponCodeInfo
+        every { couponCodeStore.createCouponCode(any()) } returns couponCode
+        every { tsidGenerator.generate(EXTERNAL_ID_LENGTH) } returns "EXTERNAL_ID"
+        every { uuidGenerator.generate(COUPON_CODE_LENGTH) } returns "xxxx-xxxx-xxxx-xxxx"
 
-        `when`("couponCodeStoreService의 createCouponCode() 함수를 호출했을 때") {
-            val result = couponCodeStoreServiceMock.createCouponCode(couponCodeCreateCommand)
+        val result = couponCodeStoreService.createCouponCode(couponCodeCreateCommand)
 
-            then("쿠폰 코드를 생성할 수 있다.") {
-                result.externalId shouldBeEqual "externalId"
-                result.couponId shouldBeEqual 1
-                result.couponCode shouldBeEqual "xxxx-xxxx-xxxx-xxxx"
-                result.expirationPeriod shouldBeEqual couponCodeInfo.expirationPeriod
-            }
-        }
+        verify { couponCodeStore.createCouponCode(couponCode) }
+        verify { tsidGenerator.generate(EXTERNAL_ID_LENGTH) }
+        verify { uuidGenerator.generate(COUPON_CODE_LENGTH) }
+        result shouldBe CouponCodeInfo.toInfo(couponCode)
     }
 
 })

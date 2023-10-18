@@ -25,9 +25,9 @@ class AccountStoreImpl(
         findBitSet.set(userId.toInt(), true)
 
         redisHandler.set(
-            key,
-            findBitSet,
-            Duration.ofDays(ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL)
+            key = key,
+            value = findBitSet,
+            ttl = Duration.ofDays(ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL)
         )
     }
 

@@ -12,10 +12,10 @@ data class CouponCodeInfo(
     companion object {
         fun toInfo(couponCode: CouponCode): CouponCodeInfo {
             return CouponCodeInfo(
-                couponCode.externalId,
-                couponCode.couponId,
-                couponCode.code,
-                couponCode.expirationPeriod,
+                externalId = couponCode.externalId,
+                couponId = couponCode.couponId,
+                couponCode = couponCode.code,
+                expirationPeriod = couponCode.expirationPeriod,
             )
         }
     }

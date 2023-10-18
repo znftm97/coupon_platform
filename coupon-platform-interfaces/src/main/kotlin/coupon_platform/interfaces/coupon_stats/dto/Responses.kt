@@ -15,14 +15,14 @@ data class CouponStatsResponse(
                 .map { CouponDailyStatsResponse.toResponse(it) }
 
             return CouponStatsResponse(
-                couponDailyStatsResponses,
-                CouponSummaryStatsResponse.toResponse(info.couponSummaryStatsInfo)
+                couponDailyStatsResponses = couponDailyStatsResponses,
+                couponSummaryStats = CouponSummaryStatsResponse.toResponse(info.couponSummaryStatsInfo)
             )
         }
     }
 }
 
-class CouponDailyStatsResponse(
+data class CouponDailyStatsResponse(
     /*쿠폰 발급 개수*/
     val issuedCouponCount: Long,
 
@@ -40,17 +40,17 @@ class CouponDailyStatsResponse(
     companion object {
         fun toResponse(info: CouponDailyStatsInfo): CouponDailyStatsResponse {
             return CouponDailyStatsResponse(
-                info.issuedCouponCount,
-                info.usedCouponCount,
-                info.expiredCouponCount,
-                info.couponUsageRate,
-                info.statsDate,
+                issuedCouponCount = info.issuedCouponCount,
+                usedCouponCount = info.usedCouponCount,
+                expiredCouponCount = info.expiredCouponCount,
+                couponUsageRate = info.couponUsageRate,
+                statsDate = info.statsDate,
             )
         }
     }
 }
 
-class CouponSummaryStatsResponse(
+data class CouponSummaryStatsResponse(
     /*기간 내 쿠폰 발급 총 개수*/
     val totalIssuedCouponCount: Long,
 
@@ -66,10 +66,10 @@ class CouponSummaryStatsResponse(
     companion object {
         fun toResponse(info: CouponSummaryStatsInfo): CouponSummaryStatsResponse {
             return CouponSummaryStatsResponse(
-                info.totalIssuedCouponCount,
-                info.totalUsedCouponCount,
-                info.totalExpiredCouponCount,
-                info.totalCouponUsageRate,
+                totalIssuedCouponCount = info.totalIssuedCouponCount,
+                totalUsedCouponCount = info.totalUsedCouponCount,
+                totalExpiredCouponCount = info.totalExpiredCouponCount,
+                totalCouponUsageRate = info.totalCouponUsageRate,
             )
         }
     }

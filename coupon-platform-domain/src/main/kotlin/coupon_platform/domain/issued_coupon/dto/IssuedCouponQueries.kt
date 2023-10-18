@@ -12,9 +12,9 @@ data class IssuedCouponInfo(
     companion object {
         fun toInfo(issuedCoupon: IssuedCoupon): IssuedCouponInfo {
             return IssuedCouponInfo(
-                issuedCoupon.isUsed,
-                issuedCoupon.expirationPeriod,
-                issuedCoupon.createdAt.toLocalDate(),
+                isUsed = issuedCoupon.isUsed,
+                expirationPeriod = issuedCoupon.expirationPeriod,
+                createdAt = issuedCoupon.createdAt.toLocalDate(),
             )
         }
     }

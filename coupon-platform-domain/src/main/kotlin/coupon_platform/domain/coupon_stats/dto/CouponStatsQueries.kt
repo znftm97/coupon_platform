@@ -31,21 +31,21 @@ data class CouponDailyStatsInfo(
 
         fun toEntity(couponDailyStatsInfo: CouponDailyStatsInfo): CouponDailyStats {
             return CouponDailyStats.of(
-                couponDailyStatsInfo.issuedCouponCount,
-                couponDailyStatsInfo.usedCouponCount,
-                couponDailyStatsInfo.expiredCouponCount,
-                couponDailyStatsInfo.couponUsageRate,
-                couponDailyStatsInfo.statsDate,
+                issuedCouponCount = couponDailyStatsInfo.issuedCouponCount,
+                usedCouponCount = couponDailyStatsInfo.usedCouponCount,
+                expiredCouponCount = couponDailyStatsInfo.expiredCouponCount,
+                couponUsageRate = couponDailyStatsInfo.couponUsageRate,
+                statsDate = couponDailyStatsInfo.statsDate,
             )
         }
 
         private fun toInfo(couponDailyStats: CouponDailyStats): CouponDailyStatsInfo {
             return CouponDailyStatsInfo(
-                couponDailyStats.issuedCouponCount,
-                couponDailyStats.usedCouponCount,
-                couponDailyStats.expiredCouponCount,
-                couponDailyStats.couponUsageRate,
-                couponDailyStats.statsDate,
+                issuedCouponCount = couponDailyStats.issuedCouponCount,
+                usedCouponCount = couponDailyStats.usedCouponCount,
+                expiredCouponCount = couponDailyStats.expiredCouponCount,
+                couponUsageRate = couponDailyStats.couponUsageRate,
+                statsDate = couponDailyStats.statsDate,
             )
         }
     }
@@ -64,6 +64,4 @@ data class CouponSummaryStatsInfo(
 
     /*기간 내 쿠폰 총 사용 비율*/
     val totalCouponUsageRate: Int,
-) {
-
-}
+)

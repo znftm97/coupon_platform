@@ -44,10 +44,10 @@ class Processor(
     private fun convertToBatchParameters(checkedAttendanceAccountIds: List<Long>): List<BatchParameters> =
         checkedAttendanceAccountIds.map { accountId ->
             BatchParameters(
-                randomNumberGenerator.generate(EXTERNAL_ID_LENGTH),
-                accountId,
-                couponId!!,
-                convertStringToZonedDateTime(expirationPeriodStr),
+                externalId = randomNumberGenerator.generate(EXTERNAL_ID_LENGTH),
+                accountId = accountId,
+                couponId = couponId!!,
+                expirationPeriod = convertStringToZonedDateTime(expirationPeriodStr),
             )
         }.toList()
 

@@ -11,10 +11,10 @@ data class CouponResponse(
 ) {
     companion object {
         fun toResponse(couponInfo: CouponInfo) = CouponResponse(
-            couponInfo.externalId,
-            couponInfo.name,
-            couponInfo.discountType,
-            couponInfo.price,
+            externalId = couponInfo.externalId,
+            name = couponInfo.name,
+            discountType = couponInfo.discountType,
+            price = couponInfo.price,
         )
     }
 }

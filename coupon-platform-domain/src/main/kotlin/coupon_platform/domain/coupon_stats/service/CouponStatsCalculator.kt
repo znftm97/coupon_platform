@@ -18,10 +18,10 @@ class CouponStatsCalculator {
         }
 
         return CouponSummaryStatsInfo(
-            findCouponStatsInfos.sumOf { it.issuedCouponCount },
-            findCouponStatsInfos.sumOf { it.usedCouponCount },
-            findCouponStatsInfos.sumOf { it.expiredCouponCount },
-            findCouponStatsInfos.sumOf { it.couponUsageRate } / findCouponStatsInfos.size,
+            totalIssuedCouponCount = findCouponStatsInfos.sumOf { it.issuedCouponCount },
+            totalUsedCouponCount = findCouponStatsInfos.sumOf { it.usedCouponCount },
+            totalExpiredCouponCount = findCouponStatsInfos.sumOf { it.expiredCouponCount },
+            totalCouponUsageRate = findCouponStatsInfos.sumOf { it.couponUsageRate } / findCouponStatsInfos.size,
         )
     }
 
@@ -30,24 +30,21 @@ class CouponStatsCalculator {
     ): List<CouponDailyStatsInfo> {
         val groupedByDate: Map<LocalDate, List<IssuedCouponInfo>> = issuedCoupons.groupBy { it.createdAt }
 
-        return groupedByDate.map { (date: LocalDate, coupons: List<IssuedCouponInfo>) ->
-            val issuedCount = coupons.size.toLong()
-            val usedCount = coupons.count { it.isUsed }.toLong()
-            val expiredCount = coupons.count { it.expirationPeriod.isBefore(ZonedDateTime.now()) }.toLong()
-            val usageRate = when {
-                issuedCount > 0 -> usedCount.toDouble() / issuedCount * 100
+        return groupedByDate.map { (statsDate: LocalDate, coupons: List<IssuedCouponInfo>) ->
+            val issuedCouponCount = coupons.size.toLong()
+            val usedCouponCount = coupons.count { it.isUsed }.toLong()
+            val expiredCouponCount = coupons.count { it.expirationPeriod.isBefore(ZonedDateTime.now()) }.toLong()
+            val couponUsageRate = when {
+                issuedCouponCount > 0 -> usedCouponCount.toDouble() / issuedCouponCount * 100
                 else -> 0
             }
 
-            println(usedCount / issuedCount)
-            println(usedCount / issuedCount * 100)
-
             CouponDailyStatsInfo(
-                issuedCouponCount = issuedCount,
-                usedCouponCount = usedCount,
-                expiredCouponCount = expiredCount,
-                couponUsageRate = usageRate.toInt(),
-                statsDate = date
+                issuedCouponCount = issuedCouponCount,
+                usedCouponCount = usedCouponCount,
+                expiredCouponCount = expiredCouponCount,
+                couponUsageRate = couponUsageRate.toInt(),
+                statsDate = statsDate
             )
         }
     }

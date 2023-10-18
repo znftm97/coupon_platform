@@ -26,10 +26,10 @@ class CouponCodeStoreService(
 
     fun createCouponCode(couponCodeCreateCommand: CouponCodeCreateCommand): CouponCodeInfo {
         val couponCode = CouponCode.of(
-            couponCodeCreateCommand.couponId,
-            generateCouponCode(),
-            couponCodeCreateCommand.expirationPeriod,
-            tsidGenerator.generate(EXTERNAL_ID_LENGTH),
+            couponId = couponCodeCreateCommand.couponId,
+            code = generateCouponCode(),
+            expirationPeriod = couponCodeCreateCommand.expirationPeriod,
+            externalId = tsidGenerator.generate(EXTERNAL_ID_LENGTH),
         )
         val storedCouponCode = couponCodeStore.createCouponCode(couponCode)
 

@@ -19,7 +19,7 @@ class CouponStatsScenarioTest(
             RestAssured.port = port
         }
 
-        feature("쿠폰 통계 데이터가 존재할 때 조회") {
+        feature("계산된 쿠폰 통계 데이터가 이미 존재할 때 조회") {
 
             scenario("2023-10-15 날짜의 통계 데이터를 조회") {
                 given()
@@ -76,7 +76,7 @@ class CouponStatsScenarioTest(
             }
         }
 
-        feature("쿠폰 통계 데이터가 존재하지 않을 때 조회") {
+        feature("계산된 쿠폰 통계 데이터가 존재하지 않을 때 조회") {
             scenario("2030-01-01 날짜의 통계 데이터를 조회") {
                 given()
                     .contentType("application/json")
@@ -104,9 +104,9 @@ class CouponStatsScenarioTest(
                     .contentType("application/json")
                     .pathParam("startDate", "2030-01-02")
                     .pathParam("endDate", "2030-01-04")
-                    .When()
+                .When()
                     .get("/api/v1/coupon-stats/{startDate}/{endDate}")
-                    .then()
+                .then()
                     .statusCode(200)
                     .body("data.couponSummaryStats.totalIssuedCouponCount", equalTo(3))
                     .body("data.couponSummaryStats.totalUsedCouponCount", equalTo(1))

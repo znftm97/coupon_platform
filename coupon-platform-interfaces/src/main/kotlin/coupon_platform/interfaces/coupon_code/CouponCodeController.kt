@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/coupon-code")
 class CouponCodeController(
-    val couponCodeFacade: CouponCodeFacade,
+    private val couponCodeFacade: CouponCodeFacade,
 ) {
 
-    @PostMapping()
+    @PostMapping
     fun createCouponCode(@RequestBody couponCodeCreateRequest: CouponCodeCreateRequest): BaseResponse<String> {
         val couponCode = couponCodeFacade.createCouponCode(couponCodeCreateRequest.toCommand())
         return BaseResponse.success(couponCode)

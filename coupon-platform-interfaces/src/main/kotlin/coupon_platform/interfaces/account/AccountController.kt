@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/accounts/")
 class AccountController(
-    val accountFacade: AccountFacade,
+    private val accountFacade: AccountFacade,
 ) {
 
     /**
      * 핵심 기능(출석체크)에 집중하기 위해, 실제 로그인 기능은 구현하지 않는다.
      */
-    @PostMapping("/login/{user-id}")
-    fun tmpLogin(@PathVariable("user-id") userId: Long): BaseResponse<Unit> {
+    @PostMapping("/login/{userId}")
+    fun tmpLogin(@PathVariable("userId") userId: Long): BaseResponse<Unit> {
         accountFacade.login(userId);
         return BaseResponse.success(Unit)
     }

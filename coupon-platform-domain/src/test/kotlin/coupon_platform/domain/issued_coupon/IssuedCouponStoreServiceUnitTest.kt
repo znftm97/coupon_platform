@@ -1,32 +1,44 @@
 package coupon_platform.domain.issued_coupon
 
+import coupon_platform.domain.common.CommonConstants.EXTERNAL_ID_LENGTH
+import coupon_platform.domain.common.RandomNumberGenerator
 import coupon_platform.domain.issued_coupon.dto.IssueCouponCommand
+import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
+import coupon_platform.domain.issued_coupon.repository.IssuedCouponStore
 import coupon_platform.domain.issued_coupon.service.IssuedCouponStoreService
-import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import java.time.ZonedDateTime
 
-class IssuedCouponStoreServiceUnitTest : BehaviorSpec({
+class IssuedCouponStoreServiceUnitTest : FunSpec({
 
-    val issuedCouponStoreServiceMock = mockk<IssuedCouponStoreService> {
-        every { issuedCouponStore } returns mockk()
-        every { randomNumberGenerator } returns mockk()
-    }
+    val issuedCouponStore = mockk<IssuedCouponStore>()
+    val randomNumberGenerator = mockk<RandomNumberGenerator>()
+    val issuedCouponStoreService = IssuedCouponStoreService(issuedCouponStore, randomNumberGenerator)
 
-    given("쿠폰 발급 요청 객체가 주어지고") {
-        val couponId = 1L
-        val accountId = 1L
-        val issuedCouponCommand = IssueCouponCommand(couponId, accountId, ZonedDateTime.now())
-        every {  issuedCouponStoreServiceMock.issueCoupon(issuedCouponCommand) } returns couponId
+    test("쿠폰 발급") {
+        val issuedCouponCommand = IssueCouponCommand(
+            1L,
+            1L,
+            ZonedDateTime.now().plusDays(7)
+        )
+        val issuedCoupon = IssuedCoupon.of(
+            1L,
+            1L,
+            ZonedDateTime.now().plusDays(7),
+            "externalId"
+        )
 
-        `when`("쿠폰 발급 요청시") {
-            val result = issuedCouponStoreServiceMock.issueCoupon(issuedCouponCommand)
+        every { issuedCouponStore.issueCoupon(any()) } returns issuedCoupon
+        every { randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) } returns "externalId"
 
-            then("쿠폰은 발급되어야 한다.") {
-                result shouldBeEqual couponId
-            }
-        }
+        val result = issuedCouponStoreService.issueCoupon(issuedCouponCommand)
+
+        verify { issuedCouponStore.issueCoupon(any()) }
+        verify { randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) }
+        result shouldBeEqual issuedCoupon.couponId
     }
 })

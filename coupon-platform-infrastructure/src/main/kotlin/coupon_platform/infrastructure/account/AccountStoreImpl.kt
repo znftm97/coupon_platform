@@ -3,13 +3,13 @@ package coupon_platform.infrastructure.account
 import coupon_platform.domain.account.AccountStore
 import coupon_platform.domain.common.CommonConstants.MAX_ACCOUNTS_NUMBER
 import coupon_platform.infrastructure.redis.RedisHandler
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-@Component
+@Repository
 class AccountStoreImpl(
     private val redisHandler: RedisHandler,
 ) : AccountStore {

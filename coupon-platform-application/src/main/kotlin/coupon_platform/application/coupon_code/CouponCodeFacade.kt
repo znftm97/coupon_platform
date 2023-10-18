@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class CouponCodeFacade(
-    val couponCodeStoreService: CouponCodeStoreService,
-    val couponReadService: CouponReadService,
+    private val couponCodeStoreService: CouponCodeStoreService,
+    private val couponReadService: CouponReadService,
 ) {
     fun createCouponCode(couponCodeCreateCommand: CouponCodeCreateCommand): String {
         // 존재하는 쿠폰인지 확인하기 위해 조회

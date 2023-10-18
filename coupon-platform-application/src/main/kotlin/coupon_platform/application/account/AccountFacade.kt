@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class AccountFacade(
-    val accountStoreService: AccountStoreService,
+    private val accountStoreService: AccountStoreService,
 ) {
 
     fun login(userId: Long) {

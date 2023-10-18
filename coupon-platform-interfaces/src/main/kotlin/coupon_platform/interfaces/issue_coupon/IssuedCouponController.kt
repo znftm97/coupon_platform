@@ -6,9 +6,9 @@ import coupon_platform.interfaces.issue_coupon.dto.CouponIssueRequest
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/v1/issued_coupons")
+@RequestMapping("/api/v1/issued-coupons")
 class IssuedCouponController(
-    val issuedCouponFacade: IssuedCouponFacade,
+    private val issuedCouponFacade: IssuedCouponFacade,
 ) {
 
     @PostMapping
@@ -17,13 +17,13 @@ class IssuedCouponController(
         return BaseResponse.success(issuedCouponId)
     }
 
-    @PostMapping("/coupon_code/{coupon-code}/{account-id}")
+    @PostMapping("/coupon-code/{couponCode}/{accountId}")
     fun issueCouponByCouponCode(
-        @PathVariable("coupon-code") couponCode: String,
-        @PathVariable("account-id") accountId: Long,
+        @PathVariable("couponCode") couponCode: String,
+        @PathVariable("accountId") accountId: Long,
     ): BaseResponse<Long> {
-        val issuedCouponInfo = issuedCouponFacade.issueCouponByCouponCode(couponCode, accountId)
-        return BaseResponse.success(issuedCouponInfo)
+        val couponId = issuedCouponFacade.issueCouponByCouponCode(couponCode, accountId)
+        return BaseResponse.success(couponId)
     }
 
 }

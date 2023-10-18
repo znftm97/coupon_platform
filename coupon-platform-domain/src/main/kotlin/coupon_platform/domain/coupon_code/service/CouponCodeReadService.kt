@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class CouponCodeReadService(
-    val couponCodeReader: CouponCodeReader,
+    private val couponCodeReader: CouponCodeReader,
 ) {
     fun findCouponCodeByCode(code: String): CouponCodeInfo {
         val couponCode = couponCodeReader.findCouponCodeByCode(code)
-        return CouponCodeInfo.toCouponCodeInfo(couponCode)
+        return CouponCodeInfo.toInfo(couponCode)
     }
 }

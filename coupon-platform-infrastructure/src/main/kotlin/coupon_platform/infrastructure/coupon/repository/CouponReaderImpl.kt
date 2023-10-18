@@ -3,11 +3,11 @@ package coupon_platform.infrastructure.coupon.repository
 import coupon_platform.domain.common.exception.coupon.NotFoundCouponException
 import coupon_platform.domain.coupon.entity.Coupon
 import coupon_platform.domain.coupon.repository.CouponReader
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 
-@Component
+@Repository
 class CouponReaderImpl(
-    val couponJpaRepository: CouponJpaRepository,
+    private val couponJpaRepository: CouponJpaRepository,
 ) : CouponReader {
 
     override fun findCouponByName(name: String): Coupon {

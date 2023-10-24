@@ -43,3 +43,17 @@ create table issued_coupon
     update_at         datetime(6)  null,
     external_id       varchar(255) null
 );
+
+create table coupon_daily_stats
+(
+    coupon_usage_rate     int          not null,
+    stats_date            date         null,
+    coupon_daily_stats_id bigint auto_increment
+        primary key,
+    created_at            datetime(6)  null,
+    expired_coupon_count  bigint       not null,
+    issued_coupon_count   bigint       not null,
+    updated_at            datetime(6)  null,
+    used_coupon_count     bigint       not null,
+    external_id           varchar(255) null
+);

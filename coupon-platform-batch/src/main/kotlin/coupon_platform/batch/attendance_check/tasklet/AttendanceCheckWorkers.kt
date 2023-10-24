@@ -49,7 +49,7 @@ class Processor(
                 couponId = couponId!!,
                 expirationPeriod = convertStringToZonedDateTime(expirationPeriodStr),
             )
-        }.toList()
+        }
 
     private fun convertStringToZonedDateTime(str: String?) =
         ZonedDateTime.of(LocalDate.parse(str).atStartOfDay(), ZoneId.of("UTC"))

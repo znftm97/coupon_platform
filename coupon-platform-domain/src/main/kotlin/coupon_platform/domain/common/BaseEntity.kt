@@ -17,5 +17,5 @@ abstract class BaseEntity {
     lateinit var createdAt: ZonedDateTime
 
     @UpdateTimestamp
-    lateinit var updateAt: ZonedDateTime
+    lateinit var updatedAt: ZonedDateTime
 }

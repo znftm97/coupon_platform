@@ -5,6 +5,10 @@ import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity
+@Table(
+    name = "coupon_daily_stats",
+    indexes = [Index(name = "idx_stats_date", columnList = "statsDate")]
+)
 class CouponDailyStats private constructor(
 
     /*쿠폰 발급 개수*/

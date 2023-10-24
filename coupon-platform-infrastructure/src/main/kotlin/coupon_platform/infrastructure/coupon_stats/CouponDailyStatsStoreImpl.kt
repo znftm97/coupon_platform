@@ -5,12 +5,12 @@ import coupon_platform.domain.coupon_stats.repository.CouponStatsStore
 import org.springframework.stereotype.Repository
 
 @Repository
-class CouponStatsStoreImpl(
-    private val couponStatsJpaRepository: CouponStatsJpaRepository,
+class CouponDailyStatsStoreImpl(
+    private val couponDailyStatsJpaRepository: CouponDailyStatsJpaRepository,
 ): CouponStatsStore {
 
     override fun saveDailyStats(couponDailyStats: List<CouponDailyStats>) {
-        couponStatsJpaRepository.saveAll(couponDailyStats)
+        couponDailyStatsJpaRepository.saveAll(couponDailyStats)
     }
 
 }

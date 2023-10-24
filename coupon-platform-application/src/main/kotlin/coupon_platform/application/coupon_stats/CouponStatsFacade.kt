@@ -31,15 +31,21 @@ class CouponStatsFacade(
         }
 
         val emptyDates: List<LocalDate> = getEmptyStatsDate(startDate, endDate, findCouponDailyStatsInfos)
-        val issuedCoupons: List<IssuedCouponInfo> = issuedCouponReadService.findIssuedCouponsInDates(emptyDates)
-        val couponDailyStatsInfos: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponStatsDaily(issuedCoupons)
-        couponStatsStoreService.saveDailyStats(couponDailyStatsInfos)
+        val couponDailyStatsInfos: List<CouponDailyStatsInfo> = calculateCouponDailyStats(emptyDates)
         findCouponDailyStatsInfos.addAll(couponDailyStatsInfos)
 
         return CouponStatsInfo(
             couponDailyStatsInfos = findCouponDailyStatsInfos.sortedBy { it.statsDate },
             couponSummaryStatsInfo = couponStatsCalculator.calculateCouponStatsSummary(findCouponDailyStatsInfos)
         )
+    }
+
+    private fun calculateCouponDailyStats(emptyDates: List<LocalDate>): List<CouponDailyStatsInfo> {
+        val issuedCoupons: List<IssuedCouponInfo> = issuedCouponReadService.findIssuedCouponsInDates(emptyDates)
+        val couponDailyStatsInfos: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponStatsDaily(issuedCoupons)
+        couponStatsStoreService.saveDailyStats(couponDailyStatsInfos)
+
+        return couponDailyStatsInfos
     }
 
     private fun isAllExistStats(

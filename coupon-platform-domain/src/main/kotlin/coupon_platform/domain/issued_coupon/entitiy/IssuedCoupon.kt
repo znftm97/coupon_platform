@@ -6,6 +6,10 @@ import java.security.InvalidParameterException
 import java.time.ZonedDateTime
 
 @Entity
+@Table(
+    name = "issued_coupon",
+    indexes = [Index(name = "idx_create_at", columnList = "createdAt")]
+)
 class IssuedCoupon private constructor(
 
     val couponId: Long,

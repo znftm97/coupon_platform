@@ -1,4 +1,4 @@
-package coupon_platform.infrastructure.coupon.repository
+package coupon_platform.infrastructure.coupon
 
 import coupon_platform.domain.common.exception.coupon.NotFoundCouponException
 import coupon_platform.domain.coupon.entity.Coupon

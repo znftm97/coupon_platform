@@ -2,7 +2,7 @@ package coupon_platform.batch.attendance_check.tasklet
 
 import coupon_platform.batch.attendance_check.CommonConstants
 import coupon_platform.batch.attendance_check.KeyGenerator
-import coupon_platform.infrastructure.redis.RedisHandler
+import coupon_platform.infrastructure.redis.handler.RedisHandlerOfBitset
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet
@@ -14,7 +14,7 @@ import java.util.*
 @Component
 class ThirtyDayAttendanceCheckTasklet(
     private val keyGenerator: KeyGenerator,
-    private val redisHandler: RedisHandler,
+    private val redisHandler: RedisHandlerOfBitset,
     private val processor: Processor,
     private val writer: Writer,
 ) : Tasklet {

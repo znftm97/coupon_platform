@@ -18,7 +18,7 @@ class IssuedCouponStoreService(
 
     fun issueCoupon(issueCouponCommand: IssueCouponCommand): Long {
         val issuedCoupon = issueCouponCommand.toEntity(randomNumberGenerator.generate(EXTERNAL_ID_LENGTH))
-        return issuedCouponStore.issueCoupon(issuedCoupon).couponId
+        return issuedCouponStore.saveIssuedCoupon(issuedCoupon).couponId
     }
 
 }

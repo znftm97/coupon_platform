@@ -7,7 +7,7 @@ import coupon_platform.batch.attendance_check.CommonConstants.EVENT_DAY_SEVEN
 import coupon_platform.batch.attendance_check.CommonConstants.EVENT_DAY_THIRTY
 import coupon_platform.batch.attendance_check.CommonConstants.EVENT_DAY_THREE
 import coupon_platform.batch.attendance_check.KeyGenerator
-import coupon_platform.infrastructure.redis.RedisHandler
+import coupon_platform.infrastructure.redis.handler.RedisHandlerOfBitset
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet
@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 @Component
 class ThreeDaysBitopOperatorTasklet(
     private val keyGenerator: KeyGenerator,
-    private val redisHandler: RedisHandler,
+    private val redisHandler: RedisHandlerOfBitset,
 ) : Tasklet {
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus {
@@ -34,7 +34,7 @@ class ThreeDaysBitopOperatorTasklet(
 @Component
 class SevenDaysBitopOperatorTasklet(
     private val keyGenerator: KeyGenerator,
-    private val redisHandler: RedisHandler,
+    private val redisHandler: RedisHandlerOfBitset,
 ) : Tasklet {
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus {
@@ -50,7 +50,7 @@ class SevenDaysBitopOperatorTasklet(
 @Component
 class ThirtyDaysBitopOperatorTasklet(
     private val keyGenerator: KeyGenerator,
-    private val redisHandler: RedisHandler,
+    private val redisHandler: RedisHandlerOfBitset,
 ) : Tasklet {
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus {

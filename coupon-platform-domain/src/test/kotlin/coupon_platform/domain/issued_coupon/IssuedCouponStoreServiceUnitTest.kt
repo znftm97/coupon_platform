@@ -32,12 +32,12 @@ class IssuedCouponStoreServiceUnitTest : FunSpec({
             "externalId"
         )
 
-        every { issuedCouponStore.issueCoupon(any()) } returns issuedCoupon
+        every { issuedCouponStore.saveIssuedCoupon(any()) } returns issuedCoupon
         every { randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) } returns "externalId"
 
         val result = issuedCouponStoreService.issueCoupon(issuedCouponCommand)
 
-        verify { issuedCouponStore.issueCoupon(any()) }
+        verify { issuedCouponStore.saveIssuedCoupon(any()) }
         verify { randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) }
         result shouldBeEqual issuedCoupon.couponId
     }

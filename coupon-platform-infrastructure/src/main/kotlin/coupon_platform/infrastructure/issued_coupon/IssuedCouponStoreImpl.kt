@@ -9,6 +9,6 @@ class IssuedCouponStoreImpl(
     private val issuedCouponJpaRepository: IssuedCouponJpaRepository,
 ) : IssuedCouponStore {
 
-    override fun issueCoupon(issuedCoupon: IssuedCoupon): IssuedCoupon = issuedCouponJpaRepository.save(issuedCoupon)
+    override fun saveIssuedCoupon(issuedCoupon: IssuedCoupon): IssuedCoupon = issuedCouponJpaRepository.save(issuedCoupon)
 
 }

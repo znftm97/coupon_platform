@@ -30,7 +30,7 @@ class CouponStatsFacade(
             )
         }
 
-        val emptyDates: List<LocalDate> = getEmptyStatsDate(startDate, endDate, findCouponDailyStatsInfos)
+        val emptyDates: List<LocalDate> = getEmptyStatsDates(startDate, endDate, findCouponDailyStatsInfos)
         val couponDailyStatsInfos: List<CouponDailyStatsInfo> = calculateCouponDailyStats(emptyDates)
         findCouponDailyStatsInfos.addAll(couponDailyStatsInfos)
 
@@ -59,7 +59,7 @@ class CouponStatsFacade(
         return findCouponStatsInfos.last().statsDate == endDate
     }
 
-    private fun getEmptyStatsDate(
+    private fun getEmptyStatsDates(
         startDate: LocalDate,
         endDate: LocalDate,
         findCouponStatsInfos: List<CouponDailyStatsInfo>,

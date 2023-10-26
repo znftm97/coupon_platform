@@ -1,10 +1,17 @@
 package coupon_platform.infrastructure.config
 
+import com.fasterxml.jackson.databind.JavaType
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.type.TypeFactory
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import coupon_platform.infrastructure.redis.util.IssuedCouponForRedis
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer
 import java.util.*
@@ -19,7 +26,30 @@ class LettuceConfiguration(
     }
 
     @Bean
-    fun redisTemplate(): RedisTemplate<String, BitSet> {
+    fun redisTemplateOfIssuedCoupons(connectionFactory: RedisConnectionFactory): RedisTemplate<String, List<IssuedCouponForRedis>> {
+        val template = RedisTemplate<String, List<IssuedCouponForRedis>>()
+        template.connectionFactory = connectionFactory
+
+        val objectMapper = ObjectMapper().registerModule(JavaTimeModule())
+
+        val keySerializer = StringRedisSerializer()
+        val listType: JavaType = TypeFactory.defaultInstance().constructCollectionType(List::class.java, IssuedCouponForRedis::class.java)
+        val valueSerializer = Jackson2JsonRedisSerializer<List<IssuedCouponForRedis>>(objectMapper, listType)
+        val hashKeySerializer = StringRedisSerializer()
+        val hashValueSerializer = Jackson2JsonRedisSerializer<List<IssuedCouponForRedis>>(listType)
+
+        template.keySerializer = keySerializer
+        template.valueSerializer = valueSerializer
+        template.hashKeySerializer = hashKeySerializer
+        template.hashValueSerializer = hashValueSerializer
+
+        template.afterPropertiesSet()
+
+        return template
+    }
+
+    @Bean
+    fun redisTemplateOfBitset(): RedisTemplate<String, BitSet> {
         val template = RedisTemplate<String, BitSet>()
         template.connectionFactory = lettuceConnectionFactory()
 

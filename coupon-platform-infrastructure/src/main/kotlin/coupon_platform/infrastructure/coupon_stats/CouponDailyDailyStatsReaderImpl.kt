@@ -10,8 +10,8 @@ class CouponDailyDailyStatsReaderImpl(
     private val couponDailyStatsJpaRepository: CouponDailyStatsJpaRepository,
 ): CouponDailyStatsReader {
 
-    override fun findCouponStats(startDate: LocalDate, endDate: LocalDate): List<CouponDailyStats> {
-        return couponDailyStatsJpaRepository.findCouponStatsByDateRange(startDate, endDate)
+    override fun findCouponDailyStats(startDate: LocalDate, endDate: LocalDate): List<CouponDailyStats> {
+        return couponDailyStatsJpaRepository.findCouponDailyStatsByDateRange(startDate, endDate)
     }
 
 }

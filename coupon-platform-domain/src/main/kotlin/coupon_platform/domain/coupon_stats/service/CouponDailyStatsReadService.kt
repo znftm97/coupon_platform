@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class CouponStatsReadService(
+class CouponDailyStatsReadService(
     private val couponDailyStatsReader: CouponDailyStatsReader,
 ) {
     fun findCouponStats(startDate: LocalDate, endDate: LocalDate): List<CouponDailyStatsInfo> {
-        val couponStats: List<CouponDailyStats> = couponDailyStatsReader.findCouponStats(startDate, endDate)
-        return CouponDailyStatsInfo.toInfos(couponStats)
+        val couponDailyStats: List<CouponDailyStats> = couponDailyStatsReader.findCouponDailyStats(startDate, endDate)
+        return CouponDailyStatsInfo.toInfos(couponDailyStats)
     }
 }

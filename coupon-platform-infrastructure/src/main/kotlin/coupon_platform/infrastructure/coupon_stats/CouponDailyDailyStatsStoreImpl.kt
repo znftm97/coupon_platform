@@ -1,13 +1,13 @@
 package coupon_platform.infrastructure.coupon_stats
 
 import coupon_platform.domain.coupon_stats.domain.CouponDailyStats
-import coupon_platform.domain.coupon_stats.repository.CouponStatsStore
+import coupon_platform.domain.coupon_stats.repository.CouponDailyStatsStore
 import org.springframework.stereotype.Repository
 
 @Repository
-class CouponDailyStatsStoreImpl(
+class CouponDailyDailyStatsStoreImpl(
     private val couponDailyStatsJpaRepository: CouponDailyStatsJpaRepository,
-): CouponStatsStore {
+): CouponDailyStatsStore {
 
     override fun saveDailyStats(couponDailyStats: List<CouponDailyStats>) {
         couponDailyStatsJpaRepository.saveAll(couponDailyStats)

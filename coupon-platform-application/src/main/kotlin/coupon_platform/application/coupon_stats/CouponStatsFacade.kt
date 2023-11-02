@@ -2,9 +2,9 @@ package coupon_platform.application.coupon_stats
 
 import coupon_platform.domain.coupon_stats.dto.CouponDailyStatsInfo
 import coupon_platform.domain.coupon_stats.dto.CouponStatsInfo
+import coupon_platform.domain.coupon_stats.service.CouponDailyStatsReadService
+import coupon_platform.domain.coupon_stats.service.CouponDailyStatsStoreService
 import coupon_platform.domain.coupon_stats.service.CouponStatsCalculator
-import coupon_platform.domain.coupon_stats.service.CouponStatsReadService
-import coupon_platform.domain.coupon_stats.service.CouponStatsStoreService
 import coupon_platform.domain.issued_coupon.dto.IssuedCouponInfo
 import coupon_platform.domain.issued_coupon.service.IssuedCouponReadService
 import org.springframework.stereotype.Service
@@ -13,13 +13,13 @@ import java.time.LocalDate
 @Service
 class CouponStatsFacade(
     private val issuedCouponReadService: IssuedCouponReadService,
-    private val couponStatsReadService: CouponStatsReadService,
-    private val couponStatsStoreService: CouponStatsStoreService,
+    private val couponDailyStatsReadService: CouponDailyStatsReadService,
+    private val couponDailyStatsStoreService: CouponDailyStatsStoreService,
     private val couponStatsCalculator: CouponStatsCalculator,
 ) {
     fun findCouponStats(startDate: LocalDate, endDate: LocalDate): CouponStatsInfo {
         val findCouponDailyStatsInfos: MutableList<CouponDailyStatsInfo> =
-            couponStatsReadService.findCouponStats(startDate, endDate)
+            couponDailyStatsReadService.findCouponStats(startDate, endDate)
                 .sortedBy { it.statsDate }
                 .toMutableList()
 
@@ -42,8 +42,8 @@ class CouponStatsFacade(
 
     private fun calculateCouponDailyStats(emptyDates: List<LocalDate>): List<CouponDailyStatsInfo> {
         val issuedCoupons: List<IssuedCouponInfo> = issuedCouponReadService.findIssuedCouponsInDates(emptyDates)
-        val couponDailyStatsInfos: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponStatsDaily(issuedCoupons)
-        couponStatsStoreService.saveDailyStats(couponDailyStatsInfos)
+        val couponDailyStatsInfos: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponDailyStats(issuedCoupons)
+        couponDailyStatsStoreService.saveDailyStats(couponDailyStatsInfos)
 
         return couponDailyStatsInfos
     }

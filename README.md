@@ -9,13 +9,14 @@
 - Spring Data JPA
 - Spring Data Redis
 - Spring Batch
-- kotest, mockk
+- kotest, mockk, rest-assured
 - MySQL 8.0.34
 - Redis 7.0.10 , Lettuce 6.2.6
 
 # 주요 기능
 1. 코드입력을 통한 쿠폰 발급<br>
-2. 출석체크 쿠폰 발급 이벤트<br> 
+2. 출석체크 쿠폰 발급 이벤트<br>
+3. 쿠폰 통계 조회 기능<br>
 
 # 1. 코드입력을 통한 쿠폰 발급
 [해당 기능에 대한 자세한 내용은 노션에 문서화](https://languid-visage-6fe.notion.site/6f5ee3a7208d4db3a7d42facfd8d814c?pvs=4)
@@ -132,88 +133,8 @@ Redis의 비트 연산자를 정확히는 `BITOP` 명령어를 이용하는 방�
 ### 2-2-4. 전체적인 플로우
 
 ![%EC%8B%9C%ED%80%80%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8_(1)](https://github.com/znftm97/coupon_platform/assets/57134526/f6eb079e-029f-4635-b2f3-3e6377cafdda)
-
-## 2-3. 구현
-
-### 2-3-1. 로그인 기능(출석체크)
-
-```kotlin
-@Component
-class AccountStoreImpl(
-    private val redisHandler: RedisHandler,
-) : AccountStore {
-
-    companion object {
-        const val ATTENDANCE_CHECK_PREFIX = "attendance:check:"
-        const val ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL = 60L
-    }
-
-    override fun attendance(userId: Long) {
-        val key = generateKey()
-        val findBitSet: BitSet = redisHandler.get(key) ?: BitSet(MAX_ACCOUNTS_NUMBER)
-        findBitSet.set(userId.toInt(), true)
-
-        redisHandler.set(
-            key,
-            findBitSet,
-            Duration.ofDays(ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL)
-        )
-    }
-
-    private fun generateKey(): String =
-        ATTENDANCE_CHECK_PREFIX + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
-}
-```
-
-- key가 존재하지 않으면(당일 처음 로그인하는 사용자인 경우) 새 Bitset을 생성하고, `userId`값을 `offset`으로 넣어서 `1(true)`로 세팅한다.
-- key가 존재하면 조회한 Bitset에 `userId`값을 `offset`으로 넣어서 `1(true)`로 세팅한다.
-
-### 2-3-2. 출석체크 확인하는 배치
-
-![a](https://github.com/znftm97/coupon_platform/assets/57134526/31d45330-b5f5-457c-91b0-34744c32c1b7)
-
-**Job**
-
-- 3일, 7일, 30일 Job이 따로 있고, 3일을 기준으로 설명한다.
-
-**Step**
-
-- **Step - Bitop**
-    - Redis의 `Bitop`명령어을 수행하는 Step이다.
-- **Step - 출석체크 확인**
-    - 3일 연속 출석체크한 사용자를 조회해서, 쿠폰을 발급해주는 Step이다.
-
-**Tasklet**
-
-- **Tasklet - Bitop**
-    - 오늘이 2023-09-25일이라면, 3일치 [09-23, 09-24, 09-25] key들에 대해 bit and 연산을 수행한다.
-    - 연산을 수행한 결과가 지정한key:결과값 형태로 저장된다.
-- **Tasklet - 출석체크 확인**
-    - 처리해야 할 과정이 read-process-write로 딱 떨어져서 chunck 처리를 하려 했다.
-    - 하지만 읽어야 할 데이터는 Redis의 `Bitop` 명령어 수행 결과값 하나 뿐이고, 여러명의 사용자에게 쿠폰을 발급한다.
-        - 즉 reader와 writer의 `chunk size`가 다르다. 이를 해결하기 위해서는 별도의 구현이 필요한데 복잡해질 가능성이 크고, 조회 데이터는 1개 뿐이라 Tasklet으로 구현했다.
-
-**Worker**
-
-- **read**
-    - Redis에서 `Bitop` 명령어 수행 결과를 조회한다.
-- **process**
-    - 비트 데이터를 기반으로 3일 연속 출석체크한 사용자의 ID 값을 추출한다.
-- **write**
-    - 추출된 사용자들에게 모두 쿠폰을 발급한다. (RDB에 발급한 쿠폰 저장)
-
-**KeyGenerator**
-
-- `Bitop` 명령어 사용시 저장될 key를 지정해야 하는데, 이 때 key를 생성하는 역할
-- `Bitop` 명령어 수행 결과를 조회할 key를 생성하는 역할
-
-**RedisHandler**
-
-- Redis에 `Bitop` 명령어를 수행하거나, 데이터를 저장하고 조회하는 등, Redis 관련 작업을 처리하는 핸들러
-- **LettuceHandler**
-    - 여러 Redis 자바 클라이언트 중 `Lettuce`를 사용했고 `redisson`, `jedis`등 얼마든지 다른 라이브러리로 변경가능하므로 추상화했다.
  
-## 2-4 요구사항 확장해보기
+## 2-3 요구사항 확장해보기
 [자세한 내용은 노션으로 문서화](https://languid-visage-6fe.notion.site/6e4684a0dd4f41688d3533ff175682ce?pvs=4)
 
 - **기존 요구사항**
@@ -221,7 +142,7 @@ class AccountStoreImpl(
 - **변경된 요구사항**
     - 서비스가 흥행해서, 가입한 사용자 수가 **1억명**으로 늘어났다.
 
-### 2-4-1. 개선 할 수 있는 부분 고민해보기
+### 2-3-1. 개선 할 수 있는 부분 고민해보기
 
 <details>
 <summary><strong>1. N일 출석체크 여부 확인 과정</strong></summary>
@@ -268,3 +189,66 @@ class AccountStoreImpl(
 </details> 
 
 * 개선점을 고민해보는 것 자체로 유의미하다고 생각하고 위 1,2번 방법만 적용했다. batch insert는 JPA, MyBatis, Exposed, JDBC 등 어떤 기술을 통해 batch insert를 구현할지 고민했고, 가장 적합하다고 생각한 JDBC를 이용했다.
+
+# 3. 쿠폰 통계 조회 기능
+## 3-1. 요구사항
+쿠폰 시스템 개선을 위해, 쿠폰 관련 통계 데이터를 산출하라는 업무가 주어졌다고 가정해보자.<br> 
+이 데이터는 화면을 통해 제공되고, 내부 운영자가 사용한다.
+
+1. **통계 데이터**
+    - 쿠폰 발급 개수
+    - 쿠폰 사용 개수
+    - 기간이 만료된 쿠폰 개수
+    - 쿠폰 사용 비율
+        - 소수점은 버린다.
+    - 조회한 데이터의, 위 4개 항목 합계 및 평균 데이터
+2. **통계 데이터의 날짜 범위는, 클라이언트의 요청에 포함된 날짜를 기준으로 한다.**
+    - 날짜 범위는 클라이언트에서 자유롭게 직접 지정할 수 있다.
+    - 유효하지 않은 날짜 데이터는 인입되지 않는다고 가정한다. (validation 생략)
+3. **통계 데이터는 하루마다 갱신된다.**
+    - 오늘이 2023-10-13일 이라면, 2023-10-12일 까지 데이터만 조회할 수 있다.
+4. **날짜 기준 오름차순으로 응답한다.**
+5. **발급된 쿠폰의 개수는 100만개라고 가정한다.**
+
+### 예시
+| 날짜 | 쿠폰 발급 개수 | 쿠폰 사용 개수 | 기간이 만료된 쿠폰 개수 | 쿠폰 사용 비율(%) |
+| --- | --- | --- | --- | --- |
+| 2023-10-15 | 1 | 1 | 0 | 100 |
+| 2023-10-16 | 10 | 5 | 1 | 50 |
+| 2023-10-17 | 1 | 0 | 0 | 0 |
+| 합계 | 12 | 6 | 1 | 50 |
+
+## 3-2. 개선사항 고민해보기
+### 3-2-1. 인덱스
+사실 인덱스 적용은 필수적인 과정이다. 그러나 인덱스는 적은양의 데이터를 빠르게 조회할 때 효과를 발휘한다. MySQL InnoDB 스토리지 엔진 기준, 조회하는 데이터가 전체 데이터의 약 25%가 넘어가면 옵티마이저가 테이블 풀 스캔을한다. 
+이처럼 적은 양의 데이터를 조회하는 경우에는 인덱스로도 충분하지만, 현재는 한번에 많은 양의 데이터를 조회하므로, **인덱스로 성능 개선을 기대하기는 어렵다.**
+### 3-2-2. 글로벌 캐싱
+통계 데이터를 계산하기 위해, 발급된 쿠폰 데이터를 RDB가 아닌 Redis에 저장된 데이터를 읽어오도록 하면, RDB에 대한 부하 감소와, 빠른 응답속도 등 이점을 챙길 수 있다. 
+또한 발급된 쿠폰은 마이페이지, 주문서 등 다른 API에서도 조회할 일이 종종 있기 때문에, 추후 캐싱 데이터를 활용할 수 있다. 
+
+**Cache Aside 패턴을 적용하고, 해당 프로젝트에는 이미 Redis를 사용중이기 때문에, Redis를 이용해 발급된 쿠폰 데이터를 캐싱하고자 한다.**
+
+여기서 고려해야할 점은, 쿠폰이 발급될 때 마다 Redis에 저장해야하는가? 이다. 매번 RDB 뿐만 아니라 Redis에 저장하는 network I/O가 추가되기 때문에, 응답속도에 영향을 미친다. 
+잘 생각해보면 통계 데이터는 하루에 한번 갱신되기 때문에, 하루에 한번만 하루동안 발급된 쿠폰의 데이터를 Redis에 넣어주면 된다. 
+**이렇게 되면 Cache Aside 패턴의 단점 중 하나인 첫 요청은 무조건 캐시 미스가 발생하는 문제도 자연스럽게 해결된다.**
+
+### 3-2-3. 로컬 캐싱
+각 애플리케이션 서버에 통계 데이터를 캐싱해놓는 방법도 있다. 이를 로컬 캐싱이라 부르는데, 로컬 캐싱을 적용하기 어려운 이유는 동기화이다. 
+A,B 애플리케이션 서버가 존재할 때, A 서버에서 인입된 요청으로 데이터가 변경되었다면 B 애플리케이션 서버에 저장된 캐시 데이터는 정합성이 깨지게 된다. 
+
+그런데 여기서 통계 데이터는 하루마다 갱신하기 때문에, 하루동안 데이터 정합성이 깨질일이 없다. 하루마다 데이터를 갱신만 해주면 된다. 
+**따라서 로컬 캐싱을 적용하여 더 빠른 응답속도, RDB에 대한 부하 감소 효과를 얻을 수 있다.**
+
+## 3-3. 개선 결과
+### 3-3-1. 성능 개선 전
+![성능테스트_성능개선전 PNG](https://github.com/znftm97/coupon_platform/assets/57134526/10ebb626-8015-4fa3-acff-5d2e45450d07)
+- 100만개라서 2회 이상 요청하면 서버가 다운되기 때문에 1번의 요청을 기준으로 이후 테스트와 비교해본다.
+- 평균 응답시간인 `Average`를 기준으로 비교한다.
+- **약 19초**
+
+### 3-3-2. 글로벌 캐싱 적용
+![글로벌캐싱 PNG](https://github.com/znftm97/coupon_platform/assets/57134526/8c057fb6-abbf-4f0a-97bc-a95e47ba05df)
+- **약 9초**
+- 19초 → 9초로 10초정도 개선됐다.
+
+### 3-3-3. 로컬 캐싱 적용 (진행중)

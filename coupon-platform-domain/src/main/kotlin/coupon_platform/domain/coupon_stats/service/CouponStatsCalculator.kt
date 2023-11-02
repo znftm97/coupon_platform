@@ -25,7 +25,7 @@ class CouponStatsCalculator {
         )
     }
 
-    fun calculateCouponStatsDaily(
+    fun calculateCouponDailyStats(
         issuedCoupons: List<IssuedCouponInfo>,
     ): List<CouponDailyStatsInfo> {
         val groupedByDate: Map<LocalDate, List<IssuedCouponInfo>> = issuedCoupons.groupBy { it.createdAt }

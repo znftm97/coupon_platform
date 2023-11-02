@@ -3,7 +3,6 @@ package coupon_platform.domain.coupon_code.entity
 import coupon_platform.domain.common.BaseEntity
 import coupon_platform.domain.common.exception.coupon_code.InvalidExpirationPeriodException
 import jakarta.persistence.*
-import java.security.InvalidParameterException
 import java.time.ZonedDateTime
 
 @Entity

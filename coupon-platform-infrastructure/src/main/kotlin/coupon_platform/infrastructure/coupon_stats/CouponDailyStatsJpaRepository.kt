@@ -9,7 +9,7 @@ import java.time.LocalDate
 interface CouponDailyStatsJpaRepository: JpaRepository<CouponDailyStats, Long> {
 
     @Query("SELECT cds FROM CouponDailyStats cds WHERE cds.statsDate BETWEEN :startDate AND :endDate")
-    fun findCouponStatsByDateRange(
+    fun findCouponDailyStatsByDateRange(
         @Param("startDate") startDate: LocalDate,
         @Param("endDate") endDate: LocalDate
     ): List<CouponDailyStats>

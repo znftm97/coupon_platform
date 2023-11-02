@@ -1,22 +1,22 @@
-package coupon_platform.infrastructure.redis
+package coupon_platform.infrastructure.redis.handler
 
-import coupon_platform.infrastructure.account.AccountStoreImpl.Companion.ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL
+import coupon_platform.infrastructure.redis.util.RedisTTLConstants.ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL
 import org.springframework.data.redis.connection.RedisStringCommands
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
 import java.time.Duration
 import java.util.*
 
-interface RedisHandler {
+interface RedisHandlerOfBitset {
     fun bitopAndCommand(destKey: String, keys: Array<String>)
     fun get(key: String): BitSet?
     fun set(key: String, value: BitSet, ttl: Duration)
 }
 
 @Component
-class LettuceHandler(
+class LettuceHandlerOfBitset(
     private val redisTemplate: RedisTemplate<String, BitSet>,
-): RedisHandler {
+): RedisHandlerOfBitset {
 
     companion object {
         const val BIT_AND_OPERATOR = "AND"

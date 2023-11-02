@@ -2,7 +2,8 @@ package coupon_platform.infrastructure.account
 
 import coupon_platform.domain.account.AccountStore
 import coupon_platform.domain.common.CommonConstants.MAX_ACCOUNTS_NUMBER
-import coupon_platform.infrastructure.redis.RedisHandler
+import coupon_platform.infrastructure.redis.handler.RedisHandlerOfBitset
+import coupon_platform.infrastructure.redis.util.RedisTTLConstants.ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL
 import org.springframework.stereotype.Repository
 import java.time.Duration
 import java.time.LocalDateTime
@@ -11,12 +12,11 @@ import java.util.*
 
 @Repository
 class AccountStoreImpl(
-    private val redisHandler: RedisHandler,
+    private val redisHandler: RedisHandlerOfBitset,
 ) : AccountStore {
 
     companion object {
         const val ATTENDANCE_CHECK_PREFIX = "attendance:check:"
-        const val ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL = 60L
     }
 
     override fun attendance(userId: Long) {

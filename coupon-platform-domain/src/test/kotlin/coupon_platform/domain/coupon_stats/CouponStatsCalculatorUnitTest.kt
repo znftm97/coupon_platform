@@ -15,7 +15,7 @@ class CouponStatsCalculatorUnitTest: FeatureSpec({
 
     feature("발급된 쿠폰정보가 주어지면, 일일 통계 데이터를 계산한다.") {
         scenario("발급된 쿠폰이 존재하지 않는 경우") {
-            val results: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponStatsDaily(emptyList())
+            val results: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponDailyStats(emptyList())
             results.size shouldBeEqual 0
         }
 
@@ -25,7 +25,7 @@ class CouponStatsCalculatorUnitTest: FeatureSpec({
             val info3 = IssuedCouponInfo(false, ZonedDateTime.now().minusDays(7), LocalDate.now())
             val issuedCouponInfos: List<IssuedCouponInfo> = listOf(info1, info2, info3)
 
-            val results: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponStatsDaily(issuedCouponInfos)
+            val results: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponDailyStats(issuedCouponInfos)
             val couponDailyStatsInfo = results.get(0)
 
             results.size shouldBeEqual 1
@@ -41,7 +41,7 @@ class CouponStatsCalculatorUnitTest: FeatureSpec({
             val info3 = IssuedCouponInfo(false, ZonedDateTime.now().minusDays(7), LocalDate.now().plusDays(2))
             val issuedCouponInfos: List<IssuedCouponInfo> = listOf(info1, info2, info3)
 
-            val results: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponStatsDaily(issuedCouponInfos)
+            val results: List<CouponDailyStatsInfo> = couponStatsCalculator.calculateCouponDailyStats(issuedCouponInfos)
             val result1 = results.get(0)
             val result2 = results.get(1)
             val result3 = results.get(2)

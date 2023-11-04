@@ -20,4 +20,9 @@ class IssuedCouponFacade(
         val couponInfo = couponReadService.findCouponById(couponCodeInfo.couponId)
         return issuedCouponStoreService.issueCoupon(IssueCouponCommand(couponInfo.id, accountId, couponCodeInfo.expirationPeriod))
     }
+
+    fun cachingIssuedCouponToLocal() {
+        issuedCouponStoreService.cachingIssuedCouponToLocal()
+    }
+
 }

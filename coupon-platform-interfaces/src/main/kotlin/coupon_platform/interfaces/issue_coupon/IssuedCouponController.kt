@@ -26,4 +26,10 @@ class IssuedCouponController(
         return BaseResponse.success(couponId)
     }
 
+    @PostMapping("/local-caching")
+    fun cachingIssuedCouponToLocal(): BaseResponse<Unit> {
+        issuedCouponFacade.cachingIssuedCouponToLocal()
+        return BaseResponse.success(Unit)
+    }
+
 }

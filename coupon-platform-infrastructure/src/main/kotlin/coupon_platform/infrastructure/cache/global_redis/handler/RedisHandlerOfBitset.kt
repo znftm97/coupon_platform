@@ -1,6 +1,6 @@
 package coupon_platform.infrastructure.cache.global_redis.handler
 
-import coupon_platform.infrastructure.cache.global_redis.util.RedisTTLConstants.ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL
+import coupon_platform.infrastructure.cache.global_redis.util.CacheConstants.ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL
 import org.springframework.data.redis.connection.RedisStringCommands
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component

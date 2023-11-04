@@ -3,7 +3,7 @@ package coupon_platform.batch.issued_coupon.global_caching
 import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
 import coupon_platform.domain.issued_coupon.repository.IssuedCouponReader
 import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfIssuedCoupon
-import coupon_platform.infrastructure.cache.global_redis.util.RedisTTLConstants.ISSUED_COUPON_KEY_TTL
+import coupon_platform.infrastructure.cache.global_redis.util.CacheConstants.ISSUED_COUPON_KEY_TTL
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 import java.time.LocalDate
 
 @Component
-class IssueCouponTasklet(
+class IssueCouponToRedisTasklet(
     private val issuedCouponReader: IssuedCouponReader,
     private val redisHandler: RedisHandlerOfIssuedCoupon,
 ): Tasklet {

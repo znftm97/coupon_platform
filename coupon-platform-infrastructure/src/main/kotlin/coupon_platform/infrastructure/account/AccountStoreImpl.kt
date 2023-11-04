@@ -2,8 +2,8 @@ package coupon_platform.infrastructure.account
 
 import coupon_platform.domain.account.AccountStore
 import coupon_platform.domain.common.CommonConstants.MAX_ACCOUNTS_NUMBER
-import coupon_platform.infrastructure.redis.handler.RedisHandlerOfBitset
-import coupon_platform.infrastructure.redis.util.RedisTTLConstants.ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL
+import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfBitset
+import coupon_platform.infrastructure.cache.global_redis.util.RedisTTLConstants.ATTENDANCE_CHECK_BITOP_RESULT_KEY_TTL
 import org.springframework.stereotype.Repository
 import java.time.Duration
 import java.time.LocalDateTime

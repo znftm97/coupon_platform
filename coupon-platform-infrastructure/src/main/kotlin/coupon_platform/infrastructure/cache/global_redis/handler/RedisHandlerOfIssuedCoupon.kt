@@ -1,7 +1,7 @@
-package coupon_platform.infrastructure.redis.handler
+package coupon_platform.infrastructure.cache.global_redis.handler
 
 import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
-import coupon_platform.infrastructure.redis.util.IssuedCouponForRedis
+import coupon_platform.infrastructure.cache.global_redis.util.IssuedCouponForRedis
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
 import java.time.Duration

@@ -1,4 +1,4 @@
-package coupon_platform.infrastructure.redis.util
+package coupon_platform.infrastructure.cache.global_redis.util
 
 object RedisTTLConstants {
     /*출석체크 BITOP 연산 결과 데이터 TTL*/

@@ -2,8 +2,8 @@ package coupon_platform.infrastructure.issued_coupon
 
 import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
 import coupon_platform.domain.issued_coupon.repository.IssuedCouponStore
-import coupon_platform.infrastructure.redis.handler.RedisHandlerOfIssuedCoupon
-import coupon_platform.infrastructure.redis.util.RedisTTLConstants.ISSUED_COUPON_KEY_TTL
+import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfIssuedCoupon
+import coupon_platform.infrastructure.cache.global_redis.util.RedisTTLConstants.ISSUED_COUPON_KEY_TTL
 import org.springframework.stereotype.Repository
 
 @Repository

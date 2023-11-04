@@ -2,7 +2,7 @@ package coupon_platform.infrastructure.issued_coupon
 
 import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
 import coupon_platform.domain.issued_coupon.repository.IssuedCouponReader
-import coupon_platform.infrastructure.redis.handler.RedisHandlerOfIssuedCoupon
+import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfIssuedCoupon
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 

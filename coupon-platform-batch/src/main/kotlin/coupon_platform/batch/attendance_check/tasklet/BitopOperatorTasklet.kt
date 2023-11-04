@@ -7,7 +7,7 @@ import coupon_platform.batch.attendance_check.CommonConstants.EVENT_DAY_SEVEN
 import coupon_platform.batch.attendance_check.CommonConstants.EVENT_DAY_THIRTY
 import coupon_platform.batch.attendance_check.CommonConstants.EVENT_DAY_THREE
 import coupon_platform.batch.attendance_check.KeyGenerator
-import coupon_platform.infrastructure.redis.handler.RedisHandlerOfBitset
+import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfBitset
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet

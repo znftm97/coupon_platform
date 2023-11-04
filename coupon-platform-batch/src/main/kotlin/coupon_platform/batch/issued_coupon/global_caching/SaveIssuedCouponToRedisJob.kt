@@ -1,6 +1,6 @@
-package coupon_platform.batch.issued_coupon
+package coupon_platform.batch.issued_coupon.global_caching
 
-import coupon_platform.batch.issued_coupon.SaveIssuedCouponToRedisJob.Companion.JOB_NAME_OF_ISSUE_COUPON
+import coupon_platform.batch.issued_coupon.global_caching.SaveIssuedCouponToRedisJob.Companion.JOB_NAME_OF_ISSUE_COUPON
 import coupon_platform.batch.listener.JobListener
 import coupon_platform.batch.listener.StepListener
 import org.springframework.batch.core.Job

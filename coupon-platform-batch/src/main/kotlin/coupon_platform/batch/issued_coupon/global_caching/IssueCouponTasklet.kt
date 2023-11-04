@@ -1,9 +1,9 @@
-package coupon_platform.batch.issued_coupon
+package coupon_platform.batch.issued_coupon.global_caching
 
 import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
 import coupon_platform.domain.issued_coupon.repository.IssuedCouponReader
-import coupon_platform.infrastructure.redis.handler.RedisHandlerOfIssuedCoupon
-import coupon_platform.infrastructure.redis.util.RedisTTLConstants.ISSUED_COUPON_KEY_TTL
+import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfIssuedCoupon
+import coupon_platform.infrastructure.cache.global_redis.util.RedisTTLConstants.ISSUED_COUPON_KEY_TTL
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet

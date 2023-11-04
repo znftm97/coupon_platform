@@ -8,22 +8,22 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class IssuedCouponReadService(
+class IssuedCouponReadServiceV2(
     private val issuedCouponReader: IssuedCouponReader,
     private val issuedCouponStore: IssuedCouponStore,
 ) {
 
     fun findIssuedCouponsInDates(reqDates: List<LocalDate>): List<IssuedCouponInfo> {
-        val issuedCouponsFromRedis: List<IssuedCoupon> = issuedCouponReader.findIssuedCouponsInDatesFromRedis(reqDates)
-        val emptyStatsDates: List<LocalDate> = getEmptyStatsDates(reqDates.toSet(), issuedCouponsFromRedis)
+        val issuedCouponsFromLocal: List<IssuedCoupon> = issuedCouponReader.findIssuedCouponInDatesFromLocal(reqDates)
+        val emptyStatsDates: List<LocalDate> = getEmptyStatsDates(reqDates.toSet(), issuedCouponsFromLocal)
 
         if(emptyStatsDates.isEmpty()) {
-            return issuedCouponsFromRedis.map { IssuedCouponInfo.toInfo(it) }
+            return issuedCouponsFromLocal.map { IssuedCouponInfo.toInfo(it) }
         }
 
         val issuedCoupons: List<IssuedCoupon> = issuedCouponReader.findIssuedCouponsInDates(emptyStatsDates)
-        issuedCouponStore.saveIssuedCouponToRedis(issuedCoupons)
-        issuedCoupons.toMutableList().addAll(issuedCouponsFromRedis)
+        issuedCouponStore.saveIssuedCouponToLocal(issuedCoupons)
+        issuedCoupons.toMutableList().addAll(issuedCouponsFromLocal)
 
         return issuedCoupons.map { IssuedCouponInfo.toInfo(it) }
     }

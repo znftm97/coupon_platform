@@ -2,20 +2,18 @@ package coupon_platform.batch.issued_coupon.local_caching
 
 import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
 import coupon_platform.domain.issued_coupon.repository.IssuedCouponReader
-import coupon_platform.infrastructure.cache.global_redis.util.CacheConstants.ISSUED_COUPON
-import coupon_platform.infrastructure.cache.global_redis.util.IssuedCouponForRedis
+import coupon_platform.infrastructure.cache.local_caffeine.CaffeineHandlerForIssuedCoupon
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet
 import org.springframework.batch.repeat.RepeatStatus
-import org.springframework.cache.CacheManager
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 
 @Component
 class IssueCouponToLocalTasklet(
     private val issuedCouponReader: IssuedCouponReader,
-    private val cacheManager: CacheManager
+    private val caffeineHandler: CaffeineHandlerForIssuedCoupon,
 ): Tasklet {
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus? {
@@ -35,14 +33,11 @@ class IssueCouponToLocalTasklet(
     }
 
     private fun saveIssuedCouponsToLocal(issuedCoupons: List<IssuedCoupon>) {
-        val cache = cacheManager.getCache(ISSUED_COUPON) ?: return
-
-        issuedCoupons.asSequence()
-            .map { IssuedCouponForRedis.of(it) }
-            .groupBy { it.createdAt.toLocalDate().toString() }
-            .forEach { (key, value) ->
-                cache.put(key, value)
-            }
+        issuedCoupons.groupBy {
+            it.createdAt.toLocalDate().toString()
+        }.forEach { (key, value) ->
+            caffeineHandler.set(key, value)
+        }
     }
 }
 

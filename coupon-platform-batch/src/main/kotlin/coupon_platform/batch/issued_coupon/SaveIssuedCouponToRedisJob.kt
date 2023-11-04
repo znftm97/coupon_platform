@@ -1,6 +1,6 @@
-package coupon_platform.batch.issued_coupon.local_caching
+package coupon_platform.batch.issued_coupon
 
-import coupon_platform.batch.issued_coupon.local_caching.SaveIssuedCouponToLocalJob.Companion.JOB_NAME_OF_ISSUE_COUPON_TO_LOCAL
+import coupon_platform.batch.issued_coupon.SaveIssuedCouponToRedisJob.Companion.JOB_NAME_OF_ISSUE_COUPON
 import coupon_platform.batch.listener.JobListener
 import coupon_platform.batch.listener.StepListener
 import org.springframework.batch.core.Job
@@ -14,15 +14,15 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.PlatformTransactionManager
 
 @Configuration
-@ConditionalOnProperty(value = ["spring.batch.job.names"], havingValue = JOB_NAME_OF_ISSUE_COUPON_TO_LOCAL)
-class SaveIssuedCouponToLocalJob(
-    private val issueCouponToLocalTasklet: IssueCouponToLocalTasklet,
+@ConditionalOnProperty(value = ["spring.batch.job.names"], havingValue = JOB_NAME_OF_ISSUE_COUPON)
+class SaveIssuedCouponToRedisJob(
+    private val issueCouponToRedisTasklet: IssueCouponToRedisTasklet,
     private val jobListener: JobListener,
     private val stepListener: StepListener,
 ) {
     companion object {
-        const val JOB_NAME_OF_ISSUE_COUPON_TO_LOCAL = "issue.coupon.to.local.job"
-        const val STEP_NAME_OF_ISSUE_COUPON_TO_LOCAL = "issue.coupon.to.local.step"
+        const val JOB_NAME_OF_ISSUE_COUPON = "issue.coupon.to.redis.job"
+        const val STEP_NAME_OF_ISSUE_COUPON = "issue.coupon.to.redis.step"
     }
 
     @Bean
@@ -30,7 +30,7 @@ class SaveIssuedCouponToLocalJob(
         jobRepository: JobRepository,
         platformTransactionManager: PlatformTransactionManager,
     ): Job {
-        return JobBuilder(JOB_NAME_OF_ISSUE_COUPON_TO_LOCAL, jobRepository)
+        return JobBuilder(JOB_NAME_OF_ISSUE_COUPON, jobRepository)
             .start(issueCouponStep(jobRepository, platformTransactionManager))
             .listener(jobListener)
             .build()
@@ -40,8 +40,8 @@ class SaveIssuedCouponToLocalJob(
     fun issueCouponStep(
         jobRepository: JobRepository,
         platformTransactionManager: PlatformTransactionManager,
-    ): Step = StepBuilder(STEP_NAME_OF_ISSUE_COUPON_TO_LOCAL, jobRepository)
-        .tasklet(issueCouponToLocalTasklet, platformTransactionManager)
+    ): Step = StepBuilder(STEP_NAME_OF_ISSUE_COUPON, jobRepository)
+        .tasklet(issueCouponToRedisTasklet, platformTransactionManager)
         .listener(stepListener)
         .build()
 }

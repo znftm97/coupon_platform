@@ -1,8 +1,9 @@
-package coupon_platform.batch.issued_coupon.local_caching
+package coupon_platform.batch.issued_coupon
 
 import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
 import coupon_platform.domain.issued_coupon.repository.IssuedCouponReader
-import coupon_platform.infrastructure.cache.local_caffeine.CaffeineHandlerForIssuedCoupon
+import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfIssuedCoupon
+import coupon_platform.infrastructure.cache.global_redis.util.CacheConstants.ISSUED_COUPON_KEY_TTL
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet
@@ -11,9 +12,9 @@ import org.springframework.stereotype.Component
 import java.time.LocalDate
 
 @Component
-class IssueCouponToLocalTasklet(
+class IssueCouponToRedisTasklet(
     private val issuedCouponReader: IssuedCouponReader,
-    private val caffeineHandler: CaffeineHandlerForIssuedCoupon,
+    private val redisHandler: RedisHandlerOfIssuedCoupon,
 ): Tasklet {
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus? {
@@ -22,22 +23,18 @@ class IssueCouponToLocalTasklet(
             return RepeatStatus.FINISHED
         }
 
-        saveIssuedCouponsToLocal(findIssuedCoupons)
+        saveIssuedCouponsToRedis(findIssuedCoupons)
 
         return RepeatStatus.FINISHED
     }
 
     private fun findIssuedCoupons(): List<IssuedCoupon> {
-        val yesterday = LocalDate.now().minusDays(1L)
+        val yesterday = LocalDate.now().minusDays(1)
         return issuedCouponReader.findIssuedCouponsInDates(listOf(yesterday))
     }
 
-    private fun saveIssuedCouponsToLocal(issuedCoupons: List<IssuedCoupon>) {
-        issuedCoupons.groupBy {
-            it.createdAt.toLocalDate().toString()
-        }.forEach { (key, value) ->
-            caffeineHandler.set(key, value)
-        }
+    private fun saveIssuedCouponsToRedis(findIssuedCoupons: List<IssuedCoupon>) {
+        redisHandler.setIssuedCouponsWithTTL(findIssuedCoupons, ISSUED_COUPON_KEY_TTL)
     }
 }
 

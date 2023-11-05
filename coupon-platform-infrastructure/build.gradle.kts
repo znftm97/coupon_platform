@@ -9,6 +9,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis:3.1.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2")
+
+    implementation ("org.springframework.boot:spring-boot-starter-cache")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}

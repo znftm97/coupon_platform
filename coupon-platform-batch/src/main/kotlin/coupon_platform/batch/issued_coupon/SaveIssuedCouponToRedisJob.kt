@@ -16,7 +16,7 @@ import org.springframework.transaction.PlatformTransactionManager
 @Configuration
 @ConditionalOnProperty(value = ["spring.batch.job.names"], havingValue = JOB_NAME_OF_ISSUE_COUPON)
 class SaveIssuedCouponToRedisJob(
-    private val issueCouponTasklet: IssueCouponTasklet,
+    private val issueCouponToRedisTasklet: IssueCouponToRedisTasklet,
     private val jobListener: JobListener,
     private val stepListener: StepListener,
 ) {
@@ -41,7 +41,7 @@ class SaveIssuedCouponToRedisJob(
         jobRepository: JobRepository,
         platformTransactionManager: PlatformTransactionManager,
     ): Step = StepBuilder(STEP_NAME_OF_ISSUE_COUPON, jobRepository)
-        .tasklet(issueCouponTasklet, platformTransactionManager)
+        .tasklet(issueCouponToRedisTasklet, platformTransactionManager)
         .listener(stepListener)
         .build()
 }

@@ -2,7 +2,7 @@ package coupon_platform.batch.attendance_check.tasklet
 
 import coupon_platform.batch.attendance_check.CommonConstants
 import coupon_platform.batch.attendance_check.KeyGenerator
-import coupon_platform.infrastructure.redis.handler.RedisHandlerOfBitset
+import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfBitset
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet

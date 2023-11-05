@@ -1,4 +1,4 @@
-package coupon_platform.infrastructure.redis.util
+package coupon_platform.infrastructure.cache.global_redis.util
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize

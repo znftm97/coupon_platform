@@ -28,5 +28,4 @@ class StepListener {
 
         return exitStatus
     }
-
 }

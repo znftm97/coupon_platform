@@ -13,7 +13,7 @@ class JobListener {
 
     @BeforeJob
     fun beforeJob(jobExecution: JobExecution) {
-        log.info { "Job - {$jobExecution.jobInstance.jobName} 실행"}
+        log.info { "Job - {$jobExecution.jobInstance.jobName} 실행" }
     }
 
     @AfterJob

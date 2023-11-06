@@ -28,7 +28,6 @@ class CouponReadServiceUnitTest : FunSpec({
         result.name shouldBeEqual name
         result.discountType shouldBeEqual Coupon.DiscountType.PRICE
         result.price shouldBeEqual coupon.price
-
     }
 
     test("쿠폰id로 쿠폰을 조회할 수 있다.") {
@@ -47,5 +46,4 @@ class CouponReadServiceUnitTest : FunSpec({
         result.discountType shouldBeEqual Coupon.DiscountType.PRICE
         result.price shouldBeEqual coupon.price
     }
-
 })

@@ -1,7 +1,7 @@
 package coupon_platform.infrastructure.config
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import coupon_platform.infrastructure.cache.local_caffeine.CacheType
+import coupon_platform.infrastructure.cache.localcaffeine.CacheType
 import org.springframework.cache.CacheManager
 import org.springframework.cache.caffeine.CaffeineCache
 import org.springframework.cache.support.SimpleCacheManager

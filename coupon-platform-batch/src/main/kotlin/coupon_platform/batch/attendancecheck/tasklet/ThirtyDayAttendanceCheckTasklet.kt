@@ -2,7 +2,7 @@ package coupon_platform.batch.attendancecheck.tasklet
 
 import coupon_platform.batch.attendancecheck.CommonConstants
 import coupon_platform.batch.attendancecheck.KeyGenerator
-import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfBitset
+import coupon_platform.infrastructure.cache.globalredis.handler.RedisHandlerOfBitset
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet
@@ -31,6 +31,4 @@ class ThirtyDayAttendanceCheckTasklet(
         val destKey = keyGenerator.generateKey(CommonConstants.DEST_KEY_OF_THIRTY_DAY, LocalDateTime.now())
         return redisHandler.get(destKey)
     }
-
 }
-

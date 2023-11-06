@@ -57,5 +57,4 @@ class ThreeDayAttendanceCheckJobConfig(
         .tasklet(threeDayAttendanceCheckTasklet, platformTransactionManager)
         .listener(stepListener)
         .build()
-
 }

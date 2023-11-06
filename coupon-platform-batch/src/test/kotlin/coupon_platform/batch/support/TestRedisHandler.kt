@@ -11,7 +11,7 @@ class TestRedisHandler(
 ) {
 
     /* accountIds에 들어있는 id를 가진 사용자는 checkDay일 동안 출석체크 하도록 세팅*/
-    fun set(accountIds : List<Int>, checkDay: Long) {
+    fun set(accountIds: List<Int>, checkDay: Long) {
         val bitSet = BitSet(CommonConstants.MAX_ACCOUNTS_NUMBER)
         accountIds.forEach {
             bitSet.set(it, true)
@@ -26,7 +26,7 @@ class TestRedisHandler(
     }
 
     /*checkDay일 동안 연속으로 출석체크한 사용자가 없도록 세팅*/
-    fun setNobodyAttendanceCheck(checkDay: Long){
+    fun setNobodyAttendanceCheck(checkDay: Long) {
         val bitSet = BitSet(CommonConstants.MAX_ACCOUNTS_NUMBER)
 
         (0 until checkDay).forEach { idx ->

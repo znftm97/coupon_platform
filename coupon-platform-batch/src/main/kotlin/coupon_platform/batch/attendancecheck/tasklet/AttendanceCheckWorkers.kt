@@ -53,7 +53,6 @@ class Processor(
 
     private fun convertStringToZonedDateTime(str: String?) =
         ZonedDateTime.of(LocalDate.parse(str).atStartOfDay(), ZoneId.of("UTC"))
-
 }
 
 @Component
@@ -65,7 +64,7 @@ class Writer(
 
     fun issueCoupon(parameters: List<BatchParameters>) {
         val sql = "INSERT INTO issued_coupon (external_id, account_id, coupon_id, expiration_period, is_used) " +
-                "VALUES (:externalId, :accountId, :couponId, :expirationPeriod, false)"
+            "VALUES (:externalId, :accountId, :couponId, :expirationPeriod, false)"
 
         namedParameterJdbcTemplate.batchUpdate(sql, SqlParameterSourceUtils.createBatch(parameters))
     }

@@ -7,7 +7,7 @@ import coupon_platform.batch.attendancecheck.CommonConstants.EVENT_DAY_SEVEN
 import coupon_platform.batch.attendancecheck.CommonConstants.EVENT_DAY_THIRTY
 import coupon_platform.batch.attendancecheck.CommonConstants.EVENT_DAY_THREE
 import coupon_platform.batch.attendancecheck.KeyGenerator
-import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfBitset
+import coupon_platform.infrastructure.cache.globalredis.handler.RedisHandlerOfBitset
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.tasklet.Tasklet
@@ -28,7 +28,6 @@ class ThreeDaysBitopOperatorTasklet(
 
         return RepeatStatus.FINISHED
     }
-
 }
 
 @Component
@@ -44,7 +43,6 @@ class SevenDaysBitopOperatorTasklet(
 
         return RepeatStatus.FINISHED
     }
-
 }
 
 @Component
@@ -60,5 +58,4 @@ class ThirtyDaysBitopOperatorTasklet(
 
         return RepeatStatus.FINISHED
     }
-
 }

@@ -14,9 +14,8 @@ import org.springframework.context.annotation.FilterType
     excludeFilters = [
         ComponentScan.Filter(
             type = FilterType.REGEX,
-            pattern = [".*(Batch).*"]
+            pattern = [".*(Batch).*"],
         )
     ]
 )
-class BatchTestConfig {
-}
+class BatchTestConfig

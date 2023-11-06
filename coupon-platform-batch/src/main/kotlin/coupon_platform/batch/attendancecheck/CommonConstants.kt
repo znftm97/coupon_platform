@@ -9,8 +9,7 @@ object CommonConstants {
     const val DEST_KEY_OF_THIRTY_DAY = "dest:thirty:"
 
     /*n일 연속 출석체크 이벤트 일수*/
-    const val EVENT_DAY_THREE = 3L;
-    const val EVENT_DAY_SEVEN = 7L;
-    const val EVENT_DAY_THIRTY = 30L;
-
+    const val EVENT_DAY_THREE = 3L
+    const val EVENT_DAY_SEVEN = 7L
+    const val EVENT_DAY_THIRTY = 30L
 }

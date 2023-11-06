@@ -23,13 +23,13 @@ class IssuedCouponStoreServiceUnitTest : FunSpec({
         val issuedCouponCommand = IssueCouponCommand(
             1L,
             1L,
-            ZonedDateTime.now().plusDays(7)
+            ZonedDateTime.now().plusDays(7),
         )
         val issuedCoupon = IssuedCoupon.of(
             1L,
             1L,
             ZonedDateTime.now().plusDays(7),
-            "externalId"
+            "externalId",
         )
 
         every { issuedCouponStore.saveIssuedCoupon(any()) } returns issuedCoupon

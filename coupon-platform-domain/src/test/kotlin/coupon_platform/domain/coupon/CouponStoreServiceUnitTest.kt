@@ -26,16 +26,15 @@ class CouponStoreServiceUnitTest : FunSpec({
             "externalId",
         )
 
-        every {  couponStore.saveCoupon(coupon) } returns coupon
-        every {  couponCreateCommand.toEntity(coupon.externalId) } returns coupon
-        every {  randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) } returns coupon.externalId
+        every { couponStore.saveCoupon(coupon) } returns coupon
+        every { couponCreateCommand.toEntity(coupon.externalId) } returns coupon
+        every { randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) } returns coupon.externalId
 
         val couponName = couponStoreService.createCoupon(couponCreateCommand)
 
-        verify {  couponStore.saveCoupon(coupon) }
-        verify {  couponCreateCommand.toEntity(coupon.externalId) }
-        verify {  randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) }
+        verify { couponStore.saveCoupon(coupon) }
+        verify { couponCreateCommand.toEntity(coupon.externalId) }
+        verify { randomNumberGenerator.generate(EXTERNAL_ID_LENGTH) }
         couponName shouldBeEqual coupon.name
     }
-
 })

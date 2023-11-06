@@ -28,7 +28,7 @@ class CouponCodeStoreServiceUnitTest : FunSpec({
             1,
             "xxxx-xxxx-xxxx-xxxx",
             ZonedDateTime.now().plusDays(7),
-            "externalId"
+            "externalId",
         )
         every { couponCodeStore.createCouponCode(any()) } returns couponCode
         every { tsidGenerator.generate(EXTERNAL_ID_LENGTH) } returns "EXTERNAL_ID"
@@ -41,5 +41,4 @@ class CouponCodeStoreServiceUnitTest : FunSpec({
         verify { uuidGenerator.generate(COUPON_CODE_LENGTH) }
         result shouldBe CouponCodeInfo.toInfo(couponCode)
     }
-
 })

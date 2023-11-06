@@ -9,7 +9,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 import java.time.LocalDate
 import java.time.ZonedDateTime
 
-class CouponStatsCalculatorUnitTest: FeatureSpec({
+class CouponStatsCalculatorUnitTest : FeatureSpec({
 
     val couponStatsCalculator = CouponStatsCalculator()
 
@@ -115,5 +115,4 @@ class CouponStatsCalculatorUnitTest: FeatureSpec({
             result.totalCouponUsageRate shouldBeEqual couponDailyStatsInfos.sumOf { it.couponUsageRate } / couponDailyStatsInfos.size
         }
     }
-
 })

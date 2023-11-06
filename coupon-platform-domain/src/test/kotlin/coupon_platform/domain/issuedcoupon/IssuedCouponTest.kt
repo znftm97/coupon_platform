@@ -19,5 +19,4 @@ class IssuedCouponTest : FunSpec({
         val result = IssuedCoupon.of(1, 1, ZonedDateTime.now().plusDays(1), "1")
         result.isUsed shouldBe false
     }
-
 })

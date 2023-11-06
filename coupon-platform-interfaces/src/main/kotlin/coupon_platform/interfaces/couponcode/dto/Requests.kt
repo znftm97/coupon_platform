@@ -1,4 +1,4 @@
-package coupon_platform.interfaces.coupon_code.dto
+package coupon_platform.interfaces.couponcode.dto
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import coupon_platform.domain.couponcode.dto.CouponCodeCreateCommand

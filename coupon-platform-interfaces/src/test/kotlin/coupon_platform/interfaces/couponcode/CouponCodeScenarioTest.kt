@@ -1,6 +1,6 @@
-package coupon_platform.interfaces.coupon_code
+package coupon_platform.interfaces.couponcode
 
-import coupon_platform.interfaces.coupon_code.dto.CouponCodeCreateRequest
+import coupon_platform.interfaces.couponcode.dto.CouponCodeCreateRequest
 import coupon_platform.interfaces.support.BaseScenarioTest
 import coupon_platform.interfaces.support.When
 import io.kotest.core.spec.style.FeatureSpec
@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 
 class CouponCodeScenarioTest(
     @LocalServerPort
-    port: Int
+    port: Int,
 ) : BaseScenarioTest, FeatureSpec() {
 
     init {
@@ -56,11 +56,11 @@ class CouponCodeScenarioTest(
                     .post("/api/v1/coupon-code")
                 .then()
                     .statusCode(200)
-                    .body("data", matchesPattern("\\w{4}-\\w{4}-\\w{4}-\\w{4}"))  // xxxx-xxxx-xxxx-xxxx 형태인지 && 19자리인지 검사
+                    // xxxx-xxxx-xxxx-xxxx 형태인지 && 19자리인지 검사
+                    .body("data", matchesPattern("\\w{4}-\\w{4}-\\w{4}-\\w{4}"))
                     .body("message", nullValue())
                     .body("exceptionCode", nullValue())
             }
         }
     }
 }
-

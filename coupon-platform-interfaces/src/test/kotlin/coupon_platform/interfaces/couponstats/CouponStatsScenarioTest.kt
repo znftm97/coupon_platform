@@ -1,4 +1,4 @@
-package coupon_platform.interfaces.coupon_stats
+package coupon_platform.interfaces.couponstats
 
 import coupon_platform.interfaces.support.BaseScenarioTest
 import coupon_platform.interfaces.support.When
@@ -11,7 +11,7 @@ import org.springframework.boot.test.web.server.LocalServerPort
 
 class CouponStatsScenarioTest(
     @LocalServerPort
-    port: Int
+    port: Int,
 ) : BaseScenarioTest, FeatureSpec() {
 
     init {

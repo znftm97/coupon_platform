@@ -1,4 +1,4 @@
-package coupon_platform.interfaces.coupon_stats.dto
+package coupon_platform.interfaces.couponstats.dto
 
 import coupon_platform.domain.couponstats.dto.CouponDailyStatsInfo
 import coupon_platform.domain.couponstats.dto.CouponStatsInfo

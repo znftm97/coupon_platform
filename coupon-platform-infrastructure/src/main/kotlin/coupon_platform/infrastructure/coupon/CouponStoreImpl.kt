@@ -10,5 +10,4 @@ class CouponStoreImpl(
 ) : CouponStore {
 
     override fun saveCoupon(coupon: Coupon): Coupon = couponJpaRepository.save(coupon)
-
 }

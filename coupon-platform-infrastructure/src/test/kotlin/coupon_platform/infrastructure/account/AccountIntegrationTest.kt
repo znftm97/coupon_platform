@@ -13,12 +13,12 @@ import java.util.*
 class AccountIntegrationTest(
     private val accountStoreImpl: AccountStoreImpl,
     private val redisTemplate: RedisTemplate<String, BitSet>,
-): BaseIntegrationTest, BehaviorSpec({
+) : BaseIntegrationTest, BehaviorSpec({
 
     val key = ATTENDANCE_CHECK_PREFIX + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 
     given("accountId가 1인 사용자가") {
-        val accountId = 1L;
+        val accountId = 1L
 
         `when`("로그인을 한 번 하면") {
             accountStoreImpl.attendance(accountId)

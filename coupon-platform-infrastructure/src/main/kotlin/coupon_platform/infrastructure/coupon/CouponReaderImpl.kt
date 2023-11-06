@@ -17,5 +17,4 @@ class CouponReaderImpl(
     override fun findCouponById(id: Long): Coupon {
         return couponJpaRepository.customFindById(id) ?: throw NotFoundCouponException()
     }
-
 }

@@ -9,5 +9,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @EnableJpaAuditing
 @EntityScan(basePackages = ["coupon_platform"])
 @EnableJpaRepositories(basePackages = ["coupon_platform"])
-class JpaConfiguration {
-}
+class JpaConfiguration

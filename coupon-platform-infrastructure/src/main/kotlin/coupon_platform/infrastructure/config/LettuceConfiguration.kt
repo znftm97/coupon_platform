@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.type.TypeFactory
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import coupon_platform.infrastructure.cache.global_redis.util.IssuedCouponForRedis
+import coupon_platform.infrastructure.cache.globalredis.util.IssuedCouponForRedis
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -18,7 +18,7 @@ import java.util.*
 
 @Configuration
 class LettuceConfiguration(
-    private val redisProperties: RedisProperties
+    private val redisProperties: RedisProperties,
 ) {
     @Bean
     fun lettuceConnectionFactory(): LettuceConnectionFactory {

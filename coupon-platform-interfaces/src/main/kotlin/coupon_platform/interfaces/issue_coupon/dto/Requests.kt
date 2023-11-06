@@ -1,7 +1,7 @@
 package coupon_platform.interfaces.issue_coupon.dto
 
 import com.fasterxml.jackson.annotation.JsonFormat
-import coupon_platform.domain.issued_coupon.dto.IssueCouponCommand
+import coupon_platform.domain.issuedcoupon.dto.IssueCouponCommand
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime

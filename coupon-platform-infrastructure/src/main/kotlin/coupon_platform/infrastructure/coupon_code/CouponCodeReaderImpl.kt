@@ -1,8 +1,8 @@
 package coupon_platform.infrastructure.coupon_code
 
 import coupon_platform.domain.common.exception.coupon_code.NotFoundCouponCodeException
-import coupon_platform.domain.coupon_code.entity.CouponCode
-import coupon_platform.domain.coupon_code.repository.CouponCodeReader
+import coupon_platform.domain.couponcode.entity.CouponCode
+import coupon_platform.domain.couponcode.repository.CouponCodeReader
 import org.springframework.stereotype.Repository
 
 @Repository

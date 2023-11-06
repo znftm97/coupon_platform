@@ -1,7 +1,7 @@
 package coupon_platform.batch.issued_coupon
 
-import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
-import coupon_platform.domain.issued_coupon.repository.IssuedCouponReader
+import coupon_platform.domain.issuedcoupon.entitiy.IssuedCoupon
+import coupon_platform.domain.issuedcoupon.repository.IssuedCouponReader
 import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfIssuedCoupon
 import coupon_platform.infrastructure.cache.global_redis.util.CacheConstants.ISSUED_COUPON_KEY_TTL
 import org.springframework.batch.core.StepContribution

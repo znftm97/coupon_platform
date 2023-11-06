@@ -1,9 +1,9 @@
 package coupon_platform.infrastructure.coupon_code
 
 import coupon_platform.domain.common.CommonConstants.EXTERNAL_ID_LENGTH
-import coupon_platform.domain.coupon_code.dto.CouponCodeCreateCommand
-import coupon_platform.domain.coupon_code.service.CouponCodeStoreService
-import coupon_platform.domain.coupon_code.service.CouponCodeStoreService.Companion.COUPON_CODE_LENGTH
+import coupon_platform.domain.couponcode.dto.CouponCodeCreateCommand
+import coupon_platform.domain.couponcode.service.CouponCodeStoreService
+import coupon_platform.domain.couponcode.service.CouponCodeStoreService.Companion.COUPON_CODE_LENGTH
 import coupon_platform.infrastructure.support.BaseIntegrationTest
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.equals.shouldBeEqual

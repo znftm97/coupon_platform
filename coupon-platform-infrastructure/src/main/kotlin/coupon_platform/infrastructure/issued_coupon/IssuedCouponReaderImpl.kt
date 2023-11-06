@@ -1,7 +1,7 @@
 package coupon_platform.infrastructure.issued_coupon
 
-import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
-import coupon_platform.domain.issued_coupon.repository.IssuedCouponReader
+import coupon_platform.domain.issuedcoupon.entitiy.IssuedCoupon
+import coupon_platform.domain.issuedcoupon.repository.IssuedCouponReader
 import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfIssuedCoupon
 import coupon_platform.infrastructure.cache.local_caffeine.CaffeineHandlerForIssuedCoupon
 import org.springframework.stereotype.Repository

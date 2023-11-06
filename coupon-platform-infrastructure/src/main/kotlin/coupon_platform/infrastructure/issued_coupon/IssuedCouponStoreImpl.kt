@@ -1,7 +1,7 @@
 package coupon_platform.infrastructure.issued_coupon
 
-import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
-import coupon_platform.domain.issued_coupon.repository.IssuedCouponStore
+import coupon_platform.domain.issuedcoupon.entitiy.IssuedCoupon
+import coupon_platform.domain.issuedcoupon.repository.IssuedCouponStore
 import coupon_platform.infrastructure.cache.global_redis.handler.RedisHandlerOfIssuedCoupon
 import coupon_platform.infrastructure.cache.global_redis.util.CacheConstants.ISSUED_COUPON_KEY_TTL
 import coupon_platform.infrastructure.cache.local_caffeine.CaffeineHandlerForIssuedCoupon

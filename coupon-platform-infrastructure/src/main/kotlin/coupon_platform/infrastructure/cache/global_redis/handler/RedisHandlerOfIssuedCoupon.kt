@@ -1,6 +1,6 @@
 package coupon_platform.infrastructure.cache.global_redis.handler
 
-import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
+import coupon_platform.domain.issuedcoupon.entitiy.IssuedCoupon
 import coupon_platform.infrastructure.cache.global_redis.util.IssuedCouponForRedis
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component

@@ -1,6 +1,6 @@
 package coupon_platform.infrastructure.coupon_stats
 
-import coupon_platform.domain.coupon_stats.domain.CouponDailyStats
+import coupon_platform.domain.couponstats.domain.CouponDailyStats
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param

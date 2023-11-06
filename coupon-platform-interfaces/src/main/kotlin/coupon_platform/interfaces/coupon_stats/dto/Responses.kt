@@ -1,8 +1,8 @@
 package coupon_platform.interfaces.coupon_stats.dto
 
-import coupon_platform.domain.coupon_stats.dto.CouponDailyStatsInfo
-import coupon_platform.domain.coupon_stats.dto.CouponStatsInfo
-import coupon_platform.domain.coupon_stats.dto.CouponSummaryStatsInfo
+import coupon_platform.domain.couponstats.dto.CouponDailyStatsInfo
+import coupon_platform.domain.couponstats.dto.CouponStatsInfo
+import coupon_platform.domain.couponstats.dto.CouponSummaryStatsInfo
 import java.time.LocalDate
 
 data class CouponStatsResponse(

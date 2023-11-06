@@ -1,6 +1,6 @@
 package coupon_platform.infrastructure.cache.local_caffeine
 
-import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
+import coupon_platform.domain.issuedcoupon.entitiy.IssuedCoupon
 import coupon_platform.infrastructure.cache.global_redis.util.CacheConstants.ISSUED_COUPON
 import org.springframework.cache.CacheManager
 import org.springframework.stereotype.Component

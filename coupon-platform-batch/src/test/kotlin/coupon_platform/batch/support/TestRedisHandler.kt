@@ -19,7 +19,7 @@ class TestRedisHandler(
 
         (0 until checkDay).forEach { idx ->
             val dateTime = LocalDateTime.now().minusDays(checkDay - idx - 1)
-            val key = coupon_platform.batch.attendance_check.CommonConstants.ATTENDANCE_CHECK_PREFIX + dateTime.format(
+            val key = coupon_platform.batch.attendancecheck.CommonConstants.ATTENDANCE_CHECK_PREFIX + dateTime.format(
                 DateTimeFormatter.ofPattern("yyyyMMdd"))
             redisTemplate.opsForValue().set(key, bitSet)
         }
@@ -31,7 +31,7 @@ class TestRedisHandler(
 
         (0 until checkDay).forEach { idx ->
             val dateTime = LocalDateTime.now().minusDays(checkDay - idx - 1)
-            val key = coupon_platform.batch.attendance_check.CommonConstants.ATTENDANCE_CHECK_PREFIX + dateTime.format(
+            val key = coupon_platform.batch.attendancecheck.CommonConstants.ATTENDANCE_CHECK_PREFIX + dateTime.format(
                 DateTimeFormatter.ofPattern("yyyyMMdd"))
             redisTemplate.opsForValue().set(key, bitSet)
         }
@@ -40,8 +40,8 @@ class TestRedisHandler(
     fun delete(checkDay: Long) {
         (0 until checkDay).forEach { idx ->
             val dateTime = LocalDateTime.now().minusDays(checkDay - idx - 1)
-            val key = coupon_platform.batch.attendance_check.CommonConstants.ATTENDANCE_CHECK_PREFIX + dateTime.format(
-                DateTimeFormatter.ofPattern("yyyyMMdd"))
+            val key = coupon_platform.batch.attendancecheck.CommonConstants.ATTENDANCE_CHECK_PREFIX +
+                dateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
             redisTemplate.opsForValue().getAndDelete(key)
         }
     }

@@ -1,7 +1,7 @@
 package coupon_platform.infrastructure.coupon_code
 
-import coupon_platform.domain.coupon_code.entity.CouponCode
-import coupon_platform.domain.coupon_code.repository.CouponCodeStore
+import coupon_platform.domain.couponcode.entity.CouponCode
+import coupon_platform.domain.couponcode.repository.CouponCodeStore
 import org.springframework.stereotype.Repository
 
 @Repository

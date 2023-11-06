@@ -1,7 +1,7 @@
 package coupon_platform.infrastructure.coupon_stats
 
-import coupon_platform.domain.coupon_stats.dto.CouponDailyStatsInfo
-import coupon_platform.domain.coupon_stats.service.CouponDailyStatsReadService
+import coupon_platform.domain.couponstats.dto.CouponDailyStatsInfo
+import coupon_platform.domain.couponstats.service.CouponDailyStatsReadService
 import coupon_platform.infrastructure.support.BaseIntegrationTest
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.equals.shouldBeEqual

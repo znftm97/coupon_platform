@@ -1,6 +1,6 @@
 package coupon_platform.infrastructure.issued_coupon
 
-import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
+import coupon_platform.domain.issuedcoupon.entitiy.IssuedCoupon
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param

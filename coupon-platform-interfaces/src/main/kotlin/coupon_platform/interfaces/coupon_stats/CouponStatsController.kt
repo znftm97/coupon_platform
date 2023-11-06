@@ -1,8 +1,8 @@
 package coupon_platform.interfaces.coupon_stats
 
-import coupon_platform.application.coupon_stats.CouponStatsFacade
-import coupon_platform.application.coupon_stats.CouponStatsFacadeV2
-import coupon_platform.domain.coupon_stats.dto.CouponStatsInfo
+import coupon_platform.application.couponstats.CouponStatsFacade
+import coupon_platform.application.couponstats.CouponStatsFacadeV2
+import coupon_platform.domain.couponstats.dto.CouponStatsInfo
 import coupon_platform.interfaces.common.response.BaseResponse
 import coupon_platform.interfaces.coupon_stats.dto.CouponStatsResponse
 import org.springframework.web.bind.annotation.*

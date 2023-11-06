@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer
-import coupon_platform.domain.issued_coupon.entitiy.IssuedCoupon
+import coupon_platform.domain.issuedcoupon.entitiy.IssuedCoupon
 import java.time.ZonedDateTime
 
 data class IssuedCouponForRedis(

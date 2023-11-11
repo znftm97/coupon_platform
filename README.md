@@ -13,6 +13,9 @@
 - MySQL 8.0.34
 - Redis 7.0.10 , Lettuce 6.2.6
 
+# 프로젝트 구조
+![화면 캡처 2023-11-11 201227](https://github.com/znftm97/coupon_platform/assets/57134526/10b69f7c-b6eb-4c2e-a70d-68eac92fd276)
+
 # 주요 기능
 1. 코드입력을 통한 쿠폰 발급<br>
 2. 출석체크 쿠폰 발급 이벤트<br>
